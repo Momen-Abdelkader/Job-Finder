@@ -1,0 +1,11 @@
+# IDE-specific files
+.idea/
+
+# CMake files
+CMakeLists.txt
+cmake-build-debug/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CMakeSettings.json
