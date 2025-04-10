@@ -1,0 +1,44 @@
+.main-nav {
+    background-color: #333;
+    color: white;
+    padding: 30px 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-nav .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-right: 4em;
+    text-decoration: none;
+}
+
+.main-nav .nav-list li {
+    display: inline-block;
+    margin-right: 20px;
+    color: white;
+    font-size: 18px;
+}
+
+.main-nav .nav-list li a {
+    color: white;
+    text-decoration: none;
+}
+
+.main-nav .nav-list li a:hover {
+    color: #ff6347;
+}
+
+.main-nav .nav-list li a.active {
+    color: #ff6347;
+    font-weight: bold;
+}
+
+.main-nav .profile * {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
