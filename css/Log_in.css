@@ -1,0 +1,321 @@
+body {
+    background-color: #357dec; /* Light gray background */
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+}
+
+
+section {
+
+    margin-bottom: 20px;
+    width: 90%;
+    max-width: 450px;
+}
+
+
+
+
+/*                                                                                    Page stuff                                                                                        */
+.Page_con {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 100px; /* space between header and form */
+    /*padding: 20%;*/
+    padding-top: 100px;
+    flex-wrap: wrap; /* allows stacking on small screens */
+}
+
+/* Optional: set width for header and form */
+.Header_con, .Form_con {
+    flex: 1 1 400px; /* makes them responsive */
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+
+
+/*                                                                                    Header stuff                                                                                        */
+.Header_con {
+    padding: 20px;
+    /*background-color: #2a2a3d;*/
+    color: white;
+    border-radius: 12px;
+}
+
+
+.Header{
+    font-weight: bold;
+    font-size: 50px;
+    color: white;
+}
+
+.Subheader{
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+/*                                                                                    Form stuff                                                                                          */
+.Form_con {
+    padding: 20px;
+    /*padding-top: 100px;*/
+    /*background-color: #1e1e2f;*/
+    border-radius: 12px;
+}
+.Form_con section:not(.Toggle-container , .Use-container , .Create-container) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Adds space between the label and input */
+}
+
+
+
+
+
+.Form_con section div:not(.Log_in div){
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+.bt_name input,
+.bt_email input,
+.bt_password input,
+.bt_company_name input
+    /*.toggle-button-on,*/
+    /*.toggle-button-off*/{
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #e4edfe;
+}
+
+.bt_name,
+.bt_email,
+.bt_password,
+.bt_company_name{
+    width:100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.Icon {
+    position: absolute;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.Icon img {
+    width: 16px;
+    height: 16px;
+}
+.Text{
+    width:75%;
+}
+.Text input {
+    /*left:0px;*/
+    padding-left: 35px; /* creates space for the icon inside the box */
+    /*height: 30px;*/
+    font-size: 14px;
+    /*box-sizing: border-box;*/
+    width:100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Toggle-container{
+    /*display:flex ;*/
+    /*!*justify-content: flex-start;*!*/
+    /*width: 50%; !* You can adjust this container width *!*/
+    /*background-color: #b4c3e0;*/
+    /*border-radius: 10px;*/
+    /*border-color:#b4c3e0;*/
+    /*border: 2px solid #b4c3e0;*/
+
+    width: 65%;
+    height:100%;
+    padding: 4px;
+    border: 2px solid #b4c3e0;
+    border-radius: 8px;
+    background-color: #b4c3e0;
+    min-width: 376px;
+    min-height: 40px;
+    max-width: 376px;
+    max-height: 40px;
+
+}
+
+
+
+.Create-container,
+.Use-container{
+    width: 65%;
+    height:100%;
+    padding: 4px;
+    border: 2px solid #e4edfe;
+    border-radius: 8px;
+    background-color: #e4edfe;
+    min-width: 376px;
+    min-height: 40px;
+    max-width: 376px;
+    max-height: 40px;
+
+}
+
+
+
+.toggle-button-off,
+.toggle-button-on {
+    padding: 10px;
+    font-size: 15px; /* Adjust font size */
+    color: black;
+    border: #b4c3e0;
+    cursor: pointer;
+    text-align: center;
+    font-family: "Montserrat";
+    font-weight: bold;
+    border-radius: 10px;
+    width: 49%;
+    height: 100%;
+
+}
+.create_button,
+.use_button{
+    padding: 10px ;
+    font-size: 15px;  /* Adjust font size */
+    color: black;
+    border: #e4edfe;
+    cursor: pointer;
+    text-align: center;
+    font-family: "Montserrat";
+    font-weight: bold;
+    border-radius: 10px;
+    width:100%;
+    height:100%;
+    min-width: 376px;
+    min-height: 40px;
+    max-width: 376px;
+    max-height: 40px;
+}
+
+
+.toggle-button-off
+{
+    background-color:#b4c3e0 ;
+    border-right: 2px solid #b4c3e0;
+    color: white;
+}
+
+
+.toggle-button-on,
+.create_button,
+.use_button{
+    background-color: #e4edfe;
+    border-left:2px solid #e4edfe;
+
+}
+
+
+
+.Use-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    width: 65%;
+    height: 100%;
+    border: 2px solid #e4edfe;
+    border-radius: 8px;
+    background-color: #e4edfe;
+    min-width: 376px;
+    min-height: 40px;
+    max-width: 376px;
+    max-height: 40px;
+    position: relative;
+}
+
+.bt_icon {
+    position: absolute;
+    left: 10px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.bt_icon img {
+    padding-left: 10px;
+    width: 20px; /* Adjust size as needed */
+    height: 20px;
+}
+
+.use_button {
+    padding-left: 40px; /* Adjust to prevent text overlap */
+    text-align: center;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+.Log_in div{
+    font-size: 12px;
+    /*font-weight: normal;*/
+    color: white;
+    text-align: center;
+    min-width: 376px;
+    min-height: 20px;
+    max-width: 376px;
+    max-height: 20px;
+}
+.t1{
+    font-weight: normal;
+}
+.t2 {
+    text-decoration: underline;
+    text-decoration-color: white;
+    font-weight: bold;
+}
+
+
+
+.t3{
+    font-weight: normal;
+    text-decoration: underline;
+    text-decoration-color: white;
+}
