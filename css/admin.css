@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #d8e6f3;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #c9d9eb;
+}
+
+.logo {
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    color: #000;
+}
+
+.threeDash {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.app_chart, .job_chart {
+    background-color: #c9d9eb;
+    margin: 20px;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.app_chart h3,
+.job_chart h3 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.add_button {
+    float: right;
+    margin-top: -36px;
+    margin-right: 4px;
+    background-color: #4e73df;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#job1 {
+    background-color: #d8e6f3;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.google_logo {
+    height: 24px;
+    vertical-align: middle;
+    margin-bottom: 4px;
+}
+
+.job_title {
+    font-weight: bold;
+    margin: 4px 0;
+}
+
+.location {
+    font-size: 13px;
+    color: #555;
+    margin-top: 0;
+}
+
+.job1_button {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.job_descrption {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 12px;
+    background-color: #4e73df;
+    color: white;
+    cursor: default;
+}
+
+.job_edit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.edit_button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    background-color: #4e73df;
+    color: white;
+    cursor: pointer;
+}
+
+.edit_button.delete {
+    background-color: #e74a3b;
+}
