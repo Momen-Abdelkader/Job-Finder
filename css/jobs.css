@@ -1,16 +1,89 @@
+:root {
+    --accent: #5193fa;
+    --accent-dark: #305188;
+    --white_1: #e3edfe;
+    --white_2: #d4e0f4;
+    --white_3: #d0dbee;
+    --white_4: #c3cdde;
+    --white_5: #b9c2d1;
+    --dark: #1b1b1e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: montserrat;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    background-color: var(--white_2);
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.2rem;
+}
+
+.job-title {
+    font-size: 1.2rem;
+}
+
+.company-name {
+    font-size: 1.2rem;
+}
+
+.job-location {
+    font-size: 1rem;
+}
+
+.filter {
+    font-size: 1rem;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--dark);
+    border-radius: 3px;
+}
+
 .main-nav {
-    background-color: #333;
-    color: white;
+    background-color: var(--white_1);
+    color: var(--dark);
     padding: 30px 90px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-weight: 500;
 }
 
 .main-nav .logo {
     font-size: 24px;
     font-weight: bold;
-    color: white;
+    color: var(--dark);
     margin-right: 4em;
     text-decoration: none;
 }
@@ -18,27 +91,427 @@
 .main-nav .nav-list li {
     display: inline-block;
     margin-right: 20px;
-    color: white;
-    font-size: 18px;
+    color: var(--dark);
+    font-size: 20px;
 }
 
 .main-nav .nav-list li a {
-    color: white;
+    color: var(--dark);
     text-decoration: none;
+    transition: 0.1s;
 }
 
 .main-nav .nav-list li a:hover {
-    color: #ff6347;
+    color: var(--accent);
 }
 
-.main-nav .nav-list li a.active {
-    color: #ff6347;
+.main-nav .nav-list li .active {
+    color: var(--accent);
     font-weight: bold;
 }
 
-.main-nav .profile * {
+.main-nav .profile {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav .profile .profile-image {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
+}
+
+.arrow-down {
+    width: 30px;
+    height: 30px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1750px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 100%; 
+    padding: 10px 10px;
+    background-color: var(--white_1);
+    border-radius: 10px;
+}
+
+.search-left {
+    display: flex;
+    align-items: center;
+    width: 100%; 
+    gap: 10px; 
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.search-icon img {
+    width: 30px;
+    height: 30px;
+}
+
+.search-input {
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    flex: 1; 
+    width: 100%; 
+    margin-left: 20px;
+}
+
+.find-button {
+    background-color: var(--accent);
+    padding: 20px 30px;
+    border-radius: 7px;
+    color: var(--white_1);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.find-button:hover {
+    background-color: var(--accent-dark);
+}
+
+.jobs-container {
+    display: flex;
+    gap: 50px;
+}
+
+.filter-category {
+    padding: 20px;
+}
+
+.filter-category h2 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+}
+
+.filters {
+    width: 18%;
+    flex-shrink: 0;
+}
+
+.filter {
+    font-size: 19px;
+    font-weight: 600;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-bottom: 15px;
+    justify-content: space-between;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+    margin-right: 10px;
+    border-radius: 10px;
+    align-self: center;
+}
+
+.count {
+    background-color: var(--accent);
+    color: var(--white_1);
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 5px;
+    margin-left: 10px;
+    text-align: center;
+    width: 50px;
+}
+  
+.job-postings {
+    flex: 1;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.job-postings h1 {
+    margin-bottom: 20px;
+}
+
+.job-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.job-card {
+    background-color: var(--white_3);
+    border-radius: 10px;
+    padding: 40px;
+}
+
+.company-info {
+    display: flex;
+    align-items: center;
+}
+
+.company-logo {
+    background-color: var(--white_1);
+    padding: 10px;
+    border-radius: 5px;
+    width: 50px;
+    height: auto;
+    min-width: 50px;
+    object-fit: contain;
+    margin-right: 20px;
+}
+
+.job-info {
+    margin-top: 15px;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 100%;
+    margin-bottom: 35px;
+}
+
+.tag {
+    background-color: var(--accent);
+    color: var(--white_1);
+    padding: 10px 15px;
+    border-radius: 50px;
+    cursor: default;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-bottom: 5px;
+    display: inline-block; 
+}
+
+.buttons {
+    display: flex;
+}
+
+.button {
+    background-color: var(--white_4);
+    text-decoration: none;
+    cursor: default;
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: var(--dark);
+    font-weight: 600;
+    transition: 0.1s;
+}
+
+.apply-button {
+    color: var(--white_1);
+    background-color: var(--accent);
+    padding: 10px 20px;
+    margin-right: 7px;
+}
+
+.button:hover {
+    background-color: var(--white_5);
+}
+
+.apply-button:hover {
+    background-color: var(--accent-dark);
+}
+
+@media screen and (max-width: 767px) {
+    .main-nav {
+        padding: 15px 20px;
+        position: relative;
+    }
+    
+    .menu-toggle {
+        display: flex;
+        order: 1;
+    }
+    
+    .main-nav .logo {
+        margin-right: 0;
+        font-size: 1.4rem;
+        order: 2;
+    }
+    
+    .main-nav .profile {
+        order: 3;
+    }
+    
+    .main-nav .nav-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        background-color: var(--white_1);
+        z-index: 10;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+    
+    .nav-list.active {
+        display: flex;
+    }
+    
+    .main-nav .nav-list li {
+        margin-right: 0;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+        display: block;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    .search {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+    
+    .search-left {
+        width: 100%;
+    }
+    
+    .search-input {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+    
+    .find-button {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+    
+    .jobs-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .filters {
+        width: 100%;
+    }
+    
+    .filter-category {
+        padding: 15px;
+    }
+    
+    .job-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .job-card {
+        padding: 20px;
+    }
+    
+    .company-logo {
+        width: 40px;
+        min-width: 40px;
+    }
+    
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .button {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .apply-button {
+        margin-right: 0;
+    }
+    
+    .main-nav .profile .profile-image {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .arrow-down {
+        width: 25px;
+        height: 25px;
+    }
+
+    .tags {
+        gap: 12px; 
+    }
+    
+    .tag {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .main-nav {
+        padding: 20px 40px;
+    }
+    
+    .container {
+        max-width: 95%;
+    }
+    
+    .job-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .job-card {
+        padding: 30px;
+    }
+    
+    .filters {
+        width: 30%;
+    }
+    
+    .company-logo {
+        width: 45px;
+        min-width: 45px;
+    }
+    
+    .search-input {
+        font-size: 18px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        max-width: 90%;
+    }
+    
+    .filters {
+        width: 20%;
+    }
+    
+    .job-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .company-logo {
+        width: 50px;
+        min-width: 50px;
+    }
 }

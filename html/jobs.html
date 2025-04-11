@@ -19,10 +19,255 @@
             <li><a href="#" class="active">Jobs</a></li>
             <li><a href="#">Whatever</a></li>
         </ul>
-        <div class="profile">
+        <div class="profile" id="profile-nav">
             <img src="../assets/profile.webp" class="profile-image">
-            <i class="fa-solid fa-chevron-down arrow"></i>
+            <img src="../assets/arrow-down.png" class="arrow-down">
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </nav>
+    <main class="container"> 
+        <div class="search">
+            <div class="search-left">
+                <div class="search-icon"><img src="../assets/search.png"></div>
+                <input type="text" class="search-input" placeholder="Search for jobs, companies, or keywords...">
+            </div>
+            <a class="find-button">Find</a>
+        </div>
+        <div class="jobs-container">
+            <div class="filters">
+                <div class="filter-category">
+                    <h2>Type Of Employment</h2>
+                    <div class="filter">
+                        <div> 
+                            <input type="checkbox" id="full-time" name="full-time" value="Full Time">
+                            <label for="full-time">Full Time</label>
+                        </div>
+                        <a id="full-time-count" class="count">54</a>
+                    </div>
+                    <div class="filter">
+                        <div>
+                            <input type="checkbox" id="part-time" name="part-time" value="Part Time">
+                            <label for="part-time">Part Time</label>
+                        </div>
+                        <a id="part-time-count" class="count">12</a>
+                    </div>                
+                    <div class="filter">
+                        <div>
+                            <input type="checkbox" id="internship" name="internship" value="Internship">
+                            <label for="internship">Internship</label>
+                        </div>
+                        <a id="internship-count" class="count">5</a>
+                    </div>                
+                    <div class="filter">
+                        <div>
+                            <input type="checkbox" id="remote" name="remote" value="Remote">
+                            <label for="remote">Remote</label>
+                        </div>
+                        <a id="remote-count" class="count">2</a>
+                    </div>
+                    <div class="filter">
+                        <div>
+                            <input type="checkbox" id="onsite" name="onsite" value="On-Site">
+                            <label for="onsite">On-Site</label>
+                        </div>
+                        <a id="onsite-count" class="count">40</a>
+                    </div>
+                </div>
+                <div class="filter-category">
+                    <h2>Level</h2>
+                    <div class="filter">
+                        <div> 
+                            <input type="checkbox" id="senior" name="senior" value="Senior">
+                            <label for="senior">Senior</label>
+                        </div>
+                        <a id="senior-count" class="count">54</a>
+                    </div>
+                    <div class="filter">
+                        <div> 
+                            <input type="checkbox" id="midlevel" name="midlevel" value="Mid-Level">
+                            <label for="midlevel">Mid-Level</label>
+                        </div>
+                        <a id="midlevel-count" class="count">54</a>
+                    </div>
+                    <div class="filter">
+                        <div> 
+                            <input type="checkbox" id="junior" name="junior" value="Jnior">
+                            <label for="junior">Junior</label>
+                        </div>
+                        <a id="junior-count" class="count">54</a>
+                    </div>
+                    <div class="filter">
+                        <div> 
+                            <input type="checkbox" id="fresh-grad" name="fresh-grad" value="Fresh Graduate">
+                            <label for="fresh-grad">Fresh Graduate</label>
+                        </div>
+                        <a id="fresh-grad-count" class="count">54</a>
+                    </div>
+                    <div class="filter">
+                        <div> 
+                            <input type="checkbox" id="student" name="student" value="Student">
+                            <label for="student">Student</label>
+                        </div>
+                        <a id="student-count" class="count">54</a>
+                    </div>
+                </div>
+            </div>
+            <div class="job-postings">
+                <h1>Found <a id="job-count">49</a> Job Postings</h1>
+                <div class="job-cards">
+                    <div class="job-card">
+                        <div class="company-info">
+                            <img src="../assets/google.png" class="company-logo">
+                            <h4 class="company-name">Google</h4>                
+                        </div>
+                        <div class="job-info">
+                            <h4 class="job-title">Junior Software Engineer</h4>
+                            <a class="job-location">Mountain View, CA</a>
+                        </div>
+                        <ul class="tags">
+                            <li><a class="tag">On-Site</a></li>
+                            <li><a class="tag">Full Time</a></li>
+                            <li><a class="tag">No Experience</a></li>
+                            <li><a class="tag">$4000/month</a></li>
+                        </ul>
+                        <div class="buttons">
+                            <a href="#" class="apply-button button">Apply Now</a>
+                            <a href="#" class="details-button button">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <div class="company-info">
+                            <img src="../assets/google.png" class="company-logo">
+                            <h4 class="company-name">Google</h4>                
+                        </div>
+                        <div class="job-info">
+                            <h4 class="job-title">Junior Software Engineer</h4>
+                            <a class="job-location">Mountain View, CA</a>
+                        </div>
+                        <ul class="tags">
+                            <li><a class="tag">On-Site</a></li>
+                            <li><a class="tag">Full Time</a></li>
+                            <li><a class="tag">No Experience</a></li>
+                            <li><a class="tag">$4000/month</a></li>
+                        </ul>
+                        <div class="buttons">
+                            <a href="#" class="apply-button button">Apply Now</a>
+                            <a href="#" class="details-button button">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <div class="company-info">
+                            <img src="../assets/google.png" class="company-logo">
+                            <h4 class="company-name">Google</h4>                
+                        </div>
+                        <div class="job-info">
+                            <h4 class="job-title">Junior Software Engineer</h4>
+                            <a class="job-location">Mountain View, CA</a>
+                        </div>
+                        <ul class="tags">
+                            <li><a class="tag">On-Site</a></li>
+                            <li><a class="tag">Full Time</a></li>
+                            <li><a class="tag">No Experience</a></li>
+                            <li><a class="tag">$4000/month</a></li>
+                        </ul>
+                        <div class="buttons">
+                            <a href="#" class="apply-button button">Apply Now</a>
+                            <a href="#" class="details-button button">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <div class="company-info">
+                            <img src="../assets/google.png" class="company-logo">
+                            <h4 class="company-name">Google</h4>                
+                        </div>
+                        <div class="job-info">
+                            <h4 class="job-title">Junior Software Engineer</h4>
+                            <a class="job-location">Mountain View, CA</a>
+                        </div>
+                        <ul class="tags">
+                            <li><a class="tag">On-Site</a></li>
+                            <li><a class="tag">Full Time</a></li>
+                            <li><a class="tag">No Experience</a></li>
+                            <li><a class="tag">$4000/month</a></li>
+                        </ul>
+                        <div class="buttons">
+                            <a href="#" class="apply-button button">Apply Now</a>
+                            <a href="#" class="details-button button">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <div class="company-info">
+                            <img src="../assets/google.png" class="company-logo">
+                            <h4 class="company-name">Google</h4>                
+                        </div>
+                        <div class="job-info">
+                            <h4 class="job-title">Junior Software Engineer</h4>
+                            <a class="job-location">Mountain View, CA</a>
+                        </div>
+                        <ul class="tags">
+                            <li><a class="tag">On-Site</a></li>
+                            <li><a class="tag">Full Time</a></li>
+                            <li><a class="tag">No Experience</a></li>
+                            <li><a class="tag">$4000/month</a></li>
+                        </ul>
+                        <div class="buttons">
+                            <a href="#" class="apply-button button">Apply Now</a>
+                            <a href="#" class="details-button button">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <div class="company-info">
+                            <img src="../assets/google.png" class="company-logo">
+                            <h4 class="company-name">Google</h4>                
+                        </div>
+                        <div class="job-info">
+                            <h4 class="job-title">Junior Software Engineer</h4>
+                            <a class="job-location">Mountain View, CA</a>
+                        </div>
+                        <ul class="tags">
+                            <li><a class="tag">On-Site</a></li>
+                            <li><a class="tag">Full Time</a></li>
+                            <li><a class="tag">No Experience</a></li>
+                            <li><a class="tag">$4000/month</a></li>
+                        </ul>
+                        <div class="buttons">
+                            <a href="#" class="apply-button button">Apply Now</a>
+                            <a href="#" class="details-button button">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <div class="company-info">
+                            <img src="../assets/google.png" class="company-logo">
+                            <h4 class="company-name">Google</h4>                
+                        </div>
+                        <div class="job-info">
+                            <h4 class="job-title">Junior Software Engineer</h4>
+                            <a class="job-location">Mountain View, CA</a>
+                        </div>
+                        <ul class="tags">
+                            <li><a class="tag">On-Site</a></li>
+                            <li><a class="tag">Full Time</a></li>
+                            <li><a class="tag">No Experience</a></li>
+                            <li><a class="tag">$4000/month</a></li>
+                        </ul>
+                        <div class="buttons">
+                            <a href="#" class="apply-button button">Apply Now</a>
+                            <a href="#" class="details-button button">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
