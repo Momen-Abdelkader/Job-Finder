@@ -1,3 +1,13 @@
+:root {
+    --accent: #5193fa;
+    --accent-dark: #305188;
+    --white_1: #e3edfe;
+    --white_2: #d4e0f4;
+    --white_3: #d0dbee;
+    --white_4: #c3cdde;
+    --white_5: #b9c2d1;
+    --dark: #1b1b1e;
+}
 /* General Reset */
 * {
     margin: 0;
@@ -15,48 +25,78 @@ body {
 
 
 /* Navbar */
-.navbar {
-    display: flex;
+.menu-toggle {
+    display: none;
+    flex-direction: column;
     justify-content: space-between;
-    padding: 15px 20px;
-    background-color: #1b1b1d;
-    align-items: center;
-}
-
-.navbar h1 {
-    font-size: 20px;
-}
-
-.nav-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.nav-buttons button {
-    padding: 5px 10px;
-    border-radius: 10px;
+    width: 30px;
+    height: 21px;
     cursor: pointer;
 }
 
-.login {
-    background: none;
-    color: white;
-    border: 1px solid white;
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--dark);
+    border-radius: 3px;
 }
 
-.login:hover {
-    background-color: gray;
-    color: black;
+.main-nav {
+    background-color: var(--dark);
+    color: var(--dark);
+    padding: 30px 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
 }
 
-.signup {
-    background-color: dodgerblue;
-    color: white;
+.main-nav .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--white_1);
+    margin-right: 4em;
+    text-decoration: none;
 }
 
-.signup:hover {
-    color: black;
+.main-nav .nav-list li {
+    display: inline-block;
+    margin-right: 20px;
+    color: var(--white_1);
+    font-size: 20px;
+}
+
+.main-nav .nav-list li a {
+    color: var(--accent);
+    font-weight: bold;
+    transition: 0.1s;
+}
+
+.main-nav .nav-list li a:hover {
+    color: var(--accent);
+}
+
+.main-nav .nav-list li .active {
+    color: var(--white_1);
+    text-decoration: none;
+}
+
+.main-nav .profile {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav .profile .profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.arrow-down {
+    width: 30px;
+    height: 30px;
 }
 
 .menu-icon {
@@ -65,7 +105,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background-color: #1b1b1d;
+    background-color: var(--dark);
     padding: 30px 20px;
 }
 
