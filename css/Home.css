@@ -68,9 +68,8 @@ body {
 }
 
 .main-nav .nav-list li a {
-    color: var(--accent);
-    font-weight: bold;
-    transition: 0.1s;
+    color: var(--white_1);
+    text-decoration: none;
 }
 
 .main-nav .nav-list li a:hover {
@@ -78,8 +77,9 @@ body {
 }
 
 .main-nav .nav-list li .active {
-    color: var(--white_1);
-    text-decoration: none;
+    color: var(--accent);
+    font-weight: bold;
+    transition: 0.1s;
 }
 
 .main-nav .profile {
