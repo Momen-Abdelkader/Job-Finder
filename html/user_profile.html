@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/jobs.css">
+    <link rel="stylesheet" href="../css/user_profile.css">
+    <title>User Profile</title>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <ul class="nav-list">   
+                <a href="#" class="logo">Job Finder</a>
+                <li><a href="Home.html">Home</a></li>
+                <li><a href="jobs.html">Jobs</a></li>
+            </ul>
+            <div class="profile" id="profile-nav">
+                <img src="../assets/temp-profile.webp" class="profile-image">
+            </div>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+        <div class="card">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="../assets/temp-profile.webp" alt="User Profile Photo">
+                </div>
+                <div class="profile-info">
+                    <h2>Username</h2>
+                    <p>Role</p>
+                    <button class="edit-button">Edit</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="section-title">Preferences</div>
+            <div class="preferences-list">
+                <div class="preferences-list">
+                    <form class="preferences-form">
+                        <div class="form-group">
+                            <label>Preferred Salary Range ($):</label>
+                            <div class="salary-range">
+                                <input type="number" placeholder="Min" class="salary-input">
+                                <span>-</span>
+                                <input type="number" placeholder="Max" class="salary-input">
+                            </div>
+                        </div>
+            
+                        <div class="form-group">
+                            <label>Experience Level:</label>
+                            <select class="form-select">
+                                <option value="">Select Level</option>
+                                <option>Entry</option>
+                                <option>Mid</option>
+                                <option>Senior</option>
+                                <option>Executive</option>
+                            </select>
+                        </div>
+            
+                        <div class="form-group">
+                            <label>Work Type:</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="work-type" value="onsite">
+                                    Onsite
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="work-type" value="remote">
+                                    Remote
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="work-type" value="hybrid">
+                                    Hybrid
+                                </label>
+                            </div>
+                        </div>
+            
+                        <div class="form-group">
+                            <label>Employment Type:</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="employment-type" value="full-time">
+                                    Full-time
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="employment-type" value="part-time">
+                                    Part-time
+                                </label>
+                            </div>
+                        </div>
+            
+                        <div class="form-group">
+                            <label>Preferred Keywords:</label>
+                            <input type="text" class="keywords-input" 
+                                   placeholder="Engineering, Design, Marketing">
+                        </div>
+            
+                        <button type="submit" class="edit-button save-button">Save Preferences</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="section-title">List of Jobs Applied To</div>
+            <div class="jobs-list">
+                <div class="job-card">
+                    <div class="status-badge">Pending</div>
+                    <div class="job-header">
+                        <h3 class="company-name">Google</h3>
+                        <h2 class="job-title">Junior Software Engineer</h2>
+                        <p class="job-location">Mountain View, CA</p>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="tag on-site">On-Site</span>
+                        <span class="tag full-time">Full Time</span>
+                        <span class="tag experience">No Experience</span>
+                        <span class="tag salary">$4000/month</span>
+                    </div>
+                    
+                    <div class="job-actions">
+                        <button class="details-button">Details</button>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="status-badge">Pending</div>
+                    <div class="job-header">
+                        <h3 class="company-name">Google</h3>
+                        <h2 class="job-title">Junior Software Engineer</h2>
+                        <p class="job-location">Mountain View, CA</p>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="tag on-site">On-Site</span>
+                        <span class="tag full-time">Full Time</span>
+                        <span class="tag experience">No Experience</span>
+                        <span class="tag salary">$4000/month</span>
+                    </div>
+                    
+                    <div class="job-actions">
+                        <button class="details-button">Details</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
