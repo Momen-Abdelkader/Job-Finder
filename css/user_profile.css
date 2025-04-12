@@ -169,11 +169,11 @@ label {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: var(--accent-semi-dark);
-    color: white;
+    background-color: var(--accent);
+    color: var(--white_1);
     padding: 4px 12px;
     border-radius: 15px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 500;
 }
 
@@ -206,12 +206,12 @@ label {
     margin-bottom: 15px;
 }
 
-.tag {
+.job-tag {
     padding: 6px 12px;
     border-radius: 20px;
-    font-size: 0.9rem;
-    background-color: var(--white_2);
-    color: var(--dark);
+    font-size: 1em;
+    background-color: var(--accent);
+    color: var(--white_1);
 }
 
 .details-button {
