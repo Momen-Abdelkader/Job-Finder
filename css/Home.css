@@ -13,16 +13,18 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: montserrat;
 }
 
 body {
-    background-color: #111;
-    color: white;
-    font-family: "Montserrat", sans-serif;
+    background-color: var(--white_2);
+    color: var(--dark);
     text-align: center;
 }
 
+section {
+    background-color: var(--white_2);
+}
 
 /* Navbar */
 .menu-toggle {
@@ -38,12 +40,12 @@ body {
     display: block;
     height: 3px;
     width: 100%;
-    background-color: var(--dark);
+    background-color: var(--white_1);
     border-radius: 3px;
 }
 
 .main-nav {
-    background-color: var(--dark);
+    background-color: var(--white_1);
     color: var(--dark);
     padding: 30px 90px;
     display: flex;
@@ -55,7 +57,7 @@ body {
 .main-nav .logo {
     font-size: 24px;
     font-weight: bold;
-    color: var(--white_1);
+    color: var(--dark);
     margin-right: 4em;
     text-decoration: none;
 }
@@ -63,12 +65,12 @@ body {
 .main-nav .nav-list li {
     display: inline-block;
     margin-right: 20px;
-    color: var(--white_1);
+    color: var(--dark);
     font-size: 20px;
 }
 
 .main-nav .nav-list li a {
-    color: var(--white_1);
+    color: var(--dark);
     text-decoration: none;
 }
 
@@ -105,7 +107,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background-color: var(--dark);
+    background-color: var(--white_2);
     padding: 30px 20px;
 }
 
@@ -117,11 +119,11 @@ body {
 .search-bar {
     display: flex;
     justify-content: center;
-    background-color: #c4ccdf;
+    background-color: var(--white_1);
     padding: 1px;
     margin: 12px ;
     width: 70%;
-    border-color:#e8ebf2;
+    border-color:var(--white_1);
     border-style: solid;
     border-radius: 5px;
     margin: 10px auto;
@@ -133,13 +135,13 @@ body {
     border-radius: 5px;
     width:85%;
 
-    background-color: #c4ccdf;
+    background-color: var(--white_1);
     border: none;
 }
 
 .search-bar button {
     padding: 10px;
-    background-color: dodgerblue;
+    background-color: var(--accent);
     color: white;
     border: none;
     width: 15%;
@@ -148,12 +150,11 @@ body {
 }
 
 .search-bar button:hover {
-    color: black;
+    color: var(--dark);
 }
 
 /* Recommended Jobs */
 .recommended-jobs {
-    background-color: dodgerblue;
     font-size: larger;
     padding: 20px;
     min-height: fit-content;
@@ -161,7 +162,7 @@ body {
 }
 
 .job-card {
-    background-color: #d0dbed;
+    background-color: var(--white_4);
     color: black;
     padding: 40px;
     margin: 10px auto;
@@ -189,7 +190,6 @@ body {
 .company img {
     width: 30px;
     height: 30px;
-    background-color: #e7dff6;
     border-radius: 15px;   
 }
 
@@ -197,28 +197,19 @@ body {
     font-weight: bold;
 }
 
-/* .job-tags {
-    display: flex;
-} */
-
 .job-tags button {
-    background: #555;
+    background: var(--accent);
     color: white;
     border:none;
     font-size: medium;
-    /* margin: 5px 10px 5px 0px ; */
     margin-bottom: 5px;
     padding: 5px 10px 5px 10px;
     border-radius: 15px;
     cursor: pointer
 }
 
-/* .job-tags button:hover {
-    color:aliceblue
-} */
 
 .job-actions {
-    /* display:flex; */
     gap: 10px;
 }
 
@@ -232,7 +223,7 @@ body {
 }
 
 .apply {
-    background-color: dodgerblue;
+    background-color: var(--accent);
     color: white;
 }
 
@@ -242,7 +233,7 @@ body {
 }
 
 .see-more {
-    background: white;
+    background-color: var(--white_4);
     color: black;
     padding: 10px;
     margin-top: 10px;
@@ -251,7 +242,6 @@ body {
     font-size: large;
     width: 30%;
     min-width:max-content;
-    background-color: #d0dbed;
     border-radius: 10px;
     border: none;
     cursor: pointer;
@@ -259,7 +249,7 @@ body {
 
 /* Footer */
 footer {
-    background-color: #1b1b1d;
+    background-color: var(--white_4);
     padding: 20px;
 }
 
@@ -279,7 +269,7 @@ footer {
 }
 
 a {
-    color: white;
+    color: var(--dark);
     text-decoration: none;
 }
 
