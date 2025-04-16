@@ -9,31 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/Home.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/search.css">
     <title>Job Finder</title>
 </head>
 <body>
-    <nav class="main-nav">
-        <ul class="nav-list">   
-            <a href="#" class="logo">Job Finder</a>
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="../html/jobs.html">Jobs</a></li>
-        </ul>
-        <div class="profile" id="profile-nav">
-            <img src="../assets/temp-profile.webp" class="profile-image">
-        </div>
-        <div class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
-
+    <div id="nav"></div>
+    <script src="../js/nav.js"></script>
     <section class="hero">
-        <h2> Whether you’re a student, a graduate, or a seasoned pro — we’ve got jobs that fit your journey. Let’s get you hired.</h2>
-        <div class="search-bar">
-            <input type="text" placeholder="Search by Job Title, Company, Keyword">
-            <button>Find</button>
+        <h2 class="hero-title"> Whether you’re a student, a graduate, or a seasoned pro, <br> we’ve got jobs that fit your journey. Let’s get you hired.</h2>
+        <div class="container">
+            <div id="search"></div>
         </div>
+        <script src="../js/search.js"></script>
     </section>
 
     <section class="recommended-jobs">

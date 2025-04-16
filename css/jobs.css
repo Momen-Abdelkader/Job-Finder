@@ -53,136 +53,12 @@ h4 {
     font-size: 1rem;
 }
 
-.menu-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 21px;
-    cursor: pointer;
-}
-
-.menu-toggle span {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background-color: var(--dark);
-    border-radius: 3px;
-}
-
-.main-nav {
-    background-color: var(--white_1);
-    color: var(--dark);
-    padding: 30px 90px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 500;
-}
-
-.main-nav .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--dark);
-    margin-right: 4em;
-    text-decoration: none;
-}
-
-.main-nav .nav-list li {
-    display: inline-block;
-    margin-right: 20px;
-    color: var(--dark);
-    font-size: 20px;
-}
-
-.main-nav .nav-list li a {
-    color: var(--dark);
-    text-decoration: none;
-    transition: 0.1s;
-}
-
-.main-nav .nav-list li a:hover {
-    color: var(--accent);
-}
-
-.main-nav .nav-list li .active {
-    color: var(--accent);
-    font-weight: bold;
-}
-
-.main-nav .profile {
-    display: flex;
-    align-items: center;
-}
-
-.main-nav .profile .profile-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
 
 .container {
     width: 100%;
     max-width: 1750px;
     margin: 0 auto;
     padding: 20px;
-}
-
-.search {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 100%; 
-    padding: 10px 10px;
-    background-color: var(--white_1);
-    border-radius: 10px;
-}
-
-.search-left {
-    display: flex;
-    align-items: center;
-    width: 100%; 
-    gap: 10px; 
-}
-
-.search-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    margin-left: 10px;
-}
-
-.search-icon img {
-    width: 30px;
-    height: 30px;
-}
-
-.search-input {
-    background: none;
-    border: none;
-    outline: none;
-    font-size: 20px;
-    flex: 1; 
-    width: 100%; 
-    margin-left: 20px;
-}
-
-.find-button {
-    background-color: var(--accent);
-    padding: 20px 30px;
-    border-radius: 7px;
-    color: var(--white_1);
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.1s;
-}
-
-.find-button:hover {
-    background-color: var(--accent-dark);
 }
 
 .jobs-container {
@@ -330,50 +206,6 @@ input[type="checkbox"] {
 }
 
 @media screen and (max-width: 767px) {
-    .main-nav {
-        padding: 15px 20px;
-        position: relative;
-    }
-    
-    .menu-toggle {
-        display: flex;
-        order: 1;
-    }
-    
-    .main-nav .logo {
-        margin-right: 0;
-        font-size: 1.4rem;
-        order: 2;
-    }
-    
-    .main-nav .profile {
-        order: 3;
-    }
-    
-    .main-nav .nav-list {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 80px;
-        left: 0;
-        background-color: var(--white_1);
-        z-index: 10;
-        padding: 20px;
-        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    }
-    
-    .nav-list.active {
-        display: flex;
-    }
-    
-    .main-nav .nav-list li {
-        margin-right: 0;
-        margin-bottom: 15px;
-        font-size: 1.2rem;
-        display: block;
-    }
-    
     .container {
         padding: 10px;
     }
@@ -440,16 +272,6 @@ input[type="checkbox"] {
     .apply-button {
         margin-right: 0;
     }
-    
-    .main-nav .profile .profile-image {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .arrow-down {
-        width: 25px;
-        height: 25px;
-    }
 
     .tags {
         gap: 12px; 
@@ -462,10 +284,6 @@ input[type="checkbox"] {
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-    .main-nav {
-        padding: 20px 40px;
-    }
-    
     .container {
         max-width: 95%;
     }

@@ -1,0 +1,125 @@
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--dark);
+    border-radius: 3px;
+}
+
+.main-nav {
+    background-color: var(--white_1);
+    color: var(--dark);
+    padding: 30px 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+}
+
+.main-nav .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--dark);
+    margin-right: 4em;
+    text-decoration: none;
+}
+
+.main-nav .nav-list li {
+    display: inline-block;
+    margin-right: 20px;
+    color: var(--dark);
+    font-size: 20px;
+}
+
+.main-nav .nav-list li a {
+    color: var(--dark);
+    text-decoration: none;
+    transition: 0.1s;
+}
+
+.main-nav .nav-list li a:hover {
+    color: var(--accent);
+}
+
+.main-nav .nav-list li .active {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.main-nav .profile {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav .profile .profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 767px) {
+    .main-nav {
+        padding: 15px 20px;
+        position: relative;
+    }
+    
+    .menu-toggle {
+        display: flex;
+        order: 1;
+    }
+    
+    .main-nav .logo {
+        margin-right: 0;
+        font-size: 1.4rem;
+        order: 2;
+    }
+    
+    .main-nav .profile {
+        order: 3;
+    }
+    
+    .main-nav .nav-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        background-color: var(--white_1);
+        z-index: 10;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+    
+    .nav-list.active {
+        display: flex;
+    }
+    
+    .main-nav .nav-list li {
+        margin-right: 0;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+        display: block;
+    }
+    
+    .main-nav .profile .profile-image {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .main-nav {
+        padding: 20px 40px;
+    }
+}
