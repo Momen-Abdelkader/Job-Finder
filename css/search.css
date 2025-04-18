@@ -47,11 +47,12 @@
     color: var(--white_1);
     font-weight: bold;
     cursor: pointer;
-    transition: 0.1s;
+    transition: 0.2s;
 }
 
 .find-button:hover {
-    background-color: var(--accent-dark);
+    background-color: var(--dark);
+    color: var(--white_1)
 }
 
 @media screen and (max-width: 767px) {
