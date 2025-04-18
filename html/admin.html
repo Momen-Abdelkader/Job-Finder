@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/job-card.css">
     <title>Job Finder's Dashboard</title>
 </head>
 <body>
@@ -24,26 +25,7 @@
         <h3 class="job_posting">My Job Postings</h3>
         <button class="add_button">Add</button>
 
-        <!-- Job Card -->
-        <div id="job1">
-            <img src="../assets/google.png" class="google_logo" alt="google_logo">
-            <p class="job_title">Google</p>
-            <p>Junior Software Engineer</p>
-            <p class="location">Mountain View, California, United States</p>
-            
-            <div class="job1_tags"> 
-                <a class="tag">On-Site</a>
-                <a class="tag">Full Time</a>
-                <a class="tag">No Experience</a>
-                <a class="tag">$6000 / Month</a>
-            </div>
-
-            <div class="job_edit">
-                <button class="edit_button">Edit</button>
-                <button class="edit_button">Applicants</button>
-                <button class="edit_button delete">Delete</button>
-            </div>
-        </div>
+        <div class="job-cards"></div>
     </section>
     </div>
     <script src="../js/nav.js"></script>

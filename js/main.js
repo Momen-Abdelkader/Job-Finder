@@ -1,6 +1,4 @@
-function createJobCard(job, role = 'user') {
-    const isAdmin = role === 'admin';
-
+function createJobCard(job, isAdmin = false) {
     const html = `
         <div class="job-card">
             <div class="company-info">

@@ -21,10 +21,6 @@ body {
     background-color: var(--white_1);
 }
 
-.job_posting {
-    width: 50%;
-}
-
 .add_button {
     float: right;
     margin-top: -25px;
@@ -45,87 +41,13 @@ button:active {
     background-color: var(--dark);
 }
 
-#job1 {
-    background-color:var;
-    border-radius: 12px;
-    padding: 16px;
-    margin-top: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
 
-.google_logo {
-    height: 24px;
-    vertical-align: middle;
-    margin-bottom: 4px;
-}
-
-.job_title {
-    font-weight: bold;
-    margin: 4px 0;
-}
-
-.location {
-    font-size: 13px;
-    color: var(--dark);
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.job1_button {
+.job-cards {
+    margin-top: 2rem;
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-}
-
-.tags {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    max-width: 100%;
-    margin-bottom: 35px;
-}
-
-.tag {
-    background-color: var(--accent);
-    color: var(--white_1);
-    padding: 10px 15px;
-    border-radius: 50px;
-    cursor: default;
-    font-weight: 500;
-    white-space: nowrap;
-    margin-bottom: 5px;
-    display: inline-block; 
-}
-
-.job_edit {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 12px;
-}
-
-.edit_button {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 15px;
-    font-size: 13px;
-    background-color: var(--accent-semi-dark);
-    color: var(--white_1);
-    cursor: pointer;
-}
-
-.edit_button.delete {
-    background-color: var(--red);
-}
-
-.edit_button.delete:hover {
-    background-color: var(--reddish);
-}
-
-.edit_button.delete:active {
-    background-color: var(--dark-red);
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
 }
 
 @media screen and (max-width: 767px) {
@@ -137,4 +59,6 @@ button:active {
         padding: 8px 12px;
         font-size: 0.9rem;
     }
+    
+
 }
