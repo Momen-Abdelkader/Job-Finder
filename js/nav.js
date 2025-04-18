@@ -9,7 +9,9 @@ function createNav(isLoggedIn = false, isAdmin = false) {
             </ul>
             ${isLoggedIn ? 
             `<div class="profile" id="profile-nav">
-                <img src="../assets/temp-profile.webp" class="profile-image">
+                <a href="${isAdmin ? `company-profile.html` : `user-profile.html`}">
+                    <img src="../assets/temp-profile.webp" class="profile-image">
+                </a>
             </div>` : 
             `<div class="auth-buttons">
                 <a href="login.html" class="login">Login</a>
