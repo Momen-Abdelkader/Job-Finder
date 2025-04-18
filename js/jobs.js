@@ -1,3 +1,5 @@
+createNav(false);
+
 const jobData = [
     {
         logo: "../assets/google.png",
