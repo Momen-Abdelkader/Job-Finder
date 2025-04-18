@@ -29,7 +29,7 @@ const jobData = [
 
 const jobCardsContainer = document.querySelector('.job-cards');
 
-jobData.forEach(job => {
+jobData.forEach(job => {    
     const card = createJobCard(job);
     jobCardsContainer.appendChild(card);
 });
