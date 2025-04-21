@@ -24,25 +24,71 @@ const jobData = [
     tags: ["On-Site", "Full-Time", "Fresh Graduate"],
     salary: "$52/month",
   },
+  {
+    logo: "../assets/amazon.png",
+    company: "Amazon",
+    title: "Senior - AI Engineer",
+    location: "Hawamdeya, Dawla",
+    tags: ["On-Site", "Full Time", "Mid-Level"],
+    salary: "$5000/month",
+  },
+  {
+    logo: "../assets/apple.png",
+    company: "Apple",
+    title: "iOS Developer",
+    location: "Marg, Cairo",
+    tags: ["On-Site", "Full Time", "Senior"],
+    salary: "$6000/month",
+  },
+  {
+    logo: "../assets/facebook.png",
+    company: "Meta",
+    title: "Frontend Developer",
+    location: "Helmeyat Alzaytoon, Cairo",
+    tags: ["Remote", "Full Time", "Mid-Level"],
+    salary: "$5500/month",
+  },
+  {
+    logo: "../assets/netflix.png",
+    company: "Netflix",
+    title: "Data Engineer",
+    location: "Fayoum, Hassan",
+    tags: ["On-Site", "Full Time", "Senior"],
+    salary: "$7000/month",
+  },
+  {
+    logo: "../assets/tesla.png",
+    company: "Tesla",
+    title: "Software Engineer",
+    location: "Om Khenan, Hawamdeya",
+    tags: ["On-Site", "Full Time", "Mid-Level"],
+    salary: "$4500/month",
+  },
+  {
+    logo: "../assets/uber.png",
+    company: "Uber",
+    title: "Mobile Developer",
+    location: "San Francisco, CA",
+    tags: ["Hybrid", "Full Time", "Mid-Level"],
+    salary: "$4800/month",
+  },
+  {
+    logo: "../assets/Google.png",
+    company: "Google",
+    title: "Web Developer",
+    location: "San Francisco, CA",
+    tags: ["Remote", "Full Time", "Junior"],
+    salary: "$4200/month",
+  },
+  {
+    logo: "../assets/UnderStair.png",
+    company: "Under Stair",
+    title: "Programmer",
+    location: "October, Giza",
+    tags: ["On-Site", "Full Time", "Senior"],
+    salary: "$200/month",
+  }
 ];
-
-const searchTerm = localStorage.getItem('searchTerm');
-if (searchTerm) {
-    const filteredJobData = jobData.filter(job => {
-        const title = job.title.toLowerCase();
-        const company = job.company.toLowerCase();
-        const location = job.location.toLowerCase();
-        const searchTermLower = searchTerm.toLowerCase();
-        
-        return title.includes(searchTermLower) || 
-               company.includes(searchTermLower) || 
-               location.includes(searchTermLower);
-    });
-
-    jobData.length = 0;
-    jobData.push(...filteredJobData);
-    localStorage.removeItem('searchTerm');
-}
 
 const filterData = [
   {
@@ -173,13 +219,59 @@ function renderFilteredJobs(filteredJobs) {
   document.getElementById("job-count").textContent = filteredJobs.length;
 }
 
-generateFilters();
-jobData.forEach((job) => {
-  const card = createJobCard(job);
-  document.querySelector(".job-cards").appendChild(card);
-});
+function filterJobs() {
+    const searchTerm = localStorage.getItem('searchTerm')?.toLowerCase() || '';
+    
+    if (!searchTerm) {
+        renderFilteredJobs(jobData);
+        return;
+    }
+    
+    const filteredJobs = jobData.filter(job => {
+        return job.title.toLowerCase().includes(searchTerm) ||
+               job.company.toLowerCase().includes(searchTerm) ||
+               job.location.toLowerCase().includes(searchTerm);
+    });
+    
+    renderFilteredJobs(filteredJobs);
+}
 
-const jobCount = document.getElementById("job-count");
-jobCount.textContent = jobData.length;
+document.addEventListener('DOMContentLoaded', () => {
+    generateFilters();
+    
+    renderFilteredJobs(jobData);
+    
+    const searchInput = document.querySelector('.search-input');
+    const findButton = document.querySelector('.find-button');
+
+    const savedSearchTerm = localStorage.getItem('searchTerm');
+    if (savedSearchTerm && searchInput) {
+        searchInput.value = savedSearchTerm;
+        filterJobs();
+    }
+
+    function handleSearch() {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm) {
+            localStorage.setItem('searchTerm', searchTerm);
+            filterJobs();
+        } else {
+            localStorage.removeItem('searchTerm');
+            filterJobs();
+        }
+    }
+
+    if (findButton) {
+        findButton.addEventListener('click', handleSearch);
+    }
+    
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSearch();
+            }
+        });
+    }
+});
 
 setupSalarySlider();

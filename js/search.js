@@ -1,25 +1,16 @@
-fetch('../html/search.html')
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('search').innerHTML = data;
-        
-        const searchInput = document.querySelector('.search-input');
-        const findButton = document.querySelector('.find-button');
+// Create search bar HTML
+const searchBarHTML = `
+    <div class="search">
+        <div class="search-left">
+            <div class="search-icon"><img src="../assets/search.png"></div>
+            <input type="text" class="search-input" placeholder="Search for jobs, companies, or keywords...">
+        </div>
+        <a class="find-button">Find</a>
+    </div>
+`;
 
-        function handleSearch() {
-            const searchTerm = searchInput.value.trim();
-            if (searchTerm) {
-                // Store the search term in localStorage
-                localStorage.setItem('searchTerm', searchTerm);
-                // Redirect to jobs page
-                window.location.href = 'jobs.html';
-            }
-        }
-
-        findButton.addEventListener('click', handleSearch);
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                handleSearch();
-            }
-        });
-    });
+// Insert search bar into the page
+const searchContainer = document.getElementById('search');
+if (searchContainer) {
+    searchContainer.innerHTML = searchBarHTML;
+}
