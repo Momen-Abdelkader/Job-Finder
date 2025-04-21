@@ -87,7 +87,7 @@ const jobData = [
     location: "October, Giza",
     tags: ["On-Site", "Full Time", "Senior"],
     salary: "$200/month",
-  }
+  },
 ];
 
 const filterData = [
@@ -219,68 +219,68 @@ function renderFilteredJobs(filteredJobs) {
   document.getElementById("job-count").textContent = filteredJobs.length;
 }
 
-function filterJobs() {
-    const searchTerm = localStorage.getItem('searchTerm')?.toLowerCase() || '';
-    
-    if (!searchTerm) {
-        renderFilteredJobs(jobData);
-        return;
-    }
-    
-    const filteredJobs = jobData.filter(job => {
-        return job.title.toLowerCase().includes(searchTerm) ||
-               job.company.toLowerCase().includes(searchTerm) ||
-               job.location.toLowerCase().includes(searchTerm);
-    });
-    
-    renderFilteredJobs(filteredJobs);
+function filterJobsSearch() {
+  const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
+
+  if (!searchTerm) {
+    renderFilteredJobs(jobData);
+    return;
+  }
+
+  const filteredJobs = jobData.filter((job) => {
+    return (
+      job.title.toLowerCase().includes(searchTerm) ||
+      job.company.toLowerCase().includes(searchTerm) ||
+      job.location.toLowerCase().includes(searchTerm)
+    );
+  });
+
+  renderFilteredJobs(filteredJobs);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    generateFilters();
-    
-    renderFilteredJobs(jobData);
-    
-    const searchInput = document.querySelector('.search-input');
-    const findButton = document.querySelector('.find-button');
+document.addEventListener("DOMContentLoaded", () => {
+  generateFilters();
+  setupSalarySlider();
+  renderFilteredJobs(jobData);
 
-    const savedSearchTerm = localStorage.getItem('searchTerm');
-    if (savedSearchTerm && searchInput) {
-        searchInput.value = savedSearchTerm;
-        filterJobs();
+  const searchInput = document.querySelector(".search-input");
+  const findButton = document.querySelector(".find-button");
+
+  const savedSearchTerm = localStorage.getItem("searchTerm");
+  if (savedSearchTerm && searchInput) {
+    searchInput.value = savedSearchTerm;
+    filterJobsSearch();
+  }
+
+  function handleSearch() {
+    const searchTerm = searchInput.value.trim();
+    if (searchTerm) {
+      localStorage.setItem("searchTerm", searchTerm);
+      filterJobsSearch();
+    } else {
+      localStorage.removeItem("searchTerm");
+      filterJobsSearch();
     }
+  }
 
-    function handleSearch() {
-        const searchTerm = searchInput.value.trim();
-        if (searchTerm) {
-            localStorage.setItem('searchTerm', searchTerm);
-            filterJobs();
-        } else {
-            localStorage.removeItem('searchTerm');
-            filterJobs();
-        }
-    }
+  if (findButton) {
+    findButton.addEventListener("click", handleSearch);
+  }
 
-    if (findButton) {
-        findButton.addEventListener('click', handleSearch);
-    }
-    
-    if (searchInput) {
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                handleSearch();
-            }
-        });
-    }
-});
+  if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    });
+  }
 
-setupSalarySlider();
-
-const applyFiltersBtn = document.getElementById("apply-filters");
-applyFiltersBtn.addEventListener("click", () => {
-  const selectedFilters = getSelectedFilters();
-  const filteredJobs = filterJobs(jobData, selectedFilters);
-  renderFilteredJobs(filteredJobs);
+  const applyFiltersBtn = document.getElementById("apply-filters");
+  applyFiltersBtn.addEventListener("click", () => {
+    const selectedFilters = getSelectedFilters();
+    const filteredJobs = filterJobs(jobData, selectedFilters);
+    renderFilteredJobs(filteredJobs);
+  });
 });
 
 function getSelectedFilters() {

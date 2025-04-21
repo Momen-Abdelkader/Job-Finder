@@ -1,74 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/home.css">
-    <link rel="stylesheet" href="../css/nav.css">
-    <link rel="stylesheet" href="../css/search.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+    <link rel="stylesheet" href="../css/search.css" />
     <title>Job Finder</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="nav"></div>
     <section class="hero">
-        <h2 class="hero-title"> Whether you're a student, a graduate, or a seasoned pro, <br> we've got jobs that fit your journey. Let's get you hired.</h2>
-        <div class="container">
-            <div class="search">
-                <div class="search-left">
-                    <div class="search-icon"><img src="../assets/search.png"></div>
-                    <input type="text" class="search-input" placeholder="Search for jobs, companies, or keywords...">
-                </div>
-                <a class="find-button">Find</a>
-            </div>
-        </div>
+      <h2 class="hero-title">
+        Whether you're a student, a graduate, or a seasoned pro, <br />
+        we've got jobs that fit your journey. Let's get you hired.
+      </h2>
+      <div class="container">
+        <div id="search"></div>
+      </div>
     </section>
 
     <section class="recommended-jobs">
-        <h3>Recommended Jobs</h3>
-        <div class="job-card">
-            <div class="company">
-                <img src="../assets/google.png" alt="Google Logo">
-                <span id="company-logo">Google</span>
-            </div>
-            <div class="company">
-                <div>
-                    <p><b>Junior Software Engineer</b><p>
-                    <p>Mountain View, California, United States</p>
-                </div>
-            </div>
-            <div class="job-tags">
-                <button>On-Site</button>
-                <button>Full Time</button>
-                <button>No Experience</button>
-                <button>No Degree</button>
-            </div>
-            <div class="job-actions">
-                <button class="apply">Apply Now</button>
-                <button class="details">Details</button>
-            </div>
+      <h3>Recommended Jobs</h3>
+      <div class="job-card">
+        <div class="company">
+          <img src="../assets/google.png" alt="Google Logo" />
+          <span id="company-logo">Google</span>
         </div>
-        <a href="jobs.html"><button class="see-more">See More Jobs</button></a>
+        <div class="company">
+          <div>
+            <p><b>Junior Software Engineer</b></p>
+            <p></p>
+            <p>Mountain View, California, United States</p>
+          </div>
+        </div>
+        <div class="job-tags">
+          <button>On-Site</button>
+          <button>Full Time</button>
+          <button>No Experience</button>
+          <button>No Degree</button>
+        </div>
+        <div class="job-actions">
+          <button class="apply">Apply Now</button>
+          <button class="details">Details</button>
+        </div>
+      </div>
+      <a href="jobs.html"><button class="see-more">See More Jobs</button></a>
     </section>
 
     <footer>
-        <div class="footer-content">
-            <h4>Job Finder</h4>
-            <p>Connecting talent with opportunity — one job at a time.</p>
-            <div class="sitemap">
-                <h4>Sitemap</h4>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="../html/jobs.html">Jobs</a></li>
-                </ul>
-            </div>
+      <div class="footer-content">
+        <h4>Job Finder</h4>
+        <p>Connecting talent with opportunity — one job at a time.</p>
+        <div class="sitemap">
+          <h4>Sitemap</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="../html/jobs.html">Jobs</a></li>
+          </ul>
         </div>
+      </div>
     </footer>
     <script src="../js/nav.js"></script>
     <script src="../js/home.js"></script>
-</body>
+    <script src="../js/search.js"></script>
+  </body>
 </html>
