@@ -26,24 +26,6 @@ const jobData = [
   },
 ];
 
-const searchTerm = localStorage.getItem('searchTerm');
-if (searchTerm) {
-    const filteredJobData = jobData.filter(job => {
-        const title = job.title.toLowerCase();
-        const company = job.company.toLowerCase();
-        const location = job.location.toLowerCase();
-        const searchTermLower = searchTerm.toLowerCase();
-        
-        return title.includes(searchTermLower) || 
-               company.includes(searchTermLower) || 
-               location.includes(searchTermLower);
-    });
-
-    jobData.length = 0;
-    jobData.push(...filteredJobData);
-    localStorage.removeItem('searchTerm');
-}
-
 const filterData = [
   {
     category: "Type Of Employment",
@@ -124,7 +106,7 @@ function generateFilters() {
 
   const applyBtn = `
   <div class="button-container">
-      <a class="button apply-button">Apply Filters</a>
+      <a class="button apply-button" id="apply-filters">Apply Filters</a>
   </div>
 `;
 
@@ -183,3 +165,53 @@ const jobCount = document.getElementById("job-count");
 jobCount.textContent = jobData.length;
 
 setupSalarySlider();
+
+const applyFiltersBtn = document.getElementById("apply-filters");
+applyFiltersBtn.addEventListener("click", () => {
+  const selectedFilters = getSelectedFilters();
+  const filteredJobs = filterJobs(jobData, selectedFilters);
+  renderFilteredJobs(filteredJobs);
+});
+
+function getSelectedFilters() {
+  const selectedFilters = {
+    employmentType: [],
+    level: [],
+    salary: {
+      min: parseInt(document.getElementById("from-slider").value),
+      max: parseInt(document.getElementById("to-slider").value),
+    },
+  };
+
+  filterData.forEach((category) => {
+    if (category.category === "Type Of Employment") key = "employmentType";
+    else if (category.category === "Level") key = "level";
+
+    if (category.type !== "range") {
+      category.filters.forEach((filter) => {
+        const checkbox = document.getElementById(filter.id);
+        if (checkbox && checkbox.checked) {
+          selectedFilters[key].push(filter.label);
+        }
+      });
+    }
+  });
+
+  return selectedFilters;
+}
+
+function filterJobs(jobs, selectedFilters) {
+  return jobs.filter((job) => {
+    const isEmploymentTypeMatch =
+      selectedFilters.employmentType.length === 0 ||
+      selectedFilters.employmentType.some((type) => job.tags.includes(type));
+    const isLevelMatch =
+      selectedFilters.level.length === 0 ||
+      selectedFilters.level.some((level) => job.tags.includes(level));
+    const isSalaryMatch =
+      job.salary.replace(/[^0-9]/g, "") >= selectedFilters.salary.min &&
+      job.salary.replace(/[^0-9]/g, "") <= selectedFilters.salary.max;
+
+    return isEmploymentTypeMatch && isLevelMatch && isSalaryMatch;
+  });
+}
