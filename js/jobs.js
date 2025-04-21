@@ -27,6 +27,25 @@ const jobData = [
     }
 ];
 
+const searchTerm = localStorage.getItem('searchTerm');
+if (searchTerm) {
+    const filteredJobData = jobData.filter(job => {
+        const title = job.title.toLowerCase();
+        const company = job.company.toLowerCase();
+        const location = job.location.toLowerCase();
+        const searchTermLower = searchTerm.toLowerCase();
+        
+        return title.includes(searchTermLower) || 
+               company.includes(searchTermLower) || 
+               location.includes(searchTermLower);
+    });
+
+    jobData.length = 0;
+    jobData.push(...filteredJobData);
+    
+    localStorage.removeItem('searchTerm');
+}
+
 const jobCardsContainer = document.querySelector('.job-cards');
 
 jobData.forEach(job => {
