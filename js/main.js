@@ -10,9 +10,9 @@ function createJobCard(job, isAdmin = false) {
                 <a class="job-location">${job.location}</a>
             </div>
             <ul class="tags">
-                ${job.tags
-                  .map((tag) => `<li><a class="tag">${tag}</a></li>`)
-                  .join("")}
+                <li><a class="tag">${job.workMode}</a></li>
+                <li><a class="tag">${job.jobType}</a></li> 
+                <li><a class="tag">${job.experienceLevel}</a></li>
                 <li><a class="tag">${job.salary}</a></li>
             </ul>
             <div class="buttons">
