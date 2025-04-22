@@ -1,6 +1,7 @@
 createNav(false);
 const jobData = [
   {
+    id: 1,
     logo: "../assets/google.png",
     company: "Google",
     title: "Junior Software Engineer",
@@ -9,6 +10,7 @@ const jobData = [
     salary: "$4000/month",
   },
   {
+    id: 2,
     logo: "../assets/microsoft.png",
     company: "Microsoft",
     title: "Intern - Software Developer",
@@ -17,6 +19,7 @@ const jobData = [
     salary: "$2000/month",
   },
   {
+    id: 3,
     logo: "../assets/linkedin.png",
     company: "LinkedIn",
     title: "Fresh - Frontend Developer React.js",
@@ -25,6 +28,7 @@ const jobData = [
     salary: "$52/month",
   },
   {
+    id: 4,
     logo: "../assets/amazon.png",
     company: "Amazon",
     title: "Senior - AI Engineer",
@@ -33,6 +37,7 @@ const jobData = [
     salary: "$5000/month",
   },
   {
+    id: 5,
     logo: "../assets/apple.png",
     company: "Apple",
     title: "iOS Developer",
@@ -41,6 +46,7 @@ const jobData = [
     salary: "$6000/month",
   },
   {
+    id: 6,
     logo: "../assets/facebook.png",
     company: "Meta",
     title: "Frontend Developer",
@@ -49,6 +55,7 @@ const jobData = [
     salary: "$5500/month",
   },
   {
+    id: 7,
     logo: "../assets/netflix.png",
     company: "Netflix",
     title: "Data Engineer",
@@ -57,6 +64,7 @@ const jobData = [
     salary: "$7000/month",
   },
   {
+    id: 8,
     logo: "../assets/tesla.png",
     company: "Tesla",
     title: "Software Engineer",
@@ -65,6 +73,7 @@ const jobData = [
     salary: "$4500/month",
   },
   {
+    id: 9,
     logo: "../assets/uber.png",
     company: "Uber",
     title: "Mobile Developer",
@@ -73,6 +82,7 @@ const jobData = [
     salary: "$4800/month",
   },
   {
+    id: 10,
     logo: "../assets/Google.png",
     company: "Google",
     title: "Web Developer",
@@ -81,6 +91,7 @@ const jobData = [
     salary: "$4200/month",
   },
   {
+    id: 11,
     logo: "../assets/UnderStair.png",
     company: "Under Stair",
     title: "Programmer",
@@ -94,21 +105,21 @@ const filterData = [
   {
     category: "Type Of Employment",
     filters: [
-      { id: "full-time", label: "Full Time", count: 54 },
-      { id: "part-time", label: "Part Time", count: 12 },
-      { id: "internship", label: "Internship", count: 5 },
-      { id: "remote", label: "Remote", count: 2 },
-      { id: "onsite", label: "On-Site", count: 40 },
+      { id: "full-time", label: "Full Time", count: 0 },
+      { id: "part-time", label: "Part Time", count: 0 },
+      { id: "internship", label: "Internship", count: 0 },
+      { id: "remote", label: "Remote", count: 0 },
+      { id: "onsite", label: "On-Site", count: 0 },
     ],
   },
   {
     category: "Level",
     filters: [
-      { id: "senior", label: "Senior", count: 4 },
-      { id: "midlevel", label: "Mid-Level", count: 54 },
-      { id: "junior", label: "Junior", count: 1 },
-      { id: "fresh-grad", label: "Fresh Graduate", count: 54 },
-      { id: "student", label: "Student", count: 2 },
+      { id: "senior", label: "Senior", count: 0 },
+      { id: "midlevel", label: "Mid-Level", count: 0 },
+      { id: "junior", label: "Junior", count: 0 },
+      { id: "fresh-grad", label: "Fresh Graduate", count: 0 },
+      { id: "student", label: "Student", count: 0 },
     ],
   },
   {
@@ -117,8 +128,8 @@ const filterData = [
     min: 0,
     max: 20000,
     step: 500,
-    defaultMin: 2000,
-    defaultMax: 5000,
+    defaultMin: 0,
+    defaultMax: 20000,
   },
 ];
 
@@ -171,6 +182,7 @@ function generateFilters() {
   const applyBtn = `
   <div class="button-container">
       <a class="button apply-button" id="apply-filters">Apply Filters</a>
+      <a class="button clear-button" id="clear-filters">Clear Filters</a>
   </div>
 `;
 
@@ -238,51 +250,6 @@ function filterJobsSearch() {
   renderFilteredJobs(filteredJobs);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  generateFilters();
-  setupSalarySlider();
-  renderFilteredJobs(jobData);
-
-  const searchInput = document.querySelector(".search-input");
-  const findButton = document.querySelector(".find-button");
-
-  const savedSearchTerm = localStorage.getItem("searchTerm");
-  if (savedSearchTerm && searchInput) {
-    searchInput.value = savedSearchTerm;
-    filterJobsSearch();
-  }
-
-  function handleSearch() {
-    const searchTerm = searchInput.value.trim();
-    if (searchTerm) {
-      localStorage.setItem("searchTerm", searchTerm);
-      filterJobsSearch();
-    } else {
-      localStorage.removeItem("searchTerm");
-      filterJobsSearch();
-    }
-  }
-
-  if (findButton) {
-    findButton.addEventListener("click", handleSearch);
-  }
-
-  if (searchInput) {
-    searchInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        handleSearch();
-      }
-    });
-  }
-
-  const applyFiltersBtn = document.getElementById("apply-filters");
-  applyFiltersBtn.addEventListener("click", () => {
-    const selectedFilters = getSelectedFilters();
-    const filteredJobs = filterJobs(jobData, selectedFilters);
-    renderFilteredJobs(filteredJobs);
-  });
-});
-
 function getSelectedFilters() {
   const selectedFilters = {
     employmentType: [],
@@ -325,3 +292,110 @@ function filterJobs(jobs, selectedFilters) {
     return isEmploymentTypeMatch && isLevelMatch && isSalaryMatch;
   });
 }
+
+function clearFilters() {
+  filterData.forEach((category) => {
+    if (category.type !== "range") {
+      category.filters.forEach((filter) => {
+        const checkbox = document.getElementById(filter.id);
+        if (checkbox) {
+          checkbox.checked = false;
+        }
+      });
+    } else {
+      document.getElementById("from-slider").value = category.defaultMin;
+      document.getElementById("to-slider").value = category.defaultMax;
+      document.getElementById(
+        "min-value"
+      ).textContent = `$${category.defaultMin}`;
+      document.getElementById(
+        "max-value"
+      ).textContent = `$${category.defaultMax}`;
+    }
+  });
+
+  renderFilteredJobs(jobData);
+}
+
+function updateFilterCounts() {
+  filterData.forEach((category) => {
+    if (!category.filters) return;
+    category.filters.forEach((filter) => {
+      filter.count = 0;
+    });
+  });
+
+  jobData.forEach((job) => {
+    filterData.forEach((category) => {
+      if (!category.filters) return;
+
+      category.filters.forEach((filter) => {
+        if (job.tags.includes(filter.label)) {
+          filter.count += 1;
+        }
+      });
+    });
+  });
+
+  filterData.forEach((category) => {
+    if (!category.filters) return;
+
+    category.filters.forEach((filter) => {
+      const countElement = document.getElementById(`${filter.id}-count`);
+      if (countElement) {
+        countElement.textContent = filter.count;
+      }
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  generateFilters();
+  setupSalarySlider();
+  renderFilteredJobs(jobData);
+  updateFilterCounts();
+
+  const searchInput = document.querySelector(".search-input");
+  const findButton = document.querySelector(".find-button");
+
+  const savedSearchTerm = localStorage.getItem("searchTerm");
+  if (savedSearchTerm && searchInput) {
+    searchInput.value = savedSearchTerm;
+    filterJobsSearch();
+  }
+
+  function handleSearch() {
+    const searchTerm = searchInput.value.trim();
+    if (searchTerm) {
+      localStorage.setItem("searchTerm", searchTerm);
+      filterJobsSearch();
+    } else {
+      localStorage.removeItem("searchTerm");
+      filterJobsSearch();
+    }
+  }
+
+  if (findButton) {
+    findButton.addEventListener("click", handleSearch);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    });
+  }
+
+  const applyFiltersBtn = document.getElementById("apply-filters");
+  applyFiltersBtn.addEventListener("click", () => {
+    const selectedFilters = getSelectedFilters();
+    const filteredJobs = filterJobs(jobData, selectedFilters);
+    renderFilteredJobs(filteredJobs);
+  });
+
+  const clearFiltersBtn = document.getElementById("clear-filters");
+  clearFiltersBtn.addEventListener("click", () => {
+    clearFilters();
+  });
+});

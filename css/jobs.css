@@ -207,10 +207,11 @@ input[type="range"] {
   display: flex;
   width: 100%;
   padding-top: 0;
+  justify-content: space-between;
+  text-align: center;
 }
 
-.button-container .apply-button {
-  text-align: center;
+.button-container .button {
   width: 100%;
 }
 
