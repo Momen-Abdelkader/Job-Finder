@@ -1,8 +1,7 @@
 import { jobData } from "./job-data.js";
 
-createNav(false);
-
-const filterData = [
+// constants
+const FILTER_CONFIG = [
   {
     category: "Type Of Employment",
     filters: [
@@ -34,119 +33,143 @@ const filterData = [
   },
 ];
 
+const MIN_SALARY_GAP = 100;
+
+// DOM
+const domElements = {
+  filtersContainer: document.getElementById("filters"),
+  jobCardsContainer: document.querySelector(".job-cards"),
+  jobCount: document.getElementById("job-count"),
+  searchInput: document.querySelector(".search-input"),
+  findButton: document.querySelector(".find-button"),
+};
+
+// initialization
+function init() {
+  createNav(false);
+  generateFilters();
+  setupSalarySlider();
+  renderFilteredJobs(jobData);
+  updateFilterCounts();
+  setupEventListeners();
+  restoreSearchTerm();
+}
+
+// filters
 function generateFilters() {
-  const filtersContainer = document.getElementById("filters");
-  filterData.forEach((category) => {
+  FILTER_CONFIG.forEach((category) => {
     const categoryDiv = document.createElement("div");
     categoryDiv.classList.add("filter-category");
-
-    const categoryHeading = `<h2>${category.category}</h2>`;
-    categoryDiv.innerHTML += categoryHeading;
+    categoryDiv.innerHTML = createCategoryHeading(category);
 
     if (category.type === "range") {
-      const rangeContainer = `
-                <div class="range-container">
-                    <div class="sliders-control">
-                        <input id="from-slider" type="range" value="${category.defaultMin}" min="${category.min}" max="${category.max}"/>
-                        <input id="to-slider" type="range" value="${category.defaultMax}" min="${category.min}" max="${category.max}"/>
-                    </div>
-                    <div class="form-control">
-                        <div class="control-container">
-                            <div class="min-label">Min</div>
-                            <a id="min-value">${category.defaultMin}</a>
-                        </div>
-                        <div class="control_container">
-                            <div class="max-label">Max</div>
-                            <a id="max-value">${category.defaultMax}</a>
-                        </div>
-                    </div>
-                </div>`;
-      categoryDiv.innerHTML += rangeContainer;
+      categoryDiv.innerHTML += createRangeFilter(category);
     } else {
       category.filters.forEach((filter) => {
-        const filterDiv = `
-                    <div class="filter">
-                        <div>
-                            <input id="${filter.id}" type="checkbox" name="${filter.id}" value="${filter.label}">
-                            <label for="${filter.id}">${filter.label}</label>
-                        </div>
-                        <a id="${filter.id}-count" class="count">${filter.count}</a>
-                    </div>
-                `;
-        categoryDiv.innerHTML += filterDiv;
+        categoryDiv.innerHTML += createCheckboxFilter(filter);
       });
     }
 
-    filtersContainer.appendChild(categoryDiv);
+    domElements.filtersContainer.appendChild(categoryDiv);
   });
 
-  const applyBtn = `
-  <div class="button-container">
-      <a class="button apply-button" id="apply-filters">Apply Filters</a>
-      <a class="button clear-button" id="clear-filters">Clear Filters</a>
-  </div>
-`;
-
-  filtersContainer.innerHTML += applyBtn;
+  domElements.filtersContainer.innerHTML += createActionButtons();
 }
 
-function setupSalarySlider(jobList) {
+function createCategoryHeading(category) {
+  return `<h2>${category.category}</h2>`;
+}
+
+function createRangeFilter(category) {
+  return `
+    <div class="range-container">
+      <div class="sliders-control">
+        <input id="from-slider" type="range" value="${category.defaultMin}" 
+               min="${category.min}" max="${category.max}"/>
+        <input id="to-slider" type="range" value="${category.defaultMax}" 
+               min="${category.min}" max="${category.max}"/>
+      </div>
+      <div class="form-control">
+        <div class="control-container">
+          <div class="min-label">Min</div>
+          <a id="min-value">${category.defaultMin}</a>
+        </div>
+        <div class="control_container">
+          <div class="max-label">Max</div>
+          <a id="max-value">${category.defaultMax}</a>
+        </div>
+      </div>
+    </div>`;
+}
+
+function createCheckboxFilter(filter) {
+  return `
+    <div class="filter">
+      <div>
+        <input id="${filter.id}" type="checkbox" name="${filter.id}" value="${filter.label}">
+        <label for="${filter.id}">${filter.label}</label>
+      </div>
+      <a id="${filter.id}-count" class="count">${filter.count}</a>
+    </div>`;
+}
+
+function createActionButtons() {
+  return `
+    <div class="button-container">
+      <a class="button apply-button" id="apply-filters">Apply Filters</a>
+      <a class="button clear-button" id="clear-filters">Clear Filters</a>
+    </div>`;
+}
+
+// salary slider
+function setupSalarySlider() {
   const fromSlider = document.getElementById("from-slider");
   const toSlider = document.getElementById("to-slider");
   const minValueLabel = document.getElementById("min-value");
   const maxValueLabel = document.getElementById("max-value");
 
-  const minGap = 100;
-
-  function updateLabels() {
+  const updateLabels = () => {
     minValueLabel.textContent = `$${fromSlider.value}`;
     maxValueLabel.textContent = `$${toSlider.value}`;
-  }
+  };
 
-  function enforceRange() {
-    if (parseInt(toSlider.value) - parseInt(fromSlider.value) <= minGap) {
-      if (event.target === fromSlider) {
-        fromSlider.value = parseInt(toSlider.value) - minGap;
-      } else {
-        toSlider.value = parseInt(fromSlider.value) + minGap;
-      }
+  const enforceRange = (event) => {
+    if (
+      parseInt(toSlider.value) - parseInt(fromSlider.value) <=
+      MIN_SALARY_GAP
+    ) {
+      event.target === fromSlider
+        ? (fromSlider.value = parseInt(toSlider.value) - MIN_SALARY_GAP)
+        : (toSlider.value = parseInt(fromSlider.value) + MIN_SALARY_GAP);
     }
     updateLabels();
-  }
+  };
 
   fromSlider.addEventListener("input", enforceRange);
   toSlider.addEventListener("input", enforceRange);
-
   updateLabels();
 }
 
-function renderFilteredJobs(filteredJobs) {
-  const jobCardsContainer = document.querySelector(".job-cards");
-  jobCardsContainer.innerHTML = "";
-
-  filteredJobs.forEach((job) => {
-    const card = createJobCard(job);
-    jobCardsContainer.appendChild(card);
-  });
-
-  document.getElementById("job-count").textContent = filteredJobs.length;
+// rendering job cards
+function renderFilteredJobs(jobs) {
+  domElements.jobCardsContainer.innerHTML = "";
+  jobs.forEach((job) =>
+    domElements.jobCardsContainer.appendChild(createJobCard(job))
+  );
+  domElements.jobCount.textContent = jobs.length;
 }
 
+// filteration logic
 function filterJobsSearch() {
   const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
+  if (!searchTerm) return renderFilteredJobs(jobData);
 
-  if (!searchTerm) {
-    renderFilteredJobs(jobData);
-    return;
-  }
-
-  const filteredJobs = jobData.filter((job) => {
-    return (
+  const filteredJobs = jobData.filter(
+    (job) =>
       job.title.toLowerCase().includes(searchTerm) ||
       job.company.toLowerCase().includes(searchTerm) ||
       job.location.toLowerCase().includes(searchTerm)
-    );
-  });
+  );
 
   renderFilteredJobs(filteredJobs);
 }
@@ -161,61 +184,46 @@ function getSelectedFilters() {
     },
   };
 
-  filterData.forEach((category) => {
-    if (category.category === "Type Of Employment") key = "employmentType";
-    else if (category.category === "Level") key = "level";
+  FILTER_CONFIG.forEach((category) => {
+    if (category.type === "range") return;
 
-    if (category.type !== "range") {
-      category.filters.forEach((filter) => {
-        const checkbox = document.getElementById(filter.id);
-        if (checkbox && checkbox.checked) {
-          selectedFilters[key].push(filter.label);
-        }
-      });
-    }
+    const key =
+      category.category === "Type Of Employment" ? "employmentType" : "level";
+
+    category.filters.forEach((filter) => {
+      const checkbox = document.getElementById(filter.id);
+      if (checkbox?.checked) selectedFilters[key].push(filter.label);
+    });
   });
 
   return selectedFilters;
 }
 
-function filterJobs(jobs, selectedFilters) {
+function filterJobs(jobs, { employmentType, level, salary }) {
   return jobs.filter((job) => {
-    const isEmploymentTypeMatch =
-      selectedFilters.employmentType.length === 0 ||
-      selectedFilters.employmentType.some((type) =>
-        job.jobType.toLowerCase().includes(type.toLowerCase())
-      );
-    const isWorkModeMatch =
-      selectedFilters.employmentType.length === 0 ||
-      selectedFilters.employmentType.some((type) =>
-        job.workMode.toLowerCase().includes(type.toLowerCase())
-      );
-    const isLevelMatch =
-      selectedFilters.level.length === 0 ||
-      selectedFilters.level.some((level) =>
-        job.experienceLevel.toLowerCase().includes(level.toLowerCase())
-      );
-    const isSalaryMatch =
-      job.salary.replace(/[^0-9]/g, "") >= selectedFilters.salary.min &&
-      job.salary.replace(/[^0-9]/g, "") <= selectedFilters.salary.max;
+    const salaryValue = parseInt(job.salary.replace(/[^0-9]/g, ""));
+
     return (
-      (isEmploymentTypeMatch || isWorkModeMatch) &&
-      isLevelMatch &&
-      isSalaryMatch
+      (employmentType.length === 0 ||
+        employmentType.some(
+          (type) =>
+            job.jobType.toLowerCase().includes(type.toLowerCase()) ||
+            job.workMode.toLowerCase().includes(type.toLowerCase())
+        )) &&
+      (level.length === 0 ||
+        level.some((lvl) =>
+          job.experienceLevel.toLowerCase().includes(lvl.toLowerCase())
+        )) &&
+      salaryValue >= salary.min &&
+      salaryValue <= salary.max
     );
   });
 }
 
+// filter interactions
 function clearFilters() {
-  filterData.forEach((category) => {
-    if (category.type !== "range") {
-      category.filters.forEach((filter) => {
-        const checkbox = document.getElementById(filter.id);
-        if (checkbox) {
-          checkbox.checked = false;
-        }
-      });
-    } else {
+  FILTER_CONFIG.forEach((category) => {
+    if (category.type === "range") {
       document.getElementById("from-slider").value = category.defaultMin;
       document.getElementById("to-slider").value = category.defaultMax;
       document.getElementById(
@@ -224,6 +232,11 @@ function clearFilters() {
       document.getElementById(
         "max-value"
       ).textContent = `$${category.defaultMax}`;
+    } else {
+      category.filters.forEach((filter) => {
+        const checkbox = document.getElementById(filter.id);
+        if (checkbox) checkbox.checked = false;
+      });
     }
   });
 
@@ -231,95 +244,83 @@ function clearFilters() {
 }
 
 function updateFilterCounts() {
-  filterData.forEach((category) => {
-    if (!category.filters) return;
-    category.filters.forEach((filter) => {
-      filter.count = 0;
-    });
+  FILTER_CONFIG.forEach((category) => {
+    if (category.filters)
+      category.filters.forEach((filter) => (filter.count = 0));
   });
 
   jobData.forEach((job) => {
-    filterData.forEach((category) => {
+    FILTER_CONFIG.forEach((category) => {
       if (!category.filters) return;
 
       category.filters.forEach((filter) => {
         if (category.category === "Type Of Employment") {
           if (
             job.jobType.toLowerCase() === filter.label.toLowerCase() ||
-            job.workMode.toLocaleLowerCase() === filter.label.toLowerCase()
-          ) {
-            filter.count += 1;
-          }
+            job.workMode.toLowerCase() === filter.label.toLowerCase()
+          )
+            filter.count++;
         } else if (category.category === "Level") {
           if (
             job.experienceLevel.toLowerCase() === filter.label.toLowerCase()
           ) {
-            filter.count += 1;
+            filter.count++;
           }
         }
       });
     });
   });
 
-  filterData.forEach((category) => {
+  // update DOM
+  FILTER_CONFIG.forEach((category) => {
     if (!category.filters) return;
 
     category.filters.forEach((filter) => {
       const countElement = document.getElementById(`${filter.id}-count`);
-      if (countElement) {
-        countElement.textContent = filter.count;
-      }
+      if (countElement) countElement.textContent = filter.count;
     });
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  generateFilters();
-  setupSalarySlider();
-  renderFilteredJobs(jobData);
-  updateFilterCounts();
+// event handlers
+function handleSearch() {
+  const searchTerm = domElements.searchInput.value.trim();
 
-  const searchInput = document.querySelector(".search-input");
-  const findButton = document.querySelector(".find-button");
+  if (searchTerm) {
+    localStorage.setItem("searchTerm", searchTerm);
+  } else {
+    localStorage.removeItem("searchTerm");
+  }
 
+  filterJobsSearch();
+}
+
+function handleApplyFilters() {
+  renderFilteredJobs(filterJobs(jobData, getSelectedFilters()));
+}
+
+// setup
+function setupEventListeners() {
+  domElements.findButton?.addEventListener("click", handleSearch);
+  domElements.searchInput?.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") handleSearch();
+  });
+
+  document
+    .getElementById("apply-filters")
+    ?.addEventListener("click", handleApplyFilters);
+  document
+    .getElementById("clear-filters")
+    ?.addEventListener("click", clearFilters);
+}
+
+function restoreSearchTerm() {
   const savedSearchTerm = localStorage.getItem("searchTerm");
-  if (savedSearchTerm && searchInput) {
-    searchInput.value = savedSearchTerm;
+  if (savedSearchTerm && domElements.searchInput) {
+    domElements.searchInput.value = savedSearchTerm;
     filterJobsSearch();
   }
+}
 
-  function handleSearch() {
-    const searchTerm = searchInput.value.trim();
-    if (searchTerm) {
-      localStorage.setItem("searchTerm", searchTerm);
-      filterJobsSearch();
-    } else {
-      localStorage.removeItem("searchTerm");
-      filterJobsSearch();
-    }
-  }
-
-  if (findButton) {
-    findButton.addEventListener("click", handleSearch);
-  }
-
-  if (searchInput) {
-    searchInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        handleSearch();
-      }
-    });
-  }
-
-  const applyFiltersBtn = document.getElementById("apply-filters");
-  applyFiltersBtn.addEventListener("click", () => {
-    const selectedFilters = getSelectedFilters();
-    const filteredJobs = filterJobs(jobData, selectedFilters);
-    renderFilteredJobs(filteredJobs);
-  });
-
-  const clearFiltersBtn = document.getElementById("clear-filters");
-  clearFiltersBtn.addEventListener("click", () => {
-    clearFilters();
-  });
-});
+// document loaded
+document.addEventListener("DOMContentLoaded", init);
