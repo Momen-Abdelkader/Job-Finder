@@ -107,9 +107,7 @@ label {
     font-weight: 500;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
+input,
 textarea,
 select {
     width: 100%;
@@ -119,9 +117,8 @@ select {
     font-size: 1rem;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="tel"]:focus,
+
+input:focus,
 textarea:focus,
 select:focus {
     border-color: var(--accent-dark);

@@ -6,8 +6,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/nav.css">
-    <link rel="stylesheet" href="../css/user-profile.css">
     <title>Company Profile</title>
 </head>
 <body>
@@ -16,85 +16,54 @@
     </header>
 
     <div class="container">
-        
-        <div class="card">
-            <div class="profile-section">
-                <div class="profile-image">
-                    <img src="../assets/temp-profile.webp" alt="User Profile Photo">
-                </div>
-                <div class="profile-info">
-                    <h2>Company Name</h2>
-                    <p>Company Description</p>
-                    <button class="edit-button">Edit</button>
-                </div>
+        <div class="sidebar">
+            <div class="user-info">
+                <img src="../assets/temp-profile.webp" alt="user avatar" class="avatar">
+                <div class="user-name">Corp Inc.</div>
+                <div class="user-email">corp@example.com</div>
             </div>
+            <ul class="nav-tabs">
+                <li class="tab-link active" data-tab="personal-info">Company Info</li>
+                <li class="tab-link" data-tab="job-applications">Posted Jobs</li>
+            </ul>
         </div>
-        
-        <div class="card">
-            <div class="section-title">List of Created Jobs</div>
-            <div class="jobs-list">
-                <div class="job-card">
-                    <div class="status-badge">Open</div>
-                    <div class="job-header">
-                        <h3 class="company-name">Google</h3>
-                        <h2 class="job-title">Junior Software Engineer</h2>
-                        <p class="job-location">Mountain View, CA</p>
-                    </div>
-                    
-                    <div class="job-tags">
-                        <span class="job-tag">On-Site</span>
-                        <span class="job-tag">Full Time</span>
-                        <span class="job-tag">No Experience</span>
-                        <span class="job-tag">$4000/month</span>
-                    </div>
-                    
-                    <div class="job-actions">
-                        <a href="admin.html"><button class="details-button">Details</button></a>
-                    </div>
+
+        <div class="content">
+            <div id="personal-info" class="tab-content active">
+                <h1>Company Information</h1>
+
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" value="corp@example.com" disabled>
                 </div>
-                <div class="job-card">
-                    <div class="status-badge">Open</div>
-                    <div class="job-header">
-                        <h3 class="company-name">Google</h3>
-                        <h2 class="job-title">Junior Software Engineer</h2>
-                        <p class="job-location">Mountain View, CA</p>
-                    </div>
-                    
-                    <div class="job-tags">
-                        <span class="job-tag">On-Site</span>
-                        <span class="job-tag">Full Time</span>
-                        <span class="job-tag">No Experience</span>
-                        <span class="job-tag">$4000/month</span>
-                    </div>
-                    
-                    <div class="job-actions">
-                        <a href="admin.html"><button class="details-button">Details</button></a>
-                    </div>
+
+                <div class="input-group">
+                    <label for="company-name">Company Name</label>
+                    <input type="text" id="company-name" value="Corp Inc.">
                 </div>
-                <div class="job-card">
-                    <div class="status-badge">Open</div>
-                    <div class="job-header">
-                        <h3 class="company-name">Google</h3>
-                        <h2 class="job-title">Junior Software Engineer</h2>
-                        <p class="job-location">Mountain View, CA</p>
-                    </div>
-                    
-                    <div class="job-tags">
-                        <span class="job-tag">On-Site</span>
-                        <span class="job-tag">Full Time</span>
-                        <span class="job-tag">No Experience</span>
-                        <span class="job-tag">$4000/month</span>
-                    </div>
-                    
-                    <div class="job-actions">
-                        <a href="admin.html"><button class="details-button">Details</button></a>
-                    </div>
-                </div> 
+
+                <div class="input-group">
+                    <label for="admin-name">Admin Name</label>
+                    <input type="text" id="admin-name" value="ZUCK">
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" value="55555555555555">
+                </div>
+
+                <button class="btn">Save Changes</button>
             </div>
+
+            <div id="job-applications" class="tab-content">
+                <h1>Job Applications</h1>
             </div>
-        </div>
+
+        </div> 
     </div>
+
     <script src="../js/nav.js"></script>
     <script src="../js/company-profile.js"></script>
+    <script src="../js/profile-nav.js"></script>
 </body>
 </html>
