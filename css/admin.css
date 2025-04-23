@@ -11,7 +11,6 @@ body {
   flex-wrap: wrap;
 }
 
-.app_chart,
 .job_chart {
   flex: 1;
   min-width: 275px;
@@ -43,8 +42,8 @@ button:active {
 
 .job-cards {
   margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   gap: 2rem;
 }
@@ -207,6 +206,18 @@ button:active {
 
 #close-applicants-modal:hover {
   background-color: var(--accent-dark);
+}
+
+@media screen and (max-width: 1800px) {
+  .job-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .job-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media screen and (max-width: 767px) {
