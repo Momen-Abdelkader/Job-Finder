@@ -59,15 +59,19 @@ button:active {
   display: none;
   justify-content: center;
   align-items: center;
+  padding: 2rem; /* allows spacing around modal on small screens */
+  box-sizing: border-box;
+  overflow: hidden; /* prevents background scrolling */
 }
 
 .modal-content {
   background-color: var(--white_1);
+  max-height: 100%;
+  overflow-y: auto;
   padding: 20px;
-  border-radius: 16px;
   width: 80%;
   max-width: 600px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
 }
 
 .close {
@@ -100,7 +104,6 @@ button:active {
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
   transition: 0.1s;
   margin-right: 0.6em;
 }
@@ -117,12 +120,91 @@ button:active {
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
   transition: 0.1s;
 }
 
 .modal #cancel-delete:hover {
   background-color: var(--white_4);
+}
+
+#job-applicants-modal .modal-content {
+  max-width: 1200px;
+}
+
+.applicants-list {
+  border-top: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.applicant-item {
+  list-style: none;
+}
+
+.applicant-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  gap: 1rem;
+  transition: 0.1s;
+}
+
+.applicant-card:hover {
+  background-color: var(--white_2);
+}
+
+.applicant-info {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.applicant-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.applicant-name,
+.applicant-email,
+.applicant-date,
+.applicant-status {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.applicant-status {
+  padding: 0.3rem;
+  font-size: 0.95rem;
+}
+
+.applicant-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-self: end;
+}
+
+#close-applicants-modal {
+  background-color: var(--accent);
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--white_1);
+  padding: 10px 30px;
+  border: none;
+  border-radius: 8px;
+  transition: 0.1s;
+  margin-top: 1rem;
+}
+
+#close-applicants-modal:hover {
+  background-color: var(--accent-dark);
 }
 
 @media screen and (max-width: 767px) {

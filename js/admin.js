@@ -5,18 +5,21 @@ import {
   addJob,
   deleteJob,
 } from "./job-data.js";
+
 import {
-  getApplications, 
-  getApplicationByJobID,,
+  getApplications,
+  getApplicationByJobID,
   getApplicationByUserID,
   getApplicationByID,
   addApplication,
   updateApplicationStatus,
   deleteApplication,
+  deleteApplicationsByJobID,
+  deleteApplicationsByUserID,
   getApplicationCountByJobID,
   getApplicationCountByUserID,
   getApplicationCount,
-  getApplicationID
+  getApplicationID,
 } from "./app-data.js";
 
 createNav(true, true);
@@ -45,6 +48,7 @@ function showDeleteJobModal(job) {
 
   confirmButton.addEventListener("click", () => {
     deleteJob(job.id);
+    deleteApplicationsByJobID(job.id);
     location.reload();
   });
 
@@ -59,7 +63,77 @@ function showDeleteJobModal(job) {
   modal.style.display = "flex";
 }
 
-function showJobApplicantsModal(job) {}
+function showJobApplicantsModal(job) {
+  const modal = document.getElementById("job-applicants-modal");
+  const closeButton = modal.querySelector(".close");
+  const applicantsList = modal.querySelector(".applicants-list");
+  const okButton = modal.querySelector("#close-applicants-modal");
+
+  const applications = getApplicationByJobID(job.id);
+  applicantsList.innerHTML = "";
+
+  applications.forEach((application) => {
+    const applicant = getApplicationByID(application.applicantId);
+    const applicationDataHTML = `
+    <div class="applicant-card" id="${application.applicantId}">
+      <div class="applicant-info">
+        <img class="applicant-image" src="../assets/profile.webp" alt="${
+          applicant.name
+        } image">
+        <h3 class="applicant-name">${applicant.name}</h3>
+        <p class="applicant-email">${applicant.email}</p>
+        <p class="applicant-date">${applicant.applicationDate}</p>
+        <select class="applicant-status">
+          <option ${
+            application.status === "Pending" ? "selected" : ""
+          }>Pending</option>
+          <option ${
+            application.status === "Accepted" ? "selected" : ""
+          }>Accepted</option>
+          <option ${
+            application.status === "Rejected" ? "selected" : ""
+          }>Rejected</option>
+        </select>
+      </div>
+      <div class="applicant-actions">
+        <a class="button resume-button" href="${
+          applicant.resumeUrl
+        }" target="_blank">View Resume</a>
+        <a class="button profile-button" href="../profile.html?userId=${
+          applicant.applicantId
+        }" target="_blank">View Profile</a>
+      </div>
+    </div>`;
+
+    const listItem = document.createElement("li");
+    listItem.classList.add("applicant-item");
+    listItem.innerHTML = applicationDataHTML;
+    applicantsList.appendChild(listItem);
+  });
+
+  closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  okButton.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  const statusSelects = modal.querySelectorAll(".applicant-status");
+  statusSelects.forEach((select) => {
+    select.addEventListener("change", (event) => {
+      const newStatus = event.target.value;
+      const applicantId = event.target.closest(".applicant-card").id;
+
+      const applicationId = getApplicationID(parseInt(job.id), applicantId);
+      if (applicationId) {
+        updateApplicationStatus(applicationId, newStatus);
+      }
+    });
+  });
+
+  modal.style.display = "flex";
+}
 
 function setupCardEventHandlers(card, jobId) {
   const editButton = card.querySelector(".edit-button");

@@ -1,5 +1,24 @@
 import { getJobData } from "./job-data.js";
 
+/*
+example applications object:
+const applicantsExample = {
+  1: {
+    jobId: 3, // References the job they're applying for
+    applicantId: 1, // Unique ID for the applicant
+    name: "Sarah Johnson", // Full name
+    email: "sarah@example.com", // Contact email
+    experienceLevel: "Entry Level", // Experience level
+    skills: ["JavaScript", "React", "HTML", "CSS"], // Key skills
+    education: "Bachelor of Computer Science, University of Technology", // Simplified education
+    experience: "1 year intern at TechCorp", // Simplified experience
+    applicationDate: "2025-04-22", // When they applied
+    status: "Pending", // Application status: Applied, Reviewing, Interviewed, Rejected, Hired
+    resumeUrl: "../resumes/sarah_resume.pdf", // Path to resume file
+  },
+};
+*/
+
 export function getApplications() {
   return JSON.parse(localStorage.getItem("applications")) || {};
 }
@@ -23,7 +42,8 @@ export function getApplicationByID(applicationID) {
 
 export function addApplication(application) {
   const applications = getApplications();
-  let id = Object.keys(applications).length + 1; // Simple ID generation
+  let maxID = Math.max(0, ...Object.keys(applications).map(Number));
+  let id = maxID + 1;
   applications[id] = application;
   localStorage.setItem("applications", JSON.stringify(applications));
 }
@@ -39,6 +59,26 @@ export function updateApplicationStatus(applicationID, status) {
 export function deleteApplication(applicationID) {
   const applications = getApplications();
   delete applications[applicationID];
+  localStorage.setItem("applications", JSON.stringify(applications));
+}
+
+export function deleteApplicationsByJobID(jobId) {
+  const applications = getApplications();
+  for (const id in applications) {
+    if (applications[id].jobId === jobId) {
+      delete applications[id];
+    }
+  }
+  localStorage.setItem("applications", JSON.stringify(applications));
+}
+
+export function deleteApplicationsByUserID(userId) {
+  const applications = getApplications();
+  for (const id in applications) {
+    if (applications[id].applicantId === userId) {
+      delete applications[id];
+    }
+  }
   localStorage.setItem("applications", JSON.stringify(applications));
 }
 
@@ -61,13 +101,13 @@ export function getApplicationCount() {
 
 export function getApplicationID(jobID, userID) {
   const applications = getApplications();
-  return (
-    Object.keys(applications).find(
-      (id) =>
-        applications[id].jobId === jobID &&
-        applications[id].applicantId === userID
-    ) || null
-  );
+  for (const id in applications) {
+    const { jobId, applicantId } = applications[id];
+    if (`${jobId}` === `${jobID}` && `${applicantId}` === `${userID}`) {
+      return id;
+    }
+  }
+  return null;
 }
 
 function generateMockApplications(jobData, count = 20) {
@@ -125,7 +165,7 @@ function generateMockApplications(jobData, count = 20) {
     "Polytechnic Institute",
     "International College",
   ];
-  const statuses = ["Applied", "Reviewing", "Interviewed", "Rejected", "Hired"];
+  const statuses = ["Pending", "Rejected", "Hired"];
 
   for (let i = 1; i <= count; i++) {
     // Select a random job
