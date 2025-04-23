@@ -27,8 +27,11 @@ function showAddJobModal() {
   const closeButton = document.querySelector('#add-job-modal .close');
   const jobForm = document.querySelector('.job-form');
 
+  modal.querySelector("#add-job-button").innerHTML = "Add Job";
+
   closeButton.addEventListener("click", () => {
     modal.style.display = "none";
+    jobForm.reset();
     enableScrolling();
   });
 
@@ -88,8 +91,86 @@ function showAddJobModal() {
 
 }
 
-function showEditJobModal(job) {
-  // TODO: implement
+function showEditJobModal(job) { // TODO: IMplm
+  const modal = document.querySelector('#add-job-modal');
+  const closeButton = document.querySelector('#add-job-modal .close');
+  const cancelButton = document.querySelector('#cancel-edit');
+  
+  let jobForm = document.querySelector('.job-form');
+  let workLocation = document.querySelector(`input[name="workLocation"][value=${job.workMode}]`);
+  let jobType = document.querySelector('input[name="jobType"][value="'+job.jobType+'"]');
+  let experience = document.querySelector('input[name="experience"][value="'+job.experienceLevel+'"]');
+
+  jobForm.querySelector("#logo").src = job.logo;              
+  jobForm.querySelector("#company-name").value = job.company;    
+  jobForm.querySelector('#job-title').value = job.title;  
+  jobForm.querySelector('#job-location').value = job.location; 
+  jobForm.querySelector('#job-salary').value = job.salary.replace(/\D/g, '');
+  jobForm.querySelector('#job-description').value = job.description;
+  workLocation.checked = true;
+  jobType.checked = true;
+  experience.checked = true;
+
+  modal.querySelector("#add-job-button").innerHTML = "Edit Job";
+
+  closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+    jobForm.reset();
+    enableScrolling();
+  });
+
+  cancelButton.addEventListener("click", () => {
+    modal.style.display = "none";
+    jobForm.reset();
+    enableScrolling();
+  });
+
+  jobForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const workLocation = document.querySelector('input[name="workLocation"]:checked').value;
+    const jobType = document.querySelector('input[name="jobType"]:checked').value;
+    const experience = document.querySelector('input[name="experience"]:checked').value;
+
+    const salaryInput = document.getElementById('job-salary');
+    const salaryError = document.getElementById('salary-error');
+    const salaryValue = salaryInput.value.trim();
+  
+    if (!/^\d+$/.test(salaryValue)) {
+      salaryError.style.display = 'block';
+      salaryInput.style.borderColor = 'red';
+      salaryInput.focus();
+      return; 
+    } else {
+      salaryError.style.display = 'none';
+    }
+    
+    const newJob = {
+      id: job.id,
+      logo: job.logo,
+      company: job.company,
+      title: jobForm.querySelector('#job-title').value,
+      location: jobForm.querySelector('#job-location').value,
+      salary:  "$" + salaryValue + "/month",
+      jobType: jobType,
+      workMode: workLocation,
+      skills: ["C++", "Debugging", "Batates Soury"], // <-- Temp Skills
+      experienceLevel: experience,
+      postedAt: new Date(),
+      description: jobForm.querySelector("#job-description"),
+    };
+    
+    updateJob(newJob);
+
+    jobForm.reset();
+    modal.style.display = 'none';
+    enableScrolling();
+    location.reload();
+
+  });
+
+  modal.style.display = "flex";
+  disableScrolling();
 }
 
 function showDeleteJobModal(job) {
@@ -220,16 +301,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function setupCardEventHandlers(card, jobId) {
-  // const addButton = card.querySelector("#add-button");
   const editButton = card.querySelector(".edit-button");
   const deleteButton = card.querySelector(".delete-button");
   const applicantsButton = card.querySelector(".applicants-button");
-
-  // if(addButton){
-  //   addButton.addEventListener("click", () => {
-  //     showAddJobModal();
-  //   });
-  // }
 
   if (editButton) {
     editButton.addEventListener("click", () => {
@@ -266,80 +340,3 @@ function init() {
 }
 
 init();
-
-
-// document.addEventListener('DOMContentLoaded', function() {
-    // const addButton = document.querySelector('#add-button');
-    // const modal = document.querySelector('.modal');
-    // const closeBtn = document.querySelector('.close');
-    // const jobForm = document.querySelector('.job-form');
-//     // const editButton = document.querySelectorAll('.edit-button button');
-//     let isEdit = false;
-
-    // const workLocation = document.querySelector('input[name="workLocation"]:checked').value;
-    // const jobType = document.querySelector('input[name="jobType"]:checked').value;
-    // const experience = document.querySelector('input[name="experience"]:checked').value;
-    
-//     addButton.addEventListener('click', function() {
-//       modal.style.display = 'block';
-//     });
-    
-//     closeBtn.addEventListener('click', function() {
-//       modal.style.display = 'none';
-//     });
-
-//     // editButton.addEventListener('click', function() {
-//     //   modal.style.display = 'block';
-//     //   isEdit = true;
-//     //   //document.querySelector("#logo").value = document.querySelector()
-//     // });
-
-//     document.querySelectorAll('.edit-button').forEach(button => {
-//       button.addEventListener('click', function() {
-//         var jobCard = this.closest('.job-card'); 
-//         console.log(jobCard); 
-//         let jobTags = jobCard.querySelectorAll('.tag'); 
-//         const jobEdit = {
-//           logo: jobCard.querySelector('.company-logo').src,
-//           company: jobCard.querySelector('.company-name').innerHTML,
-//           title: jobCard.querySelector('.job-title').innerHTML,
-//           location: jobCard.querySelector('.job-location').innerHTML,
-//           tags: [jobTags[0].innerHTML, jobTags[1].innerHTML, jobTags[2].innerHTML],
-//           salary: jobCard[3].innerHTML
-//         };
-
-//         for (const job of jobData) {
-//           if(job.logo == jobEdit.logo
-//             && job.company == jobEdit.company
-//             && job.location == jobEdit.location
-//             && job.title == jobEdit.title
-//             && job.tags == jobEdit.tags
-//             && job.salary == jobEdit.salary){
-//               break;
-//           }
-//         }
-
-//       });
-//     });
-
-    
-    // jobForm.addEventListener('submit', function(e) {
-    //   e.preventDefault();
-      
-    //   const newJob = {
-    //     logo: document.querySelector("#logo").value,
-    //     company: document.querySelector("#company-name").value,
-    //     title: document.querySelector('#job-title').value,
-    //     location: document.querySelector('#job-location').value,
-    //     tags: [workLocation, jobType, experience],
-    //     salary:  "$" + document.querySelector('#job-salary').value  + "/month",
-    //   };
-      
-    //   jobData.push(newJob);
-    //   renderJobs();
-
-    //   jobForm.reset();
-    //   modal.style.display = 'none';
-    // });
-
-//   });

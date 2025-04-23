@@ -211,7 +211,7 @@ textarea {
   background-color: var(--dark-red);
 }
 
-.modal #cancel-delete {
+#cancel-delete, #cancel-edit {
   background-color: var(--white_2);
   font-size: 1rem;
   font-weight: bold;
@@ -222,7 +222,7 @@ textarea {
   transition: 0.1s;
 }
 
-.modal #cancel-delete:hover {
+#cancel-delete:hover, #cancel-edit:hover {
   background-color: var(--white_4);
 }
 
@@ -235,6 +235,11 @@ textarea {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.4);
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
 }
 
 #job-applicants-modal .modal-content {

@@ -98,11 +98,11 @@
             <div class="form-group">
               <label class="lab">Experience Level:</label>
               <div class="radio-group">
-                <label><input type="radio" name="experience" value="Fresh Graduate" checked>Fresh Graduate</label>
+                <label><input type="radio" name="experience" value="Student" checked> Student</label>
+                <label><input type="radio" name="experience" value="Fresh Graduate">Fresh Graduate</label>
                 <label><input type="radio" name="experience" value="Junior"> Junior</label>
                 <label><input type="radio" name="experience" value="Mid-Level"> Mid-Level</label>
                 <label><input type="radio" name="experience" value="Senior"> Senior</label>
-                <label><input type="radio" name="experience" value="Student"> Student</label>
               </div>
             </div>
 
@@ -121,8 +121,10 @@
               <label class="lab" for="job-description">Description:</label>
               <textarea id="job-description" required></textarea>
             </div>
-
-            <button type="submit" class="add-job-button" id="add-job-button">Add Job</button>
+            <div class="button-container">
+              <button type="submit" class="add-job-button" id="add-job-button">Add Job</button>
+              <button id="cancel-edit">Cancel</button>
+            </div>
           </form>
         </div>
       </div>
