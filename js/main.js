@@ -24,8 +24,8 @@ function createJobCard(job, isAdmin = false) {
                     <a class="delete-button button"">Delete</a>
                 `
                     : `
-                    <a class="apply-button button"">Apply Now</a>
-                    <a class="details-button button"">Details</a>
+                    <a class="apply-button button" onclick="showApplyModal(${job})">Apply Now</a>
+                    <a class="details-button button" onclick="showDetailsModal(${job})">Details</a>
                 `
                 }
             </div>
