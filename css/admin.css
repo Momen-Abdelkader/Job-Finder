@@ -79,6 +79,8 @@ button:active {
   float: right;
   font-size: 2rem;
   font-weight: bold;
+  cursor: default;
+  user-select: none;
   transition: 0.1s;
 }
 
@@ -215,5 +217,34 @@ button:active {
   .tag {
     padding: 8px 12px;
     font-size: 0.9rem;
+  }
+
+  .applicant-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .applicant-actions {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .applicant-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .applicant-image {
+    margin: 0 auto 1rem auto;
+  }
+
+  .applicant-status {
+    width: 100%;
   }
 }
