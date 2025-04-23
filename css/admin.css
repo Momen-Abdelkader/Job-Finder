@@ -20,17 +20,11 @@ body {
   background-color: var(--white_1);
 }
 
-.add_button {
-  float: right;
-  margin-top: -25px;
-  margin-right: 4px;
-  background-color: var(--accent);
-  border: none;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 16px;
-  font-size: 14px;
-  cursor: pointer;
+.job-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.2em;
 }
 
 button:hover {
@@ -38,6 +32,22 @@ button:hover {
 }
 button:active {
   background-color: var(--dark);
+}
+
+.job-chart-header .add-button {
+  background-color: var(--accent);
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--white_1);
+  border: none;
+  padding: 1em 2em;
+  border-radius: 8px;
+  transition: 0.1s;
+  text-align: center;
+}
+
+.job-chart-header .add-button:hover {
+  background-color: var(--accent-dark);
 }
 
 .job-cards {

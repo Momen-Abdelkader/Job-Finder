@@ -41,6 +41,8 @@ const FILTER_CONFIG = [
 
 const MIN_SALARY_GAP = 100;
 
+const jobData = getJobData();
+
 // DOM
 const domElements = {
   filtersContainer: document.getElementById("filters"),
@@ -52,7 +54,6 @@ const domElements = {
 
 // initialization
 function init() {
-  const jobData = getJobData();
   createNav(false);
   generateFilters();
   setupSalarySlider();
@@ -247,16 +248,32 @@ function clearFilters() {
     }
   });
 
+  localStorage.removeItem("searchTerm");
+  domElements.searchInput.value = "";
+
   renderFilteredJobs(jobData);
 }
 
 function updateFilterCounts() {
+  // Get search-filtered jobs
+  const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
+  const filteredBySearch = searchTerm
+    ? jobData.filter(
+        (job) =>
+          job.title.toLowerCase().includes(searchTerm) ||
+          job.company.toLowerCase().includes(searchTerm) ||
+          job.location.toLowerCase().includes(searchTerm)
+      )
+    : jobData;
+
+  // Reset all counts
   FILTER_CONFIG.forEach((category) => {
     if (category.filters)
       category.filters.forEach((filter) => (filter.count = 0));
   });
 
-  jobData.forEach((job) => {
+  // Count within the search-filtered jobs
+  filteredBySearch.forEach((job) => {
     FILTER_CONFIG.forEach((category) => {
       if (!category.filters) return;
 
@@ -278,7 +295,7 @@ function updateFilterCounts() {
     });
   });
 
-  // update DOM
+  // Update DOM counts
   FILTER_CONFIG.forEach((category) => {
     if (!category.filters) return;
 
@@ -292,18 +309,30 @@ function updateFilterCounts() {
 // event handlers
 function handleSearch() {
   const searchTerm = domElements.searchInput.value.trim();
-
   if (searchTerm) {
     localStorage.setItem("searchTerm", searchTerm);
   } else {
     localStorage.removeItem("searchTerm");
   }
 
-  filterJobsSearch();
+  handleApplyFilters();
+  updateFilterCounts();
 }
 
 function handleApplyFilters() {
-  renderFilteredJobs(filterJobs(jobData, getSelectedFilters()));
+  const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
+  const filters = getSelectedFilters();
+
+  const filtered = filterJobs(jobData, filters).filter((job) => {
+    return (
+      !searchTerm ||
+      job.title.toLowerCase().includes(searchTerm) ||
+      job.company.toLowerCase().includes(searchTerm) ||
+      job.location.toLowerCase().includes(searchTerm)
+    );
+  });
+
+  renderFilteredJobs(filtered);
 }
 
 // setup
@@ -325,8 +354,8 @@ function restoreSearchTerm() {
   const savedSearchTerm = localStorage.getItem("searchTerm");
   if (savedSearchTerm && domElements.searchInput) {
     domElements.searchInput.value = savedSearchTerm;
-    filterJobsSearch();
   }
+  handleApplyFilters();
 }
 
 // document loaded

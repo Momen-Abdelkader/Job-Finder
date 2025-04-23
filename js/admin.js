@@ -22,16 +22,6 @@ import {
   getApplicationID,
 } from "./app-data.js";
 
-createNav(true, true);
-const jobData = getJobData();
-const jobCardsContainer = document.querySelector(".job-cards");
-
-jobData.forEach((job) => {
-  const card = createJobCard(job, "admin");
-  jobCardsContainer.appendChild(card);
-  setupCardEventHandlers(card, job.id);
-});
-
 function showAddJobModal() {
   // TODO: implement
 }
@@ -183,5 +173,15 @@ function setupCardEventHandlers(card, jobId) {
 }
 
 function init() {
-  // TODO: implement
+  createNav(true, true);
+  const jobData = getJobData();
+  const jobCardsContainer = document.querySelector(".job-cards");
+
+  jobData.forEach((job) => {
+    const card = createJobCard(job, "admin");
+    jobCardsContainer.appendChild(card);
+    setupCardEventHandlers(card, job.id);
+  });
 }
+
+init();
