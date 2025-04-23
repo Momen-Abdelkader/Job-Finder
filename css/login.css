@@ -97,6 +97,7 @@ section  {
     padding: 20px;
     border-radius: 12px;
     width: 40%;
+    min-width: 540px;
 }
 
 
@@ -190,23 +191,8 @@ section  {
 
 
 
-.Toggle-container{
-    width: 100%;
-    height:100%;
-    padding: 4px;
-    border: 2px solid #b4c3e0;
-    border-radius: 8px;
-    background-color: #b4c3e0;
-    /*min-width: 376px;*/
-    /*min-height: 40px;*/
-    max-width: 100%;
-    max-height: 40px;
-}
-
-
-
-.Create-container,
-.Use-container{
+#create_container,
+#use_button{
     width: 100%;
     height:100%;
     /*padding: 4px;*/
@@ -218,26 +204,14 @@ section  {
     max-width: 100%;
     max-height: 40px;
 
+
 }
 
 
 
-.toggle-button-off,
-.toggle-button-on {
-    /*padding: 10px;*/
-    font-size: 15px; /* Adjust font size */
-    color: black;
-    border: #b4c3e0;
-    cursor: pointer;
-    text-align: center;
-    font-family: "Montserrat";
-    font-weight: bold;
-    border-radius: 10px;
-    width: 100%;
-    height: 100%;
-}
-.create_button,
-.use_button{
+
+#create_button,
+#use_button{
     /*padding: 10px ;*/
     font-size: 15px;  /* Adjust font size */
     color: black;
@@ -247,24 +221,16 @@ section  {
     font-family: "Montserrat";
     font-weight: bold;
     border-radius: 10px;
-    width:100%;
+    width:49%;
     height:100%;
-    max-width: 100%;
+    max-width: 49%;
     max-height: 40px;
 }
 
 
-.toggle-button-off
-{
-    background-color:#b4c3e0 ;
-    border-right: 2px solid #b4c3e0;
-    color: white;
-}
 
-
-.toggle-button-on,
-.create_button,
-.use_button{
+#create_button,
+#use_button{
     background-color: #e4edfe;
     border-left:2px solid #e4edfe;
 
@@ -272,14 +238,15 @@ section  {
 
 
 
-.Use-container,
-.Create-container{
+#use_button,
+#create_button{
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 4px;
     width: 100%;
     height: 100%;
+    text-align: center;
     border: 2px solid #e4edfe;
     border-radius: 8px;
     background-color: #e4edfe;
@@ -304,11 +271,12 @@ section  {
     padding-top: 2%;
 }
 
-.use_button {
-    padding-left: 40px; /* Adjust to prevent text overlap */
+#use_button {
+
     text-align: center;
     width: 100%;
 }
+
 
 
 
