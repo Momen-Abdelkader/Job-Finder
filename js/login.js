@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.querySelector('input[placeholder="Enter your password"]').value.trim();
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+      const passwordRegex = /^[a-zA-Z0-9]{8,}$/;
+
 
       if (!email || !password) {
           alert("Please fill in both email and password.");

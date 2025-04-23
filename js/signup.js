@@ -44,7 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const nameRegex = /^[a-zA-Z ]{2,}$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        const passwordRegex = /^[a-zA-Z0-9]{8,}$/;
+
 
         if (!nameRegex.test(name)) {
             alert("Please enter a valid name (only letters, min 2 characters).");
