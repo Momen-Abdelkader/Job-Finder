@@ -48,7 +48,8 @@ function showAddJobModal() {
   
     if (!/^\d+$/.test(salaryValue)) {
       salaryError.style.display = 'block';
-      salaryInput.style.borderColor = 'red';
+      salaryInput.style.border = '2px solid';
+      salaryInput.style.borderColor = 'rgb(250, 50, 50)';
       salaryInput.focus();
       return; 
     } else {
@@ -74,7 +75,7 @@ function showAddJobModal() {
       skills: ["C++", "Debugging", "Batates Soury"], // <-- Temp Skills
       experienceLevel: experience,
       postedAt: new Date(),
-      description: jobForm.querySelector("#job-description"),
+      description: jobForm.querySelector("#job-description").value,
     };
     
     addJob(newJob);
@@ -138,7 +139,8 @@ function showEditJobModal(job) { // TODO: IMplm
   
     if (!/^\d+$/.test(salaryValue)) {
       salaryError.style.display = 'block';
-      salaryInput.style.borderColor = 'red';
+      salaryInput.style.border = '2px solid';
+      salaryInput.style.borderColor = 'rgb(250, 50, 50)';
       salaryInput.focus();
       return; 
     } else {
@@ -157,7 +159,7 @@ function showEditJobModal(job) { // TODO: IMplm
       skills: ["C++", "Debugging", "Batates Soury"], // <-- Temp Skills
       experienceLevel: experience,
       postedAt: new Date(),
-      description: jobForm.querySelector("#job-description"),
+      description: jobForm.querySelector("#job-description").value,
     };
     
     updateJob(newJob);
