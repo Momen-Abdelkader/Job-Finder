@@ -1,80 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="../css/login.css">
-    <link rel="stylesheet" href="../css/nav.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <title>Log in</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="nav"></div>
     <div class="Page_con">
-        <div class="Header_con">
-            <section class="Header">
-                <div class="Header">Welcome to Job Finder!</div>
-            </section>
-            <section class="Subheader">
-                <div class="Subheader">Login / Sign Up to access hundreds of job postings around you.</div>
-            </section>
-        </div>
-        <div class="Form_con">
-            <section class="Email">
-                <div class="email">E-Mail Address</div>
-                <div class="bt_email">
-                    <div class="Icon">
-                        <img src="../assets/mail.png">
-                    </div>
-                    <div class="Text">
-                    <input type="email" placeholder="Enter your email">
-                    </div>
-                </div>
-            </section>
-            <section class="Password">
-                <div class="password">Password</div>
-                <div class="bt_password">
-                    <div class="Icon">
-                        <img src="../assets/door-key.png">
-                    </div>
-                    <div class="Text">
-                    <input type="password" placeholder="Enter your password">
-                    </div>
-                </div>
-            </section>
-            <section class="Log_in">
-                <a href="forgot-password.html" class="t3"><div>Forgot Password</div></a>
-            </section>
-            <section id="Create-container">
-                <!--            <div class="toggle-container">-->
-                <button id="create_button">Sign In</button>
-                <!--            </div>-->
-            </section>
-    
-    
-    
-            <section class="Log_in">
-                <div class="t1">Don't Have an Account</div>
-                <a href="Signup.html" class="t2"><div>Create an Account</div></a>
-            </section>
-    
-    
-            <section id="Use-container">
-                <!--            <div class="toggle-container">-->
-                
-                <button id="use_button">Use a Google Account
-                    <div class="bt_icon">
-                        <img src="../assets/google.png">
-                    </div>
-                </button>
-                <!--            </div>-->
-            </section>
-        </div>
+      <div class="Header_con">
+        <section class="Header">
+          <div class="Header">Welcome to Job Finder!</div>
+        </section>
+        <section class="Subheader">
+          <div class="Subheader">
+            Login / Sign Up to access hundreds of job postings around you.
+          </div>
+        </section>
+      </div>
+      <div class="Form_con">
+        <section class="Email">
+          <div class="email">E-Mail Address</div>
+          <div class="bt_email">
+            <div class="Icon">
+              <img src="../assets/mail.png" />
+            </div>
+            <div class="Text">
+              <input type="email" placeholder="Enter your email" />
+            </div>
+          </div>
+        </section>
+        <section class="Password">
+          <div class="password">Password</div>
+          <div class="bt_password">
+            <div class="Icon">
+              <img src="../assets/door-key.png" />
+            </div>
+            <div class="Text">
+              <input type="password" placeholder="Enter your password" />
+            </div>
+          </div>
+        </section>
+        <section class="Log_in">
+          <a href="forgot-password.html" class="t3"
+            ><div>Forgot Password</div></a
+          >
+        </section>
+        <section id="Create-container">
+          <!--            <div class="toggle-container">-->
+          <button id="create_button">Sign In</button>
+          <!--            </div>-->
+        </section>
+
+        <section class="Log_in">
+          <div class="t1">Don't Have an Account</div>
+          <a href="Signup.html" class="t2"><div>Create an Account</div></a>
+        </section>
+
+        <section id="Use-container">
+          <!--            <div class="toggle-container">-->
+
+          <button id="use_button">
+            Use a Google Account
+            <div class="bt_icon">
+              <img src="../assets/google.png" />
+            </div>
+          </button>
+          <!--            </div>-->
+        </section>
+      </div>
     </div>
     <script src="../js/nav.js"></script>
-    <script src="../js/login.js"></script>
-</body>
+    <script src="../js/main.js" type="module"></script>
+    <script src="../js/login.js" type="module"></script>
+  </body>
 </html>

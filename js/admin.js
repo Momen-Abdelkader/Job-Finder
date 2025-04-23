@@ -23,10 +23,10 @@ import {
 } from "./app-data.js";
 
 function showAddJobModal() {
-  const modal = document.querySelector('#add-job-modal');
-  const closeButton = document.querySelector('#add-job-modal .close');
-  const cancelButton = document.querySelector('#cancel');
-  const jobForm = document.querySelector('.job-form');
+  const modal = document.querySelector("#add-job-modal");
+  const closeButton = document.querySelector("#add-job-modal .close");
+  const cancelButton = document.querySelector("#cancel");
+  const jobForm = document.querySelector(".job-form");
 
   modal.querySelector("#add-job-button").innerHTML = "Add Job";
 
@@ -42,27 +42,32 @@ function showAddJobModal() {
     enableScrolling();
   });
 
-  jobForm.addEventListener('submit', function(e) {
+  jobForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const workLocation = document.querySelector('input[name="workLocation"]:checked').value;
-    const jobType = document.querySelector('input[name="jobType"]:checked').value;
-    const experience = document.querySelector('input[name="experience"]:checked').value;
+    const workLocation = document.querySelector(
+      'input[name="workLocation"]:checked'
+    ).value;
+    const jobType = document.querySelector(
+      'input[name="jobType"]:checked'
+    ).value;
+    const experience = document.querySelector(
+      'input[name="experience"]:checked'
+    ).value;
 
     const jobArr = getJobData();
     let maxID = 0;
-    for(let i = 0; i < jobArr.length; i++){
-      if(maxID < jobArr[i].id)
-          maxID = jobArr[i].id;
+    for (let i = 0; i < jobArr.length; i++) {
+      if (maxID < jobArr[i].id) maxID = jobArr[i].id;
     }
-    
+
     const newJob = {
-      id: (maxID + 1),
+      id: maxID + 1,
       logo: jobForm.querySelector("#logo").value,
       company: jobForm.querySelector("#company-name").value,
-      title: jobForm.querySelector('#job-title').value,
-      location: jobForm.querySelector('#job-location').value,
-      salary:  "$" + jobForm.querySelector('#job-salary').value + "/month",
+      title: jobForm.querySelector("#job-title").value,
+      location: jobForm.querySelector("#job-location").value,
+      salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
       jobType: jobType,
       workMode: workLocation,
       skills: ["C++", "Debugging", "Batates Soury"], // <-- Temp Skills
@@ -70,37 +75,41 @@ function showAddJobModal() {
       postedAt: new Date(),
       description: jobForm.querySelector("#job-description").value,
     };
-    
+
     addJob(newJob);
 
     jobForm.reset();
-    modal.style.display = 'none';
+    modal.style.display = "none";
     enableScrolling();
     location.reload();
-
   });
 
   modal.style.display = "flex";
   disableScrolling();
-
 }
 
-function showEditJobModal(job) { 
-  const modal = document.querySelector('#add-job-modal');
-  const closeButton = document.querySelector('#add-job-modal .close');
-  const cancelButton = document.querySelector('#cancel');
-  
-  let jobForm = document.querySelector('.job-form');
-  let workLocation = document.querySelector(`input[name="workLocation"][value=${job.workMode}]`);
-  let jobType = document.querySelector('input[name="jobType"][value="'+job.jobType+'"]');
-  let experience = document.querySelector('input[name="experience"][value="'+job.experienceLevel+'"]');
+function showEditJobModal(job) {
+  const modal = document.querySelector("#add-job-modal");
+  const closeButton = document.querySelector("#add-job-modal .close");
+  const cancelButton = document.querySelector("#cancel");
 
-  jobForm.querySelector("#logo").src = job.logo;              
-  jobForm.querySelector("#company-name").value = job.company;    
-  jobForm.querySelector('#job-title').value = job.title;  
-  jobForm.querySelector('#job-location').value = job.location; 
-  jobForm.querySelector('#job-salary').value = job.salary.replace(/\D/g, '');
-  jobForm.querySelector('#job-description').value = job.description;
+  let jobForm = document.querySelector(".job-form");
+  let workLocation = document.querySelector(
+    `input[name="workLocation"][value=${job.workMode}]`
+  );
+  let jobType = document.querySelector(
+    'input[name="jobType"][value="' + job.jobType + '"]'
+  );
+  let experience = document.querySelector(
+    'input[name="experience"][value="' + job.experienceLevel + '"]'
+  );
+
+  jobForm.querySelector("#logo").src = job.logo;
+  jobForm.querySelector("#company-name").value = job.company;
+  jobForm.querySelector("#job-title").value = job.title;
+  jobForm.querySelector("#job-location").value = job.location;
+  jobForm.querySelector("#job-salary").value = job.salary.replace(/\D/g, "");
+  jobForm.querySelector("#job-description").value = job.description;
   workLocation.checked = true;
   jobType.checked = true;
   experience.checked = true;
@@ -119,20 +128,26 @@ function showEditJobModal(job) {
     enableScrolling();
   });
 
-  jobForm.addEventListener('submit', function(e) {
+  jobForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const workLocation = document.querySelector('input[name="workLocation"]:checked').value;
-    const jobType = document.querySelector('input[name="jobType"]:checked').value;
-    const experience = document.querySelector('input[name="experience"]:checked').value;
-    
+    const workLocation = document.querySelector(
+      'input[name="workLocation"]:checked'
+    ).value;
+    const jobType = document.querySelector(
+      'input[name="jobType"]:checked'
+    ).value;
+    const experience = document.querySelector(
+      'input[name="experience"]:checked'
+    ).value;
+
     const newJob = {
       id: job.id,
       logo: job.logo,
       company: job.company,
-      title: jobForm.querySelector('#job-title').value,
-      location: jobForm.querySelector('#job-location').value,
-      salary:  "$" + jobForm.querySelector('#job-salary').value + "/month",
+      title: jobForm.querySelector("#job-title").value,
+      location: jobForm.querySelector("#job-location").value,
+      salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
       jobType: jobType,
       workMode: workLocation,
       skills: ["C++", "Debugging", "Batates Soury"], // <-- Temp Skills
@@ -140,14 +155,13 @@ function showEditJobModal(job) {
       postedAt: new Date(),
       description: jobForm.querySelector("#job-description").value,
     };
-    
+
     updateJob(newJob);
 
     jobForm.reset();
-    modal.style.display = 'none';
+    modal.style.display = "none";
     enableScrolling();
     location.reload();
-
   });
 
   modal.style.display = "flex";
@@ -269,17 +283,15 @@ function showJobApplicantsModal(job) {
   disableScrolling();
 }
 
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   const addButton = document.querySelector("#add-button");
 
-  if(addButton){
+  if (addButton) {
     addButton.addEventListener("click", () => {
       showAddJobModal();
     });
   }
 });
-
 
 function setupCardEventHandlers(card, jobId) {
   const editButton = card.querySelector(".edit-button");
@@ -309,7 +321,6 @@ function setupCardEventHandlers(card, jobId) {
 }
 
 function init() {
-  createNav(true, true);
   const jobData = getJobData();
   const jobCardsContainer = document.querySelector(".job-cards");
 

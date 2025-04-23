@@ -6,6 +6,10 @@ import {
   deleteJob,
 } from "./job-data.js";
 
+import { getCurrentUser } from "./auth.js";
+
+import { createJobCard } from "./main.js";
+
 // constants
 const FILTER_CONFIG = [
   {
@@ -43,6 +47,8 @@ const MIN_SALARY_GAP = 100;
 
 const jobData = getJobData();
 
+const currentUser = getCurrentUser();
+
 // DOM
 const domElements = {
   filtersContainer: document.getElementById("filters"),
@@ -54,7 +60,6 @@ const domElements = {
 
 // initialization
 function init() {
-  createNav(false);
   generateFilters();
   setupSalarySlider();
   renderFilteredJobs(jobData);

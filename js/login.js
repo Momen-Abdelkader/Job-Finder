@@ -1,45 +1,42 @@
-createNav();
+import { validateEmail, loginUser, googleAuth } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // DOM
   const loginBtn = document.getElementById("create_button");
   const useGoogleBtn = document.getElementById("use_button");
+  const emailInput = document.querySelector(
+    'input[placeholder="Enter your email"]'
+  );
+  const passwordInput = document.querySelector(
+    'input[placeholder="Enter your password"]'
+  );
 
+  // login
   loginBtn.addEventListener("click", () => {
-    const email = document
-      .querySelector('input[placeholder="Enter your email"]')
-      .value.trim();
-    const password = document
-      .querySelector('input[placeholder="Enter your password"]')
-      .value.trim();
+    try {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !password)
+        throw new Error("Please fill in both email and password.");
+      if (!validateEmail(email))
+        throw new Error("Please enter a valid email address.");
 
-    if (!email || !password) {
-      alert("Please fill in both email and password.");
-      return;
-    }
-
-    if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address.");
-      return;
-    }
-
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const matchedUser = users.find(
-      (user) => user.email === email && user.password === password
-    );
-
-    if (matchedUser) {
-      alert(`Welcome back, ${matchedUser.name}!`);
-      localStorage.setItem("currentUser", JSON.stringify(matchedUser));
+      const user = loginUser(email, password);
+      alert(`Welcome back, ${user.name}!`);
       window.location.href = "home.html";
-    } else {
-      alert("Incorrect email or password.");
+    } catch (error) {
+      alert(error.message);
     }
   });
 
+  // google auth
   useGoogleBtn.addEventListener("click", () => {
-    alert("Google login coming soon!");
+    try {
+      googleAuth();
+      alert("Google login coming soon!");
+    } catch (error) {
+      alert(error.message);
+    }
   });
 });

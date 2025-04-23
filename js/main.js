@@ -1,4 +1,6 @@
-function createJobCard(job, isAdmin = false) {
+import { getCurrentUser } from "./auth.js";
+
+export function createJobCard(job, isAdmin = false) {
   const html = `
         <div class="job-card">
             <div class="company-info">
@@ -51,3 +53,10 @@ function disableScrolling() {
 function enableScrolling() {
   document.body.style.overflow = "";
 }
+
+// create navigation
+document.addEventListener("DOMContentLoaded", () => {
+  const currentUser = getCurrentUser();
+  console.log(currentUser);
+  createNav(currentUser, currentUser?.role === "Admin");
+});
