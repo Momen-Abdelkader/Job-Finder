@@ -91,6 +91,12 @@ body {
     to { opacity: 1; }
 }
 
+h1 {
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--accent-dark);
+    padding-bottom: 10px;
+}
+
 .input-group {
     margin-bottom: 20px;
 }
@@ -99,12 +105,6 @@ label {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-}
-
-h1 {
-    margin-bottom: 30px;
-    border-bottom: 2px solid var(--accent-dark);
-    padding-bottom: 10px;
 }
 
 input[type="text"],
