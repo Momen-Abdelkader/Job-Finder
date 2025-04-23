@@ -1,226 +1,224 @@
 nav {
-    text-align: center;
+  text-align: center;
 }
 
 .menu-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 21px;
-    cursor: pointer;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
 }
 
 .menu-toggle span {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background-color: var(--dark);
-    border-radius: 3px;
-    transition: 0.1s;
-    transform-origin: center; /* This ensures rotations happen from the center */
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--dark);
+  border-radius: 3px;
+  transition: 0.1s;
+  transform-origin: center; /* This ensures rotations happen from the center */
 }
 
 .menu-toggle:hover span {
-    background-color: var(--accent);
+  background-color: var(--accent);
 }
 
 .menu-toggle:hover span:nth-child(2) {
-    translate: -0.5rem 0;
+  translate: -0.5rem 0;
 }
 
 .menu-toggle.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+  transform: translateY(9px) rotate(45deg);
 }
 
 .menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
+  opacity: 0;
+  transform: scaleX(0);
 }
 
 .menu-toggle.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+  transform: translateY(-9px) rotate(-45deg);
 }
 
 .main-nav {
-    background-color: var(--white_1);
-    color: var(--dark);
-    padding: 30px 90px;
-    display: flex;
-    align-items: center;
-    font-weight: 500;
+  background-color: var(--white_1);
+  color: var(--dark);
+  padding: 30px 90px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
 }
 
 .main-nav .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--dark);
-    margin-right: 2em;
-    text-decoration: none;
-    text-align: left;
-    flex-shrink: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--dark);
+  margin-right: 2em;
+  text-decoration: none;
+  text-align: left;
+  flex-shrink: 0;
 }
 
 .nav-content {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .main-nav .nav-list li {
-    display: inline-block;
-    margin-right: 20px;
-    color: var(--dark);
-    font-size: 20px;
+  display: inline-block;
+  margin-right: 20px;
+  color: var(--dark);
+  font-size: 20px;
 }
 
 .main-nav .nav-list li a {
-    color: var(--dark);
-    text-decoration: none;
-    transition: 0.1s;
+  color: var(--dark);
+  text-decoration: none;
+  transition: 0.1s;
 }
 
 .main-nav .nav-list li a:hover {
-    color: var(--accent);
+  color: var(--accent);
 }
 
 .main-nav .nav-list li .active {
-    color: var(--accent);
-    font-weight: bold;
+  color: var(--accent);
+  font-weight: bold;
 }
 
 .main-nav .profile {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .main-nav .profile .profile-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .auth-buttons {
-    display: flex;
-    align-items: center;    
+  display: flex;
+  align-items: center;
+  user-select: none;
 }
 
 .auth-buttons .login {
-    background-color: var(--white_1);
-    color: var(--dark);
-    border: 2px solid var(--dark);
-    padding: 0.8em 1.5em;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 16px;
-    margin-right: 20px;
-    transition: 0.3s;
+  background-color: var(--white_1);
+  color: var(--dark);
+  border: 2px solid var(--dark);
+  padding: 0.8em 1.5em;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-right: 20px;
+  transition: 0.3s;
 }
 
 .auth-buttons .login:hover {
-    background-color: var(--dark);
-    color: var(--white_1);
+  background-color: var(--dark);
+  color: var(--white_1);
 }
 
 .auth-buttons .signup {
-    background-color: var(--accent);
-    color: var(--white_1);
-    padding: 0.8em 1.5em;
-    border: 2px solid var(--accent);
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 16px;
-    transition: 0.3s;
+  background-color: var(--accent);
+  color: var(--white_1);
+  padding: 0.8em 1.5em;
+  border: 2px solid var(--accent);
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s;
 }
 
 .auth-buttons .signup:hover {
-    background-color: var(--dark);
-    border-color: var(--dark);
-    color: var(--white_1);
+  background-color: var(--dark);
+  border-color: var(--dark);
+  color: var(--white_1);
 }
 
-
-
 @media screen and (max-width: 767px) {
-    .main-nav {
-        justify-content: space-between;
-        padding: 2rem 2rem;
-        /* position: relative; */
-    }
-    
-    .menu-toggle {
-        display: flex;
-    }
-    
-    .main-nav .logo {
-        font-size: 1.4rem;
-    }
-    
-    .main-nav .nav-content {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 80px;
-        left: 0;
-        background-color: var(--white_1);
-        z-index: 10;
-        padding: 20px;
-        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    }
-    
-    .main-nav .nav-content.active {
-        display: block;
-    }
+  .main-nav {
+    justify-content: space-between;
+    padding: 2rem 2rem;
+    /* position: relative; */
+  }
 
+  .menu-toggle {
+    display: flex;
+  }
 
-    .auth-buttons {
-        display: none;
-    }
+  .main-nav .logo {
+    font-size: 1.4rem;
+  }
 
-    .main-nav .nav-content .auth-buttons.active {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 0.5rem;
-        width: 100%;
-    }
+  .main-nav .nav-content {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    background-color: var(--white_1);
+    z-index: 10;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
 
-    .auth-buttons .login, .auth-buttons .signup {
-        margin-right: 0;
-        width: 100%;
-    }
-    
-     .main-nav .nav-list li {
-        margin-right: 0;
-        margin-bottom: 15px;
-        font-size: 1.2rem;
-        display: block;
-    }
-    
-    .main-nav .profile .profile-image {
-        width: 40px;
-        height: 40px;
-    }
+  .main-nav .nav-content.active {
+    display: block;
+  }
 
-    .visible {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        
-    }
+  .auth-buttons {
+    display: none;
+  }
 
-    .nav-content.active .profile {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .main-nav .nav-content .auth-buttons.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .auth-buttons .login,
+  .auth-buttons .signup {
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .main-nav .nav-list li {
+    margin-right: 0;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    display: block;
+  }
+
+  .main-nav .profile .profile-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .visible {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-content.active .profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-    .main-nav {
-        padding: 20px 40px;
-    }
+  .main-nav {
+    padding: 20px 40px;
+  }
 }

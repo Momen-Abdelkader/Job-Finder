@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/jobs.css">
-    <link rel="stylesheet" href="../css/nav.css">
-    <link rel="stylesheet" href="../css/search.css">
-    <link rel="stylesheet" href="../css/job-card.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/jobs.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+    <link rel="stylesheet" href="../css/search.css" />
+    <link rel="stylesheet" href="../css/job-card.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
     <title>Jobs</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="nav"></div>
-    <main class="container"> 
-        <div id="search"></div>
-        <div class="jobs-container">
-            <div class="filters" id="filters"></div>
-            <div class="job-postings">
-                <h1>Found <a id="job-count"></a> Job Postings</h1>
-                <div class="job-cards"></div>
-            </div>
+    <main class="container">
+      <div id="search"></div>
+      <div class="jobs-container">
+        <div class="filters" id="filters"></div>
+        <div class="job-postings">
+          <h1>Found <a id="job-count"></a> Job Postings</h1>
+          <div class="job-cards"></div>
         </div>
+      </div>
     </main>
     <script src="../js/nav.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/main.js"></script>
-    <script src="../js/jobs.js"></script>
-</body>
+    <script type="module" src="../js/jobs.js"></script>
+  </body>
 </html>
