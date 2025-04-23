@@ -45,7 +45,8 @@
           <button id="cancel-delete">Cancel</button>
         </div>
       </div>
-      
+
+      <!-- Applicant Job Modal -->
       <div class="modal" id="job-applicants-modal">
         <div class="modal-content">
           <span class="close">&times;</span>
@@ -54,6 +55,78 @@
           <button id="close-applicants-modal">Ok</button>
         </div>
       </div>
+      
+      <!-- Add Job Modal -->
+      <div class="modal" id="add-job-modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Add New Job</h2>
+          <form class="job-form">
+            <div class="form-group">
+              <label for="logo">Select an image to upload:</label>
+              <input type="file" id="logo" name="image" accept="image/*">
+          </div>
+
+            <div class="form-group">
+                <label for="company-name">Company:</label>
+                <input type="text" id="company-name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="job-title">Job Title:</label>
+              <input type="text" id="job-title" required>
+            </div>
+
+            <div class="form-group">
+              <label>Work Type:</label>
+              <div class="radio-group">
+                <label><input type="radio" name="workLocation" value="On-Site" checked> On-Site</label>
+                <label><input type="radio" name="workLocation" value="Remote"> Remote</label>
+                <label><input type="radio" name="workLocation" value="Hybrid"> Hybrid</label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Job Type:</label>
+              <div class="radio-group">
+                <label><input type="radio" name="jobType" value="Full Time" checked> Full Time</label>
+                <label><input type="radio" name="jobType" value="Part Time"> Part Time</label>
+                <label><input type="radio" name="jobType" value="Internship"> Internship</label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Experience Level:</label>
+              <div class="radio-group">
+                <label><input type="radio" name="experience" value="Fresh Graduate" checked>Fresh Graduate</label>
+                <label><input type="radio" name="experience" value="Junior"> Junior</label>
+                <label><input type="radio" name="experience" value="Mid-Level"> Mid-Level</label>
+                <label><input type="radio" name="experience" value="Senior"> Senior</label>
+                <label><input type="radio" name="experience" value="Student"> Student</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="job-salary">Salary:</label>
+              <input type="number" id="job-salary" required pattern="[0-9]*" title="Please enter numbers only" min="0" max="20000" placeholder="$0-20000" required>
+              <small class="error-message" id="salary-error">Please enter numbers only.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="job-location">Location:</label>
+              <input type="text" id="job-location" required>
+            </div>
+
+            <div class="form-group">
+              <label for="job-description">Description:</label>
+              <textarea id="job-description" required></textarea>
+            </div>
+
+            <button type="submit" class="add-job-button" id="add-job-button">Add Job</button>
+          </form>
+        </div>
+      </div>
+
     <script src="../js/nav.js"></script>
     <script src="../js/main.js"></script>
     <script type="module" src="../js/admin.js"></script>
