@@ -1,1 +1,61 @@
 createNav();
+
+document.addEventListener("DOMContentLoaded", () => {
+    const emailInput = document.getElementById("email");
+    const resetBtn = document.getElementById("create_button");
+    const newPasswordSection = document.getElementById("new-password-section");
+    const confirmPasswordSection = document.getElementById("confirm-password-section");
+
+    emailInput.addEventListener("blur", () => {
+        const email = emailInput.value.trim();
+
+        if (email) {
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const matchedUser = users.find(user => user.email === email);
+
+            if (matchedUser) {
+                newPasswordSection.style.display = "block";
+                confirmPasswordSection.style.display = "block";
+            } else {
+                newPasswordSection.style.display = "none";
+                confirmPasswordSection.style.display = "none";
+                alert("No user found with this email.");
+            }
+        }
+    });
+
+    resetBtn.addEventListener("click", () => {
+        const email = emailInput.value.trim();
+        const newPassword = document.getElementById("newPassword").value.trim();
+        const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+        if (!email || !newPassword || !confirmPassword) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+        if (!passwordRegex.test(newPassword)) {
+            alert("Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.");
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const matchedUser = users.find(user => user.email === email);
+
+        if (matchedUser) {
+            matchedUser.password = newPassword;
+            localStorage.setItem("users", JSON.stringify(users));
+            alert("Your password has been reset successfully!");
+            window.location.href = "login.html";
+        } else {
+            alert("No user found with this email.");
+        }
+    });
+});
