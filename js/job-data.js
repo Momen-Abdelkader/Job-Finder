@@ -166,7 +166,10 @@ export const jobData = [
   },
 ];
 
-if (!localStorage.getItem("jobData")) {
+if (
+  !localStorage.getItem("jobData") ||
+  localStorage.getItem("jobData") === "[]" // TODO: remove this line after testing
+) {
   localStorage.setItem("jobData", JSON.stringify(jobData));
 }
 

@@ -19,13 +19,13 @@ function createJobCard(job, isAdmin = false) {
                 ${
                   isAdmin
                     ? `
-                    <a href="#" class="edit-button button" id="${job.id}">Edit</a>
-                    <a href="#" class="applicants-button button" id="${job.id}">Applicants</a>
-                    <a href="#" class="delete-button button" id="${job.id}">Delete</a>
+                    <a class="edit-button button">Edit</a>
+                    <a class="applicants-button button"">Applicants</a>
+                    <a class="delete-button button"">Delete</a>
                 `
                     : `
-                    <a href="#" class="apply-button button" id="${job.id}">Apply Now</a>
-                    <a href="#" class="details-button button" id="${job.id}">Details</a>
+                    <a class="apply-button button"">Apply Now</a>
+                    <a class="details-button button"">Details</a>
                 `
                 }
             </div>
