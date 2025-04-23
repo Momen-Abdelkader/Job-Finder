@@ -1,4 +1,10 @@
-import { jobData } from "./job-data.js";
+import {
+  getJobData,
+  getJobById,
+  updateJob,
+  addJob,
+  deleteJob,
+} from "./job-data.js";
 
 // constants
 const FILTER_CONFIG = [
@@ -46,6 +52,7 @@ const domElements = {
 
 // initialization
 function init() {
+  const jobData = getJobData();
   createNav(false);
   generateFilters();
   setupSalarySlider();

@@ -165,3 +165,38 @@ export const jobData = [
       "Seeking a highly experienced programmer to maintain legacy systems and optimize performance-critical code. Deep understanding of low-level programming is a must.",
   },
 ];
+
+if (!localStorage.getItem("jobData")) {
+  localStorage.setItem("jobData", JSON.stringify(jobData));
+}
+
+export function getJobData() {
+  return JSON.parse(localStorage.getItem("jobData") || "[]");
+}
+
+export function addJob(job) {
+  const jobs = getJobData();
+  job.id = jobs.length ? jobs[jobs.length - 1].id + 1 : 1;
+  jobs.push(job);
+  localStorage.setItem("jobData", JSON.stringify(jobs));
+}
+
+export function updateJob(updatedJob) {
+  const jobs = getJobData();
+  const index = jobs.findIndex((job) => job.id === updatedJob.id);
+  if (index !== -1) {
+    jobs[index] = updatedJob;
+    localStorage.setItem("jobData", JSON.stringify(jobs));
+  }
+}
+
+export function deleteJob(jobId) {
+  const jobs = getJobData();
+  const updatedJobs = jobs.filter((job) => job.id !== jobId);
+  localStorage.setItem("jobData", JSON.stringify(updatedJobs));
+}
+
+export function getJobById(jobId) {
+  const jobs = getJobData();
+  return jobs.find((job) => job.id === jobId);
+}
