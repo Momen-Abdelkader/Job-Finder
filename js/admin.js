@@ -5,6 +5,19 @@ import {
   addJob,
   deleteJob,
 } from "./job-data.js";
+import {
+  getApplications, 
+  getApplicationByJobID,,
+  getApplicationByUserID,
+  getApplicationByID,
+  addApplication,
+  updateApplicationStatus,
+  deleteApplication,
+  getApplicationCountByJobID,
+  getApplicationCountByUserID,
+  getApplicationCount,
+  getApplicationID
+} from "./app-data.js";
 
 createNav(true, true);
 const jobData = getJobData();
@@ -16,9 +29,13 @@ jobData.forEach((job) => {
   setupCardEventHandlers(card, job.id);
 });
 
-function showAddJobModal() {}
+function showAddJobModal() {
+  // TODO: implement
+}
 
-function showEditJobModal(job) {}
+function showEditJobModal(job) {
+  // TODO: implement
+}
 
 function showDeleteJobModal(job) {
   const modal = document.getElementById("delete-job-modal");
@@ -69,4 +86,8 @@ function setupCardEventHandlers(card, jobId) {
       showJobApplicantsModal(job);
     });
   }
+}
+
+function init() {
+  // TODO: implement
 }

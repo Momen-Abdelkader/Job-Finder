@@ -177,6 +177,11 @@ export function getJobData() {
   return JSON.parse(localStorage.getItem("jobData") || "[]");
 }
 
+export function getJobById(jobId) {
+  const jobs = getJobData();
+  return jobs.find((job) => job.id === jobId);
+}
+
 export function addJob(job) {
   const jobs = getJobData();
   job.id = jobs.length ? jobs[jobs.length - 1].id + 1 : 1;
@@ -197,9 +202,4 @@ export function deleteJob(jobId) {
   const jobs = getJobData();
   const updatedJobs = jobs.filter((job) => job.id !== jobId);
   localStorage.setItem("jobData", JSON.stringify(updatedJobs));
-}
-
-export function getJobById(jobId) {
-  const jobs = getJobData();
-  return jobs.find((job) => job.id === jobId);
 }
