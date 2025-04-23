@@ -43,3 +43,11 @@ function createJobCard(job, isAdmin = false) {
 
   return element;
 }
+
+function disableScrolling() {
+  document.body.style.overflow = "hidden";
+}
+
+function enableScrolling() {
+  document.body.style.overflow = "";
+}

@@ -54,13 +54,23 @@ function showDeleteJobModal(job) {
 
   cancelButton.addEventListener("click", () => {
     modal.style.display = "none";
+    enableScrolling();
   });
 
   closeButton.addEventListener("click", () => {
     modal.style.display = "none";
+    enableScrolling();
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+      enableScrolling();
+    }
   });
 
   modal.style.display = "flex";
+  disableScrolling();
 }
 
 function showJobApplicantsModal(job) {
@@ -113,10 +123,12 @@ function showJobApplicantsModal(job) {
 
   closeButton.addEventListener("click", () => {
     modal.style.display = "none";
+    enableScrolling();
   });
 
   okButton.addEventListener("click", () => {
     modal.style.display = "none";
+    enableScrolling();
   });
 
   const statusSelects = modal.querySelectorAll(".applicant-status");
@@ -132,7 +144,15 @@ function showJobApplicantsModal(job) {
     });
   });
 
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+      enableScrolling();
+    }
+  });
+
   modal.style.display = "flex";
+  disableScrolling();
 }
 
 function setupCardEventHandlers(card, jobId) {
