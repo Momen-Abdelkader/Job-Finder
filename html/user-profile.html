@@ -16,134 +16,103 @@
     </header>
 
     <div class="container">
-        
-        <div class="card">
-            <div class="profile-section">
-                <div class="profile-image">
-                    <img src="../assets/temp-profile.webp" alt="User Profile Photo">
-                </div>
-                <div class="profile-info">
-                    <h2>Username</h2>
-                    <p>Role</p>
-                    <button class="edit-button">Edit</button>
-                </div>
+        <div class="sidebar">
+            <div class="user-info">
+                <img src="../assets/temp-profile.webp" alt="user avatar" class="avatar">
+                <div class="user-name">John Doe</div>
+                <div class="user-email">john.doe@example.com</div>
             </div>
+            <ul class="nav-tabs">
+                <li class="tab-link active" data-tab="personal-info">Personal Info</li>
+                <li class="tab-link" data-tab="preferences">Preferences</li>
+                <li class="tab-link" data-tab="job-applications">Job Applications</li>
+            </ul>
         </div>
-        
-        <div class="card">
-            <div class="section-title">Preferences</div>
-            <div class="preferences-list">
-                <div class="preferences-list">
-                    <form class="preferences-form">
-                        <div class="form-group">
-                            <label>Preferred Salary Range ($):</label>
-                            <div class="salary-range">
-                                <input type="number" placeholder="Min" class="salary-input">
-                                <span>-</span>
-                                <input type="number" placeholder="Max" class="salary-input">
-                            </div>
-                        </div>
-            
-                        <div class="form-group">
-                            <label>Experience Level:</label>
-                            <select class="form-select">
-                                <option value="">Select Level</option>
-                                <option>Entry</option>
-                                <option>Mid</option>
-                                <option>Senior</option>
-                                <option>Executive</option>
-                            </select>
-                        </div>
-            
-                        <div class="form-group">
-                            <label>Work Type:</label>
-                            <div class="radio-group">
-                                <label class="radio-option">
-                                    <input type="radio" name="work-type" value="onsite">
-                                    Onsite
-                                </label>
-                                <label class="radio-option">
-                                    <input type="radio" name="work-type" value="remote">
-                                    Remote
-                                </label>
-                                <label class="radio-option">
-                                    <input type="radio" name="work-type" value="hybrid">
-                                    Hybrid
-                                </label>
-                            </div>
-                        </div>
-            
-                        <div class="form-group">
-                            <label>Employment Type:</label>
-                            <div class="radio-group">
-                                <label class="radio-option">
-                                    <input type="radio" name="employment-type" value="full-time">
-                                    Full-time
-                                </label>
-                                <label class="radio-option">
-                                    <input type="radio" name="employment-type" value="part-time">
-                                    Part-time
-                                </label>
-                            </div>
-                        </div>
-            
-                        <div class="form-group">
-                            <label>Preferred Keywords:</label>
-                            <input type="text" class="keywords-input" 
-                                   placeholder="Engineering, Design, Marketing">
-                        </div>
-            
-                        <button type="submit" class="edit-button save-button">Save Preferences</button>
-                    </form>
+
+        <div class="content">
+            <div id="personal-info" class="tab-content active">
+                <h1>Personal Information</h1>
+
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" value="john.doe@example.com" disabled>
                 </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <div class="section-title">List of Jobs Applied To</div>
-            <div class="jobs-list">
-                <div class="job-card">
-                    <div class="status-badge">Pending</div>
-                    <div class="job-header">
-                        <h3 class="company-name">Google</h3>
-                        <h2 class="job-title">Junior Software Engineer</h2>
-                        <p class="job-location">Mountain View, CA</p>
-                    </div>
-                    
-                    <div class="job-tags">
-                        <span class="job-tag">On-Site</span>
-                        <span class="job-tag">Full Time</span>
-                        <span class="job-tag">No Experience</span>
-                        <span class="job-tag">$4000/month</span>
-                    </div>
-                    
-                    <div class="job-actions">
-                        <button class="details-button">Details</button>
-                    </div>
+
+                <div class="input-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" value="John Doe">
                 </div>
-                <div class="job-card">
-                    <div class="status-badge">Pending</div>
-                    <div class="job-header">
-                        <h3 class="company-name">Google</h3>
-                        <h2 class="job-title">Junior Software Engineer</h2>
-                        <p class="job-location">Mountain View, CA</p>
-                    </div>
-                    
-                    <div class="job-tags">
-                        <span class="job-tag">On-Site</span>
-                        <span class="job-tag">Full Time</span>
-                        <span class="job-tag">No Experience</span>
-                        <span class="job-tag">$4000/month</span>
-                    </div>
-                    
-                    <div class="job-actions">
-                        <button class="details-button">Details</button>
-                    </div>
+
+
+
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" value="55555555555555">
                 </div>
+
+                <div class="input-group">
+                    <label for="role">Role</label>
+                    <input type="text" id="role" value="Software Engineer">
+                </div>
+
+                <button class="btn">Save Changes</button>
             </div>
+
+            <div id="preferences" class="tab-content">
+                <h1>Preferences</h1>
+
+                <div class="input-group">
+                    <label>Experience Level</label>
+                    <select id="experience-level">
+                        <option>Student</option>
+                        <option>Fresh Graduate</option>
+                        <option>Mid-Level</option>
+                        <option>Senior</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Employment Type</label>
+                    <select id="experience-level">
+                        <option>On-site</option>
+                        <option>Remote</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Work Time</label>
+                    <select id="experience-level">
+                        <option>Full time</option>
+                        <option>Part time</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Industry/Interests</label>
+
+                    <div class="tags-container" id="interests-tags">
+                        <span class="interest-tag">Internships <span class="tag-remove">x</span></span>
+                        <span class="interest-tag">Software Engineering <span class="tag-remove">x</span></span>
+                        <span class="interest-tag">AI & Machine Learning <span class="tag-remove">x</span></span>
+                        <span class="interest-tag">Random Bullshit <span class="tag-remove">x</span></span>
+                        <span class="interest-tag">Random Bullshit <span class="tag-remove">x</span></span>
+                        <span class="interest-tag">Random Bullshit <span class="tag-remove">x</span></span>
+                    </div>
+                    <div class="add-tag">
+                        <input type="text" id="new-tag" class="add-tag-input" placeholder="Add keyword">
+                    </div>
+
+                    <button class="btn">Save Preferences</button>
+                </div>  
             </div>
-        </div>
+
+            <div id="job-applications" class="tab-content">
+                <h1>Job Applications</h1>
+            </div>
+
+        </div> 
     </div>
+
     <script src="../js/nav.js"></script>
     <script src="../js/user-profile.js"></script>
 </body>
