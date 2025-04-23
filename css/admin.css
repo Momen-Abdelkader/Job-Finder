@@ -50,6 +50,27 @@ button:active {
   background-color: var(--accent-dark);
 }
 
+#add-job-button {
+  background-color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--white_1);
+  border: none;
+  padding: 1em 2em;
+  border-radius: 8px;
+  transition: 0.1s;
+  text-align: center;
+}
+
+#add-job-button:hover {
+  background-color: var(--accent-dark);
+}
+
+.lab {
+  font-weight: bold;
+  font-size: medium;
+}
+
 .job-cards {
   margin-top: 2rem;
   display: grid;
@@ -58,11 +79,15 @@ button:active {
   gap: 2rem;
 }
 
+input, textarea {
+  border-radius: 10px;
+  border: none;
+}
 
 /* #job-salary {
     border-color: #ff4444;
   } */
-   
+
 .error-message {
   color: red;
   display: none;
