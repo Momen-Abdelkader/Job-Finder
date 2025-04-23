@@ -25,11 +25,18 @@ import {
 function showAddJobModal() {
   const modal = document.querySelector('#add-job-modal');
   const closeButton = document.querySelector('#add-job-modal .close');
+  const cancelButton = document.querySelector('#cancel');
   const jobForm = document.querySelector('.job-form');
 
   modal.querySelector("#add-job-button").innerHTML = "Add Job";
 
   closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+    jobForm.reset();
+    enableScrolling();
+  });
+
+  cancelButton.addEventListener("click", () => {
     modal.style.display = "none";
     jobForm.reset();
     enableScrolling();
@@ -41,20 +48,6 @@ function showAddJobModal() {
     const workLocation = document.querySelector('input[name="workLocation"]:checked').value;
     const jobType = document.querySelector('input[name="jobType"]:checked').value;
     const experience = document.querySelector('input[name="experience"]:checked').value;
-
-    const salaryInput = document.getElementById('job-salary');
-    const salaryError = document.getElementById('salary-error');
-    const salaryValue = salaryInput.value.trim();
-  
-    if (!/^\d+$/.test(salaryValue)) {
-      salaryError.style.display = 'block';
-      salaryInput.style.border = '2px solid';
-      salaryInput.style.borderColor = 'rgb(250, 50, 50)';
-      salaryInput.focus();
-      return; 
-    } else {
-      salaryError.style.display = 'none';
-    }
 
     const jobArr = getJobData();
     let maxID = 0;
@@ -69,7 +62,7 @@ function showAddJobModal() {
       company: jobForm.querySelector("#company-name").value,
       title: jobForm.querySelector('#job-title').value,
       location: jobForm.querySelector('#job-location').value,
-      salary:  "$" + salaryValue + "/month",
+      salary:  "$" + jobForm.querySelector('#job-salary').value + "/month",
       jobType: jobType,
       workMode: workLocation,
       skills: ["C++", "Debugging", "Batates Soury"], // <-- Temp Skills
@@ -92,10 +85,10 @@ function showAddJobModal() {
 
 }
 
-function showEditJobModal(job) { // TODO: IMplm
+function showEditJobModal(job) { 
   const modal = document.querySelector('#add-job-modal');
   const closeButton = document.querySelector('#add-job-modal .close');
-  const cancelButton = document.querySelector('#cancel-edit');
+  const cancelButton = document.querySelector('#cancel');
   
   let jobForm = document.querySelector('.job-form');
   let workLocation = document.querySelector(`input[name="workLocation"][value=${job.workMode}]`);
@@ -132,20 +125,6 @@ function showEditJobModal(job) { // TODO: IMplm
     const workLocation = document.querySelector('input[name="workLocation"]:checked').value;
     const jobType = document.querySelector('input[name="jobType"]:checked').value;
     const experience = document.querySelector('input[name="experience"]:checked').value;
-
-    const salaryInput = document.getElementById('job-salary');
-    const salaryError = document.getElementById('salary-error');
-    const salaryValue = salaryInput.value.trim();
-  
-    if (!/^\d+$/.test(salaryValue)) {
-      salaryError.style.display = 'block';
-      salaryInput.style.border = '2px solid';
-      salaryInput.style.borderColor = 'rgb(250, 50, 50)';
-      salaryInput.focus();
-      return; 
-    } else {
-      salaryError.style.display = 'none';
-    }
     
     const newJob = {
       id: job.id,
@@ -153,7 +132,7 @@ function showEditJobModal(job) { // TODO: IMplm
       company: job.company,
       title: jobForm.querySelector('#job-title').value,
       location: jobForm.querySelector('#job-location').value,
-      salary:  "$" + salaryValue + "/month",
+      salary:  "$" + jobForm.querySelector('#job-salary').value + "/month",
       jobType: jobType,
       workMode: workLocation,
       skills: ["C++", "Debugging", "Batates Soury"], // <-- Temp Skills

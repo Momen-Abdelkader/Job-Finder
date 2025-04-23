@@ -79,18 +79,6 @@ button:active {
   gap: 2rem;
 }
 
-/* #job-salary {
-    border-color: #ff4444;
-  } */
-
-.error-message {
-  color: red;
-  display: none;
-  font-size: 0.2em;
-  margin-top: 5px;
-  display: none;
-}
-
 .modal {
   position: fixed;
   top: 0;
@@ -101,9 +89,9 @@ button:active {
   display: none;
   justify-content: center;
   align-items: center;
-  padding: 2rem; /* allows spacing around modal on small screens */
+  padding: 2rem; 
   box-sizing: border-box;
-  overflow: hidden; /* prevents background scrolling */
+  overflow: hidden; 
 }
 
 .modal-content {
@@ -113,7 +101,7 @@ button:active {
   padding: 20px;
   width: 80%;
   max-width: 600px;
-  border-radius: 1rem;
+  border-radius: 8px;
 }
 
 .radio-group {
@@ -157,9 +145,13 @@ label {
 
 input, textarea {
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border-radius: 10px;
+    padding: 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+#logo {
   border: none;
 }
 
@@ -208,7 +200,7 @@ textarea {
   background-color: var(--dark-red);
 }
 
-#cancel-delete, #cancel-edit {
+#cancel-delete, #cancel {
   background-color: var(--white_2);
   font-size: 1rem;
   font-weight: bold;
@@ -219,7 +211,7 @@ textarea {
   transition: 0.1s;
 }
 
-#cancel-delete:hover, #cancel-edit:hover {
+#cancel-delete:hover, #cancel:hover {
   background-color: var(--white_4);
 }
 
