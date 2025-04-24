@@ -53,9 +53,9 @@ const FILTER_CONFIG = [
 
 const MIN_SALARY_GAP = 100;
 
-const jobData = getJobData();
-
 const user = getCurrentUser();
+
+let jobData = getJobData();
 
 // DOM
 const domElements = {
@@ -181,6 +181,8 @@ function setupSalarySlider() {
 
 // rendering job cards
 function renderFilteredJobs(jobs) {
+  jobs = jobs.filter((job) => !hasUserApplied(job.id, user.id));
+
   domElements.jobCardsContainer.innerHTML = "";
   jobs.forEach((job) => {
     const card = createJobCard(job);
@@ -287,7 +289,8 @@ function clearFilters() {
 }
 
 function updateFilterCounts() {
-  // Get search-filtered jobs
+  jobData = jobData.filter((job) => !hasUserApplied(job.id, user.id));
+
   const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
   const filteredBySearch = searchTerm
     ? jobData.filter(
@@ -442,6 +445,8 @@ function showApplyModal(job) {
       applyToJob(job.id, user.id);
       successMessage("Application submitted successfully!");
       closeModal();
+      renderFilteredJobs(jobData);
+      updateFilterCounts();
     }
   });
 }
