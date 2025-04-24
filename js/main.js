@@ -1,4 +1,6 @@
-function createJobCard(job, isAdmin = false) {
+import { getJobById } from "./job-data.js";
+
+export function createJobCard(job, isAdmin = false) {
   const html = `
         <div class="job-card">
             <div class="company-info">
@@ -24,8 +26,8 @@ function createJobCard(job, isAdmin = false) {
                     <a class="delete-button button"">Delete</a>
                 `
                     : `
-                    <a class="apply-button button" onclick="showApplyModal(${job})">Apply Now</a>
-                    <a class="details-button button" onclick="showDetailsModal(${job})">Details</a>
+                    <a class="apply-button button" >Apply Now</a>
+                    <a class="details-button button" >Details</a>
                 `
                 }
             </div>
@@ -34,6 +36,13 @@ function createJobCard(job, isAdmin = false) {
 
   const template = document.createElement("template");
   template.innerHTML = html.trim();
+
+  template.dataset.id=job.id;
+
+  if(!isAdmin){
+    const detailsbutton = template.querySelector(".details-button");
+    detailsbutton.addEventListener("click",(e)=>{showDetailsModal(job)});
+  }
 
   const element = template.content.firstChild;
 

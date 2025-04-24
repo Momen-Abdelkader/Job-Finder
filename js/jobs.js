@@ -5,7 +5,9 @@ import {
   addJob,
   deleteJob,
 } from "./job-data.js";
-
+import {
+  createJobCard,
+}from "./main.js";
 // constants
 const FILTER_CONFIG = [
   {
@@ -360,3 +362,164 @@ function restoreSearchTerm() {
 
 // document loaded
 document.addEventListener("DOMContentLoaded", init);
+
+// // Add this function to create job cards with click handlers
+// function createJobCard(job) {
+//   const card = document.createElement("div");
+//   card.classList.add("job-card");
+//   card.dataset.id = job.id;
+
+//   card.innerHTML = `
+//     <div class="company-info">
+//       <img src="${job.logo}" alt="${job.company} logo" class="company-logo">
+//       <h2 class="company-name">${job.company}</h2>
+//     </div>
+//     <div class="job-info">
+//       <h4 class="job-title">${job.title}</h4>
+//       <p class="job-location">${job.location}</p>
+//       <p class="job-salary">${job.salary}</p>
+//     </div>
+//     <ul class="tags">
+//       <li class="tag">${job.jobType}</li>
+//       <li class="tag">${job.workMode}</li>
+//       <li class="tag">${job.experienceLevel}</li>
+
+//     </ul>
+//     <div class="buttons">
+//       <a href="#" class="button apply-button">Apply Now</a>
+//       <a href="#" class="button details-button">View Details</a>
+//     </div>
+//   `;
+
+//   // Add click event for the entire card
+//   card.addEventListener("click", (e) => {
+//     if (e.target.classList.contains("button")) {
+//       return;
+//     }
+//     showDetailsModal(job);
+//   });
+
+//   // Add click event for details button
+//   card.querySelector(".details-button").addEventListener("click", (e) => {
+//     e.preventDefault();
+//     showDetailsModal(job);
+//   });
+
+//   return card;
+// }
+
+function showDetailsModal(job) {
+  const modalContainer = document.createElement('div');
+  modalContainer.id = 'modal-container';
+  
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  
+  // Format the skills as HTML list items
+  const skillsHTML = job.skills.map(skill => `<li class="tag">${skill}</li>`).join('');
+  
+  modal.innerHTML = `
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <div class="modal-header">
+        <div class="company-info-large">
+          <img src="${job.logo}" alt="${job.company} logo" class="company-logo-large">
+          <div>
+            <h2 class="company-name">${job.company}</h2>
+            <h1 class="job-title-large">${job.title}</h1>
+            <p class="job-location">${job.location}</p>
+            <p class="job-posted">Posted: ${new Date(job.postedAt).toLocaleDateString()}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="job-highlights">
+          <div class="highlight-item">
+            <h3>Salary</h3>
+            <p>${job.salary}</p>
+          </div>
+          <div class="highlight-item">
+            <h3>Job Type</h3>
+            <p>${job.jobType}</p>
+          </div>
+          <div class="highlight-item">
+            <h3>Experience</h3>
+            <p>${job.experienceLevel}</p>
+          </div>
+          <div class="highlight-item">
+            <h3>Work Mode</h3>
+            <p>${job.workMode}</p>
+          </div>
+        </div>
+        
+        <div class="job-section">
+          <h3>Job Description</h3>
+          <p>${job.description}</p>
+        </div>
+        
+        <div class="job-section">
+          <h3>Skills Required</h3>
+          <ul class="tags">
+            ${skillsHTML}
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="button apply-button large-button">Apply Now</a>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modalContainer);
+  modalContainer.appendChild(modal);
+  
+  // Force reflow to enable transition
+  void modalContainer.offsetWidth;
+  
+  // Activate modal
+  modalContainer.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  // Close handlers
+  const closeModal = () => {
+    modalContainer.classList.remove('active');
+    setTimeout(() => {
+      document.body.removeChild(modalContainer);
+      document.body.style.overflow = '';
+    }, 300);
+  };
+
+  modal.querySelector('.close-button').addEventListener('click', closeModal);
+  modalContainer.addEventListener('click', (e) => {
+    if (e.target === modalContainer) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+}
+
+// Helper function to format date
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+}
+
+function closeModal() {
+  const modal = document.querySelector(".modal");
+  if (modal) {
+    modal.classList.remove("active");
+    setTimeout(() => {
+      document.getElementById("modal-container").innerHTML = "";
+      document.body.style.overflow = ""; // Re-enable scrolling
+    }, 300);
+    
+    // Remove ESC key event listener
+    document.removeEventListener("keydown", handleEscKey);
+  }
+}
+
+function handleEscKey(e) {
+  if (e.key === "Escape") {
+    closeModal();
+  }
+}
