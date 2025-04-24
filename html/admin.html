@@ -63,16 +63,6 @@
           <h2>Add New Job</h2>
           <form class="job-form">
             <div class="form-group">
-              <label class="lab" for="logo">Select an image to upload:</label>
-              <input type="file" id="logo" name="image" accept="image/*">
-          </div>
-
-            <div class="form-group">
-                <label class="lab" for="company-name">Company:</label>
-                <input type="text" id="company-name" required>
-            </div>
-
-            <div class="form-group">
               <label class="lab" for="job-title">Job Title:</label>
               <input type="text" id="job-title" required>
             </div>
@@ -98,18 +88,17 @@
             <div class="form-group">
               <label class="lab">Experience Level:</label>
               <div class="radio-group">
-                <label><input type="radio" name="experience" value="Fresh Graduate" checked>Fresh Graduate</label>
+                <label><input type="radio" name="experience" value="Student" checked> Student</label>
+                <label><input type="radio" name="experience" value="Fresh Graduate">Fresh Graduate</label>
                 <label><input type="radio" name="experience" value="Junior"> Junior</label>
                 <label><input type="radio" name="experience" value="Mid-Level"> Mid-Level</label>
                 <label><input type="radio" name="experience" value="Senior"> Senior</label>
-                <label><input type="radio" name="experience" value="Student"> Student</label>
               </div>
             </div>
 
             <div class="form-group">
               <label class="lab" for="job-salary">Salary:</label>
-              <input type="number" id="job-salary" required pattern="[0-9]*" title="Please enter numbers only" min="0" max="20000" placeholder="$0-20000" required>
-              <small class="error-message" id="salary-error">Please enter numbers only.</small>
+              <input type="number" id="job-salary" required pattern="^(0|[1-9]\d*)$" min="0" max="20000" placeholder="$0-20000" required>
             </div>
 
             <div class="form-group">
@@ -121,14 +110,15 @@
               <label class="lab" for="job-description">Description:</label>
               <textarea id="job-description" required></textarea>
             </div>
-
-            <button type="submit" class="add-job-button" id="add-job-button">Add Job</button>
+            <div class="button-container">
+              <button type="submit" class="add-job-button" id="add-job-button">Add Job</button>
+              <button id="cancel">Cancel</button>
+            </div>
           </form>
         </div>
       </div>
 
-    <script src="../js/nav.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../js/main.js" type="module"></script>
     <script type="module" src="../js/admin.js"></script>
   </body>
 </html>

@@ -1,26 +1,36 @@
-createNav(false);
+import { getCurrentUser } from "./auth.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.querySelector('.search-input');
-    const findButton = document.querySelector('.find-button');
+function handleUnauthUser() {
+  const user = getCurrentUser();
+  if (user.role === "Admin") {
+    alert("You are not authorized to view this page.");
+    window.location.href = "admin.html";
+  }
+}
 
-    function handleSearch() {
-        const searchTerm = searchInput.value.trim();
-        if (searchTerm) {
-            localStorage.setItem('searchTerm', searchTerm);
-            window.location.href = 'jobs.html';
-        }
-    }
+document.addEventListener("DOMContentLoaded", () => {
+  handleUnauthUser();
 
-    if (findButton) {
-        findButton.addEventListener('click', handleSearch);
+  const searchInput = document.querySelector(".search-input");
+  const findButton = document.querySelector(".find-button");
+
+  function handleSearch() {
+    const searchTerm = searchInput.value.trim();
+    if (searchTerm) {
+      localStorage.setItem("searchTerm", searchTerm);
+      window.location.href = "jobs.html";
     }
-    
-    if (searchInput) {
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                handleSearch();
-            }
-        });
-    }
+  }
+
+  if (findButton) {
+    findButton.addEventListener("click", handleSearch);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    });
+  }
 });

@@ -3,6 +3,7 @@ export const jobData = [
     id: 1,
     logo: "../assets/google.png",
     company: "Google",
+    companyId: 1001,
     title: "Junior Software Engineer",
     location: "Mountain View, CA",
     salary: "$4000/month",
@@ -18,6 +19,7 @@ export const jobData = [
     id: 2,
     logo: "../assets/microsoft.png",
     company: "Microsoft",
+    companyId: 1002,
     title: "Intern - Software Developer",
     location: "Redmond, WA",
     salary: "$2000/month",
@@ -33,6 +35,7 @@ export const jobData = [
     id: 3,
     logo: "../assets/linkedin.png",
     company: "LinkedIn",
+    companyId: 1003,
     title: "Fresh - Frontend Developer React.js",
     location: "Imbaba, Giza",
     salary: "$52/month",
@@ -48,6 +51,7 @@ export const jobData = [
     id: 4,
     logo: "../assets/amazon.png",
     company: "Amazon",
+    companyId: 1004,
     title: "Senior - AI Engineer",
     location: "Hawamdeya, Dawla",
     salary: "$5000/month",
@@ -63,6 +67,7 @@ export const jobData = [
     id: 5,
     logo: "../assets/apple.png",
     company: "Apple",
+    companyId: 1005,
     title: "iOS Developer",
     location: "Marg, Cairo",
     salary: "$6000/month",
@@ -78,6 +83,7 @@ export const jobData = [
     id: 6,
     logo: "../assets/facebook.png",
     company: "Meta",
+    companyId: 1006,
     title: "Frontend Developer",
     location: "Helmeyat Alzaytoon, Cairo",
     salary: "$5500/month",
@@ -93,6 +99,7 @@ export const jobData = [
     id: 7,
     logo: "../assets/netflix.png",
     company: "Netflix",
+    companyId: 1007,
     title: "Data Engineer",
     location: "Fayoum, Hassan",
     salary: "$7000/month",
@@ -108,6 +115,7 @@ export const jobData = [
     id: 8,
     logo: "../assets/tesla.png",
     company: "Tesla",
+    companyId: 1008,
     title: "Software Engineer",
     location: "Om Khenan, Hawamdeya",
     salary: "$4500/month",
@@ -123,6 +131,7 @@ export const jobData = [
     id: 9,
     logo: "../assets/uber.png",
     company: "Uber",
+    companyId: 1009,
     title: "Mobile Developer",
     location: "San Francisco, CA",
     salary: "$4800/month",
@@ -138,6 +147,7 @@ export const jobData = [
     id: 10,
     logo: "../assets/Google.png",
     company: "Google",
+    companyId: 1001,
     title: "Web Developer",
     location: "San Francisco, CA",
     salary: "$4200/month",
@@ -153,6 +163,7 @@ export const jobData = [
     id: 11,
     logo: "../assets/UnderStair.png",
     company: "Under Stair",
+    companyId: 10010,
     title: "Programmer",
     location: "October, Giza",
     salary: "$200/month",
@@ -175,6 +186,11 @@ if (
 
 export function getJobData() {
   return JSON.parse(localStorage.getItem("jobData") || "[]");
+}
+
+export function getJobsByCompany(companyId) {
+  const jobs = getJobData();
+  return jobs.filter((job) => job.companyId === companyId);
 }
 
 export function getJobById(jobId) {

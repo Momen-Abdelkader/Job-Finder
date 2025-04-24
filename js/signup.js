@@ -1,103 +1,102 @@
-createNav();
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+  registerUser,
+  googleAuth,
+  isUserLoggedIn,
+  isUserAdmin,
+} from "./auth.js";
 
-function doTheThing() {
-    alert("Account is created successfully !");
+function authValidation() {
+  if (isUserLoggedIn()) {
+    alert("You are already logged in.");
+    if (isUserAdmin()) {
+      window.location.href = "admin.html";
+    } else {
+      window.location.href = "home.html";
+    }
+  }
 }
-
-function doTheThing2() {
-    alert("Google Account is selected successfully !");
-}
-
-document.getElementById("use_button").addEventListener("click", doTheThing2);
 
 document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll(".toggle-button");
-    const companySection = document.querySelector(".Company_name");
-    const createButton = document.getElementById("create_button");
-    const adminBtn = document.getElementById("AdminBtn");
-    const userBtn = document.getElementById("UserBtn");
-    const useButton = document.getElementById("use_button");
+  authValidation();
+  // DOM
+  const buttons = document.querySelectorAll(".toggle-button");
+  const companySection = document.querySelector(".Company_name");
+  const createButton = document.getElementById("create_button");
+  const useButton = document.getElementById("use_button");
+  const nameInput = document.querySelector(
+    'input[placeholder="Enter your name"]'
+  );
+  const emailInput = document.querySelector(
+    'input[placeholder="Enter your email"]'
+  );
+  const passwordInput = document.querySelector(
+    'input[placeholder="Enter your password"]'
+  );
+  const confirmPasswordInput = document.querySelector(
+    'input[placeholder="Confirm password"]'
+  );
+  const companyNameInput = document.querySelector(
+    'input[placeholder="Enter your company name"]'
+  );
 
-    let role = "Admin";
+  // role
+  let role = "Admin";
 
-    buttons.forEach(button => {
-        button.addEventListener("click", () => {
-            buttons.forEach(btn => btn.classList.remove("active"));
-            button.classList.add("active");
-
-            if (button.id === "AdminBtn") {
-                role = "Admin";
-                companySection.style.display = "block";
-            } else {
-                role = "User";
-                companySection.style.display = "none";
-            }
-        });
+  // toggle role buttons
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      buttons.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+      role = button.id === "AdminBtn" ? "Admin" : "User";
+      companySection.style.display = role === "Admin" ? "block" : "none";
     });
+  });
 
-    createButton.addEventListener("click", () => {
-        const name = document.querySelector('input[placeholder="Enter your name"]').value.trim();
-        const email = document.querySelector('input[placeholder="Enter your email"]').value.trim();
-        const password = document.querySelector('input[placeholder="Enter your password"]').value.trim();
-        const confirmPassword = document.querySelector('input[placeholder="Confirm password"]').value.trim();
-        const companyName = document.querySelector('input[placeholder="Enter your company name"]').value.trim();
+  // signup
+  createButton.addEventListener("click", () => {
+    try {
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+      const confirmPassword = confirmPasswordInput.value.trim();
+      const companyName = companyNameInput.value.trim();
 
-        const nameRegex = /^[a-zA-Z ]{2,}$/;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const passwordRegex = /^[a-zA-Z0-9]{8,}$/;
+      // validation
+      if (!validateName(name))
+        throw new Error(
+          "Please enter a valid name (only letters, min 2 characters)."
+        );
+      if (!validateEmail(email))
+        throw new Error("Please enter a valid email address.");
+      if (!validatePassword(password))
+        throw new Error(
+          "Password must be at least 8 characters and alphanumeric."
+        );
+      if (password !== confirmPassword)
+        throw new Error("Passwords do not match.");
+      if (role === "Admin" && !companyName.trim())
+        throw new Error("Please enter a company name.");
 
+      // add user to local storage
+      registerUser({ name, email, password, role, companyName });
 
-        if (!nameRegex.test(name)) {
-            alert("Please enter a valid name (only letters, min 2 characters).");
-            return;
-        }
+      alert("Account created successfully!");
+      window.location.href = "login.html";
+    } catch (error) {
+      alert(error.message);
+    }
+  });
 
-        if (!emailRegex.test(email)) {
-            alert("Please enter a valid email address.");
-            return;
-        }
-
-        if (!passwordRegex.test(password)) {
-            alert("Password must be at least 6 characters, include letters and numbers.");
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            alert("Passwords do not match.");
-            return;
-        }
-
-        if (role === "Admin" && companyName.trim() === "") {
-            alert("Please enter a company name.");
-            return;
-        }
-
-        const userData = {
-            name,
-            email,
-            password,
-            role,
-            companyName: role === "Admin" ? companyName : null
-        };
-
-        let users = JSON.parse(localStorage.getItem("users")) || [];
-        const emailExists = users.some(user => user.email === email);
-        if (emailExists) {
-            alert("User with this email already exists.");
-            return;
-        }
-
-        users.push(userData);
-        localStorage.setItem("users", JSON.stringify(users));
-
-        alert("Account created successfully!");
-        window.location.href = "login.html";
-    });
-
-    useButton.addEventListener("click", () => {
-        alert("Google Account is selected successfully !");
-    });
+  // google auth
+  useButton.addEventListener("click", () => {
+    try {
+      googleAuth();
+      alert("Google Account is selected successfully!");
+    } catch (error) {
+      alert(error.message);
+    }
+  });
 });
-
-
-    

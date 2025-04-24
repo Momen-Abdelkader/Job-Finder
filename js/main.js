@@ -1,4 +1,10 @@
-function createJobCard(job, isAdmin = false) {
+import { getCurrentUser } from "./auth.js";
+
+import { getJobById } from "./job-data.js";
+
+import { createNav } from "./nav.js";
+
+export function createJobCard(job, isAdmin = false) {
   const html = `
         <div class="job-card">
             <div class="company-info">
@@ -24,8 +30,8 @@ function createJobCard(job, isAdmin = false) {
                     <a class="delete-button button"">Delete</a>
                 `
                     : `
-                    <a class="apply-button button"">Apply Now</a>
-                    <a class="details-button button"">Details</a>
+                    <a class="apply-button button">Apply Now</a>
+                    <a class="details-button button">Details</a>
                 `
                 }
             </div>
@@ -34,6 +40,8 @@ function createJobCard(job, isAdmin = false) {
 
   const template = document.createElement("template");
   template.innerHTML = html.trim();
+
+  template.dataset.id = job.id;
 
   const element = template.content.firstChild;
 
@@ -44,10 +52,45 @@ function createJobCard(job, isAdmin = false) {
   return element;
 }
 
-function disableScrolling() {
+export function disableScrolling() {
   document.body.style.overflow = "hidden";
 }
 
-function enableScrolling() {
+export function enableScrolling() {
   document.body.style.overflow = "";
 }
+
+export function successMessage(message) {
+  const messageContainer = document.createElement("div");
+  messageContainer.className = "message-container success";
+  messageContainer.innerHTML = `<p>${message}</p>`;
+  document.body.appendChild(messageContainer);
+
+  setTimeout(() => {
+    messageContainer.classList.add("hide");
+    messageContainer.addEventListener("transitionend", () => {
+      messageContainer.remove();
+    });
+  }, 3000);
+}
+
+export function failMessage(message) {
+  const messageContainer = document.createElement("div");
+  messageContainer.className = "message-container fail";
+  messageContainer.innerHTML = `<p>${message}</p>`;
+  document.body.appendChild(messageContainer);
+
+  setTimeout(() => {
+    messageContainer.classList.add("hide");
+    messageContainer.addEventListener("transitionend", () => {
+      messageContainer.remove();
+    });
+  }, 3000);
+}
+
+// create navigation
+document.addEventListener("DOMContentLoaded", () => {
+  const currentUser = getCurrentUser();
+  console.log(currentUser);
+  createNav(currentUser, currentUser?.role === "Admin");
+});
