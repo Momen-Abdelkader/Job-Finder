@@ -74,7 +74,7 @@ function showAddJobModal() {
 
     const newJob = {
       id: maxID + 1,
-      logo: jobForm.querySelector("#logo").value, // TODO: implement profile image link
+      logo: "../assets/temp-profile.webp", // TODO: implement profile image link
       company: user.companyName,
       companyId: user.id,
       title: jobForm.querySelector("#job-title").value,
@@ -116,8 +116,6 @@ function showEditJobModal(job) {
     'input[name="experience"][value="' + job.experienceLevel + '"]'
   );
 
-  jobForm.querySelector("#logo").src = job.logo;
-  jobForm.querySelector("#company-name").value = job.company;
   jobForm.querySelector("#job-title").value = job.title;
   jobForm.querySelector("#job-location").value = job.location;
   jobForm.querySelector("#job-salary").value = job.salary.replace(/\D/g, "");
@@ -126,7 +124,7 @@ function showEditJobModal(job) {
   jobType.checked = true;
   experience.checked = true;
 
-  modal.querySelector("#add-job-button").innerHTML = "Edit Job";
+  modal.querySelector("#add-job-button").innerHTML = "Confirm";
 
   closeButton.addEventListener("click", () => {
     modal.style.display = "none";
