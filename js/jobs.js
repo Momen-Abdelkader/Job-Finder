@@ -6,9 +6,11 @@ import {
   deleteJob,
 } from "./job-data.js";
 
-import { getCurrentUser } from "./auth.js";
+import { hasUserApplied, addApplication, applyToJob } from "./app-data.js";
 
-import { createJobCard } from "./main.js";
+import { getCurrentUser, isUserAdmin, isUserLoggedIn } from "./auth.js";
+
+import { createJobCard, enableScrolling, disableScrolling } from "./main.js";
 
 // constants
 const FILTER_CONFIG = [
@@ -174,9 +176,22 @@ function setupSalarySlider() {
 // rendering job cards
 function renderFilteredJobs(jobs) {
   domElements.jobCardsContainer.innerHTML = "";
-  jobs.forEach((job) =>
-    domElements.jobCardsContainer.appendChild(createJobCard(job))
-  );
+  jobs.forEach((job) => {
+    const card = createJobCard(job);
+    card.querySelector(".apply-button").addEventListener("click", () => {
+      if (isUserLoggedIn()) {
+        showApplyModal(job);
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    card.querySelector(".details-button").addEventListener("click", () => {
+      showDetailsModal(job);
+    });
+
+    domElements.jobCardsContainer.appendChild(card);
+  });
   domElements.jobCount.textContent = jobs.length;
 }
 
@@ -347,6 +362,40 @@ function handleApplyFilters() {
 
   renderFilteredJobs(filtered);
 }
+
+function showApplyModal(job) {
+  const modal = document.getElementById("apply-modal");
+  const closeButton = document.querySelector("#apply-modal .close");
+  const applyButton = modal.querySelector(".apply-button");
+  const cancelButton = modal.querySelector(".cancel-button");
+
+  applyButton.addEventListener("click", () => {
+    if (hasUserApplied(job.id, user.id)) {
+      alert("You have already applied for this job.");
+      // TODO: handle this
+    } else {
+      applyToJob(job.id, user.id);
+      // showAppliedNotification(); // TODO: implement this
+      modal.style.display = "none";
+      enableScrolling();
+    }
+  });
+
+  cancelButton.addEventListener("click", () => {
+    modal.style.display = "none";
+    enableScrolling();
+  });
+
+  closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+    enableScrolling();
+  });
+
+  modal.style.display = "flex";
+  disableScrolling();
+}
+
+function showDetailsModal() {}
 
 // setup
 function setupEventListeners() {

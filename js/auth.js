@@ -24,6 +24,16 @@ function clearCurrentUser() {
   localStorage.removeItem("currentUser");
 }
 
+function isUserLoggedIn() {
+  const user = getCurrentUser();
+  return user !== null && user !== undefined && user !== "";
+}
+
+function isUserAdmin() {
+  const user = getCurrentUser();
+  return isUserLoggedIn() && user.role === "Admin";
+}
+
 // validation Functions
 function validateName(name) {
   return NAME_REGEX.test(name);
@@ -80,6 +90,8 @@ function googleAuth() {
 
 export {
   getCurrentUser,
+  isUserAdmin,
+  isUserLoggedIn,
   validateName,
   validateEmail,
   validatePassword,

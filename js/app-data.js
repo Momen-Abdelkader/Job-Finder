@@ -1,4 +1,5 @@
 import { getJobData } from "./job-data.js";
+import { getCurrentUser } from "./auth.js";
 
 /*
 example applications object:
@@ -8,13 +9,8 @@ const applicantsExample = {
     applicantId: 1, // Unique ID for the applicant
     name: "Sarah Johnson", // Full name
     email: "sarah@example.com", // Contact email
-    experienceLevel: "Entry Level", // Experience level
-    skills: ["JavaScript", "React", "HTML", "CSS"], // Key skills
-    education: "Bachelor of Computer Science, University of Technology", // Simplified education
-    experience: "1 year intern at TechCorp", // Simplified experience
     applicationDate: "2025-04-22", // When they applied
     status: "Pending", // Application status: Applied, Reviewing, Interviewed, Rejected, Hired
-    resumeUrl: "../resumes/sarah_resume.pdf", // Path to resume file
   },
 };
 */
@@ -46,6 +42,30 @@ export function addApplication(application) {
   let id = maxID + 1;
   applications[id] = application;
   localStorage.setItem("applications", JSON.stringify(applications));
+}
+
+export function applyToJob(jobID, userID) {
+  if (hasUserApplied(jobID, userID)) {
+    console.log("User has already applied to this job.");
+    return;
+  }
+
+  const user = getCurrentUser();
+  if (user.id != userID) {
+    console.log("User ID mismatch. Cannot apply to job.");
+    return;
+  }
+
+  const newApplication = {
+    jobId: jobID,
+    applicantId: userID,
+    name: user.name,
+    email: user.email,
+    applicationDate: new Date().toISOString().split("T")[0],
+    status: "Pending",
+  };
+
+  addApplication(newApplication);
 }
 
 export function updateApplicationStatus(applicationID, status) {
@@ -110,6 +130,17 @@ export function getApplicationID(jobID, userID) {
   return null;
 }
 
+export function hasUserApplied(jobID, userID) {
+  const applications = getApplications();
+  for (const id in applications) {
+    const { jobId, applicantId } = applications[id];
+    if (`${jobId}` === `${jobID}` && `${applicantId}` === `${userID}`) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function generateMockApplications(jobData, count = 20) {
   const applications = {};
   const firstNames = [
@@ -137,34 +168,6 @@ function generateMockApplications(jobData, count = 20) {
     "Wilson",
   ];
   const experienceLevels = ["Entry Level", "Junior", "Mid-Level", "Senior"];
-  const skillsPool = [
-    "JavaScript",
-    "React",
-    "HTML",
-    "CSS",
-    "Python",
-    "C#",
-    ".NET",
-    "Java",
-    "SQL",
-    "Node.js",
-    "TypeScript",
-    "Angular",
-    "Vue",
-    "Swift",
-    "Kotlin",
-    "Go",
-    "Rust",
-    "PHP",
-    "Ruby",
-    "C++",
-  ];
-  const universities = [
-    "University of Technology",
-    "State University",
-    "Polytechnic Institute",
-    "International College",
-  ];
   const statuses = ["Pending", "Rejected", "Hired"];
 
   for (let i = 1; i <= count; i++) {
@@ -175,40 +178,6 @@ function generateMockApplications(jobData, count = 20) {
     const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
     const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`;
-
-    // Generate 3-5 random skills (with some overlap with job skills)
-    const applicantSkills = [...job.skills];
-    while (applicantSkills.length < 3 + Math.floor(Math.random() * 3)) {
-      const randomSkill =
-        skillsPool[Math.floor(Math.random() * skillsPool.length)];
-      if (!applicantSkills.includes(randomSkill)) {
-        applicantSkills.push(randomSkill);
-      }
-    }
-
-    // Generate education and experience based on level
-    const university =
-      universities[Math.floor(Math.random() * universities.length)];
-    const degree = Math.random() > 0.3 ? "Bachelor" : "Master";
-    const education = `${degree} of Computer Science, ${university}`;
-
-    let experience = "";
-    if (
-      job.experienceLevel === "Intern" ||
-      job.experienceLevel === "Fresh Graduate"
-    ) {
-      experience = `${Math.floor(Math.random() * 2) + 1} year intern at ${
-        job.company
-      }`;
-    } else if (job.experienceLevel === "Junior") {
-      experience = `${
-        Math.floor(Math.random() * 3) + 1
-      } years at various companies`;
-    } else {
-      experience = `${
-        Math.floor(Math.random() * 5) + 3
-      } years professional experience`;
-    }
 
     // Generate random application date within the last 30 days
     const daysAgo = Math.floor(Math.random() * 30);
@@ -221,24 +190,19 @@ function generateMockApplications(jobData, count = 20) {
       applicantId: i,
       name: `${firstName} ${lastName}`,
       email: email,
-      experienceLevel: job.experienceLevel,
-      skills: applicantSkills,
-      education: education,
-      experience: experience,
       applicationDate: formattedDate,
       status: statuses[Math.floor(Math.random() * statuses.length)],
-      resumeUrl: `../resumes/${firstName.toLowerCase()}_resume.pdf`,
     };
   }
 
   return applications;
 }
 
-if (
-  !localStorage.getItem("applications") ||
-  localStorage.getItem("applications") === "{}"
-) {
-  const jobData = getJobData();
-  const mockApplications = generateMockApplications(jobData, 50);
-  localStorage.setItem("applications", JSON.stringify(mockApplications));
-}
+// if (
+//   !localStorage.getItem("applications") ||
+//   localStorage.getItem("applications") === "{}"
+// ) {
+//   const jobData = getJobData();
+//   const mockApplications = generateMockApplications(jobData, 50);
+//   localStorage.setItem("applications", JSON.stringify(mockApplications));
+// }

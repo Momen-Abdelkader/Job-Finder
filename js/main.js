@@ -26,8 +26,8 @@ export function createJobCard(job, isAdmin = false) {
                     <a class="delete-button button"">Delete</a>
                 `
                     : `
-                    <a class="apply-button button" onclick="showApplyModal(${job})">Apply Now</a>
-                    <a class="details-button button" onclick="showDetailsModal(${job})">Details</a>
+                    <a class="apply-button button">Apply Now</a>
+                    <a class="details-button button">Details</a>
                 `
                 }
             </div>
@@ -46,11 +46,11 @@ export function createJobCard(job, isAdmin = false) {
   return element;
 }
 
-function disableScrolling() {
+export function disableScrolling() {
   document.body.style.overflow = "hidden";
 }
 
-function enableScrolling() {
+export function enableScrolling() {
   document.body.style.overflow = "";
 }
 
