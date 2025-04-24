@@ -28,6 +28,10 @@ body {
   font-size: 1rem;
 }
 
+.button.see-more-button:hover {
+  background-color: var(--accent-dark);
+}
+
 @media screen and (max-width: 1500px) {
   .hero-title {
     font-size: 2.5rem;
