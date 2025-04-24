@@ -22,6 +22,8 @@ import {
   getApplicationID,
 } from "./app-data.js";
 
+import { isUserLoggedIn, isUserAdmin } from "./auth.js";
+
 function showAddJobModal() {
   const modal = document.querySelector("#add-job-modal");
   const closeButton = document.querySelector("#add-job-modal .close");
@@ -321,6 +323,8 @@ function setupCardEventHandlers(card, jobId) {
 }
 
 function init() {
+  authValidation();
+
   const jobData = getJobData();
   const jobCardsContainer = document.querySelector(".job-cards");
 
@@ -329,6 +333,18 @@ function init() {
     jobCardsContainer.appendChild(card);
     setupCardEventHandlers(card, job.id);
   });
+}
+
+function authValidation() {
+  if (!isUserLoggedIn()) {
+    alert("You are not logged in. Redirecting to login page.");
+    window.location.href = "../html/login.html";
+  }
+
+  if (!isUserAdmin()) {
+    alert("You are not an admin. Redirecting to home page.");
+    window.location.href = "../html/home.html";
+  }
 }
 
 init();
