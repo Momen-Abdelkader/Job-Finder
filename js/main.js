@@ -1,6 +1,6 @@
 import { getCurrentUser } from "./auth.js";
 
-export function createJobCard(job, isAdmin = false) {
+
 import { getJobById } from "./job-data.js";
 
 export function createJobCard(job, isAdmin = false) {
