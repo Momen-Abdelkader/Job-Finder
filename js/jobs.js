@@ -10,7 +10,13 @@ import { hasUserApplied, addApplication, applyToJob } from "./app-data.js";
 
 import { getCurrentUser, isUserAdmin, isUserLoggedIn } from "./auth.js";
 
-import { createJobCard, enableScrolling, disableScrolling } from "./main.js";
+import {
+  createJobCard,
+  enableScrolling,
+  disableScrolling,
+  successMessage,
+  failMessage,
+} from "./main.js";
 
 // constants
 const FILTER_CONFIG = [
@@ -276,10 +282,8 @@ function clearFilters() {
     }
   });
 
-  localStorage.removeItem("searchTerm");
-  domElements.searchInput.value = "";
-
-  renderFilteredJobs(jobData);
+  handleApplyFilters();
+  updateFilterCounts();
 }
 
 function updateFilterCounts() {
@@ -364,38 +368,207 @@ function handleApplyFilters() {
 }
 
 function showApplyModal(job) {
-  const modal = document.getElementById("apply-modal");
-  const closeButton = document.querySelector("#apply-modal .close");
-  const applyButton = modal.querySelector(".apply-button");
-  const cancelButton = modal.querySelector(".cancel-button");
+  const modalContainer = document.createElement("div");
+  modalContainer.id = "apply-modal-container";
+  modalContainer.className = "modal-container";
 
+  const modal = document.createElement("div");
+  modal.className = "modal";
+
+  modal.innerHTML = `
+    <div class="modal-content">
+      <div class="modal-title">
+        <h1>Apply for Job</h1>
+        <span class="close-button">&times;</span>
+      </div>
+      <div class="modal-header">
+        <div class="company-info-large">
+          <img src="${job.logo}" alt="${
+    job.company
+  } logo" class="company-logo-large">
+          <div>
+            <h2 class="company-name">${job.company}</h2>
+            <h1 class="job-title-large">${job.title}</h1>
+            <p class="job-location">${job.location}</p>
+            <p class="job-posted">Posted: ${new Date(
+              job.postedAt
+            ).toLocaleDateString()}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to apply for this job?</p>
+        <div class="modal-actions">
+          <a class="button apply-button">Apply</a>
+          <a class="button cancel-button">Cancel</a>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modalContainer);
+  modalContainer.appendChild(modal);
+
+  void modalContainer.offsetWidth;
+
+  modalContainer.classList.add("active");
+  disableScrolling();
+
+  const closeModal = () => {
+    modalContainer.classList.remove("active");
+    setTimeout(() => {
+      document.body.removeChild(modalContainer);
+      enableScrolling();
+    }, 300);
+  };
+
+  modal.querySelector(".close-button").addEventListener("click", closeModal);
+  modalContainer.addEventListener("click", (e) => {
+    if (e.target === modalContainer) closeModal();
+  });
+
+  modal.querySelector(".cancel-button").addEventListener("click", closeModal);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
+
+  const applyButton = modal.querySelector(".apply-button");
   applyButton.addEventListener("click", () => {
-    if (hasUserApplied(job.id, user.id)) {
-      alert("You have already applied for this job.");
-      // TODO: handle this
+    if (hasUserApplied(job.id)) {
+      failMessage("You have already applied for this job.");
+      closeModal();
     } else {
       applyToJob(job.id, user.id);
-      // showAppliedNotification(); // TODO: implement this
-      modal.style.display = "none";
-      enableScrolling();
+      successMessage("Application submitted successfully!");
+      closeModal();
     }
   });
-
-  cancelButton.addEventListener("click", () => {
-    modal.style.display = "none";
-    enableScrolling();
-  });
-
-  closeButton.addEventListener("click", () => {
-    modal.style.display = "none";
-    enableScrolling();
-  });
-
-  modal.style.display = "flex";
-  disableScrolling();
 }
 
-function showDetailsModal() {}
+function showDetailsModal(job) {
+  const modalContainer = document.createElement("div");
+  modalContainer.id = "details-modal-container";
+  modalContainer.className = "modal-container";
+
+  const modal = document.createElement("div");
+  modal.className = "modal";
+
+  const skillsHTML = job.skills
+    .map((skill) => `<li class="tag">${skill}</li>`)
+    .join("");
+
+  modal.innerHTML = `
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <div class="modal-header">
+        <div class="company-info-large">
+          <img src="${job.logo}" alt="${
+    job.company
+  } logo" class="company-logo-large">
+          <div>
+            <h2 class="company-name">${job.company}</h2>
+            <h1 class="job-title-large">${job.title}</h1>
+            <p class="job-location">${job.location}</p>
+            <p class="job-posted">Posted: ${new Date(
+              job.postedAt
+            ).toLocaleDateString()}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="job-highlights">
+          <div class="highlight-item">
+            <h3>Salary</h3>
+            <p>${job.salary}</p>
+          </div>
+          <div class="highlight-item">
+            <h3>Job Type</h3>
+            <p>${job.jobType}</p>
+          </div>
+          <div class="highlight-item">
+            <h3>Experience</h3>
+            <p>${job.experienceLevel}</p>
+          </div>
+          <div class="highlight-item">
+            <h3>Work Mode</h3>
+            <p>${job.workMode}</p>
+          </div>
+        </div>
+        
+        <div class="job-section">
+          <h3>Job Description</h3>
+          <p>${job.description}</p>
+        </div>
+        
+        <div class="job-section">
+          <h3>Skills Required</h3>
+          <ul class="tags">
+            ${skillsHTML}
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="button apply-button large-button">Apply Now</a>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modalContainer);
+  modalContainer.appendChild(modal);
+
+  void modalContainer.offsetWidth;
+
+  modalContainer.classList.add("active");
+  disableScrolling();
+
+  const closeModal = () => {
+    modalContainer.classList.remove("active");
+    setTimeout(() => {
+      document.body.removeChild(modalContainer);
+      enableScrolling();
+    }, 300);
+  };
+
+  modal.querySelector(".close-button").addEventListener("click", closeModal);
+  modalContainer.addEventListener("click", (e) => {
+    if (e.target === modalContainer) closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
+
+  const applyButton = modal.querySelector(".apply-button");
+  applyButton.addEventListener("click", () => {
+    if (hasUserApplied(job.id)) {
+      failMessage("You have already applied for this job.");
+      closeModal();
+    } else {
+      applyToJob(job.id, user.id);
+      successMessage("Application submitted successfully!");
+      closeModal();
+    }
+  });
+}
+
+function closeModal() {
+  const modal = document.querySelector(".modal");
+  if (modal) {
+    modal.classList.remove("active");
+    setTimeout(() => {
+      document.getElementById(id).innerHTML = "";
+      enableScrolling();
+    }, 300);
+
+    document.removeEventListener("keydown", handleEscKey);
+  }
+}
+
+function handleEscKey(e) {
+  if (e.key === "Escape") {
+    closeModal();
+  }
+}
 
 // setup
 function setupEventListeners() {
@@ -420,5 +593,4 @@ function restoreSearchTerm() {
   handleApplyFilters();
 }
 
-// document loaded
 document.addEventListener("DOMContentLoaded", init);

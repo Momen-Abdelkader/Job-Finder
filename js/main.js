@@ -1,5 +1,7 @@
 import { getCurrentUser } from "./auth.js";
 
+import { getJobById } from "./job-data.js";
+
 export function createJobCard(job, isAdmin = false) {
   const html = `
         <div class="job-card">
@@ -37,6 +39,8 @@ export function createJobCard(job, isAdmin = false) {
   const template = document.createElement("template");
   template.innerHTML = html.trim();
 
+  template.dataset.id = job.id;
+
   const element = template.content.firstChild;
 
   if (!(element instanceof HTMLElement)) {
@@ -52,6 +56,34 @@ export function disableScrolling() {
 
 export function enableScrolling() {
   document.body.style.overflow = "";
+}
+
+export function successMessage(message) {
+  const messageContainer = document.createElement("div");
+  messageContainer.className = "message-container success";
+  messageContainer.innerHTML = `<p>${message}</p>`;
+  document.body.appendChild(messageContainer);
+
+  setTimeout(() => {
+    messageContainer.classList.add("hide");
+    messageContainer.addEventListener("transitionend", () => {
+      messageContainer.remove();
+    });
+  }, 3000);
+}
+
+export function failMessage(message) {
+  const messageContainer = document.createElement("div");
+  messageContainer.className = "message-container fail";
+  messageContainer.innerHTML = `<p>${message}</p>`;
+  document.body.appendChild(messageContainer);
+
+  setTimeout(() => {
+    messageContainer.classList.add("hide");
+    messageContainer.addEventListener("transitionend", () => {
+      messageContainer.remove();
+    });
+  }, 3000);
 }
 
 // create navigation
