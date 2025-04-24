@@ -1,5 +1,5 @@
 import {
-  getJobData,
+  getJobsByCompany,
   getJobById,
   updateJob,
   addJob,
@@ -22,13 +22,22 @@ import {
   getApplicationID,
 } from "./app-data.js";
 
-import { isUserLoggedIn, isUserAdmin } from "./auth.js";
+import { isUserLoggedIn, isUserAdmin, getCurrentUser } from "./auth.js";
+
+import {
+  createJobCard,
+  disableScrolling,
+  enableScrolling,
+  successMessage,
+  failMessage,
+} from "./main.js";
 
 function showAddJobModal() {
   const modal = document.querySelector("#add-job-modal");
   const closeButton = document.querySelector("#add-job-modal .close");
   const cancelButton = document.querySelector("#cancel");
   const jobForm = document.querySelector(".job-form");
+  const user = getCurrentUser();
 
   modal.querySelector("#add-job-button").innerHTML = "Add Job";
 
@@ -57,7 +66,7 @@ function showAddJobModal() {
       'input[name="experience"]:checked'
     ).value;
 
-    const jobArr = getJobData();
+    const jobArr = getJobsByCompany(user.id);
     let maxID = 0;
     for (let i = 0; i < jobArr.length; i++) {
       if (maxID < jobArr[i].id) maxID = jobArr[i].id;
@@ -65,14 +74,15 @@ function showAddJobModal() {
 
     const newJob = {
       id: maxID + 1,
-      logo: jobForm.querySelector("#logo").value,
-      company: jobForm.querySelector("#company-name").value,
+      logo: jobForm.querySelector("#logo").value, // TODO: implement profile image link
+      company: user.companyName,
+      companyId: user.id,
       title: jobForm.querySelector("#job-title").value,
       location: jobForm.querySelector("#job-location").value,
       salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
       jobType: jobType,
       workMode: workLocation,
-      skills: ["C++", "Debugging", "Batates Soury"], // <-- Temp Skills
+      skills: ["C++", "Debugging", "Batates Soury"], // TODO: implement skills input
       experienceLevel: experience,
       postedAt: new Date(),
       description: jobForm.querySelector("#job-description").value,
@@ -147,6 +157,7 @@ function showEditJobModal(job) {
       id: job.id,
       logo: job.logo,
       company: job.company,
+      companyId: job.companyId,
       title: jobForm.querySelector("#job-title").value,
       location: jobForm.querySelector("#job-location").value,
       salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
@@ -213,7 +224,7 @@ function showJobApplicantsModal(job) {
   applicantsList.innerHTML = "";
 
   applications.forEach((application) => {
-    const applicant = getApplicationByID(application.applicantId);
+    const applicant = getApplicationByUserID(application.applicantId);
     const applicationDataHTML = `
     <div class="applicant-card" id="${application.applicantId}">
       <div class="applicant-info">
@@ -324,8 +335,8 @@ function setupCardEventHandlers(card, jobId) {
 
 function init() {
   authValidation();
-
-  const jobData = getJobData();
+  const user = getCurrentUser();
+  const jobData = getJobsByCompany(user.id);
   const jobCardsContainer = document.querySelector(".job-cards");
 
   jobData.forEach((job) => {

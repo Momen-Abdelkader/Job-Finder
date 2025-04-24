@@ -4,9 +4,20 @@ import {
   validatePassword,
   registerUser,
   googleAuth,
+  isUserLoggedIn,
+  isUserAdmin,
 } from "./auth.js";
 
-import { authValidation } from "./login.js";
+function authValidation() {
+  if (isUserLoggedIn()) {
+    alert("You are already logged in.");
+    if (isUserAdmin()) {
+      window.location.href = "admin.html";
+    } else {
+      window.location.href = "home.html";
+    }
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   authValidation();

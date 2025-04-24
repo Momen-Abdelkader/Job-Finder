@@ -435,7 +435,7 @@ function showApplyModal(job) {
 
   const applyButton = modal.querySelector(".apply-button");
   applyButton.addEventListener("click", () => {
-    if (hasUserApplied(job.id)) {
+    if (hasUserApplied(job.id, user.id)) {
       failMessage("You have already applied for this job.");
       closeModal();
     } else {

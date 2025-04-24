@@ -34,7 +34,7 @@ function isUserAdmin() {
   return isUserLoggedIn() && user.role === "Admin";
 }
 
-// validation Functions
+// validation
 function validateName(name) {
   return NAME_REGEX.test(name);
 }
@@ -47,7 +47,7 @@ function validatePassword(password) {
   return PASSWORD_REGEX.test(password);
 }
 
-// auth Operations
+// auth operations
 function registerUser({ name, email, password, role, companyName }) {
   const users = getUsers();
 
@@ -55,7 +55,16 @@ function registerUser({ name, email, password, role, companyName }) {
     throw new Error("User with this email already exists.");
   }
 
+  let id = 1;
+
+  users.forEach((user) => {
+    if (user.id >= id) {
+      id = Number(user.id) + 1;
+    }
+  });
+
   const newUser = {
+    id,
     name,
     email,
     password,

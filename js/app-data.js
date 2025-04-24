@@ -26,9 +26,14 @@ export function getApplicationByJobID(jobId) {
 
 export function getApplicationByUserID(userId) {
   const applications = getApplications();
-  return Object.values(applications).filter(
-    (app) => app.applicantId === userId
-  );
+  let application = null;
+  for (const id in applications) {
+    if (applications[id].applicantId === userId) {
+      application = applications[id];
+      break;
+    }
+  }
+  return application;
 }
 
 export function getApplicationByID(applicationID) {

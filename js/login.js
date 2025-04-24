@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-export function authValidation() {
+function authValidation() {
   if (isUserLoggedIn()) {
     alert("You are already logged in.");
     if (isUserAdmin()) {
