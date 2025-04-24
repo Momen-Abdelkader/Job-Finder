@@ -56,6 +56,7 @@ const MIN_SALARY_GAP = 100;
 const user = getCurrentUser();
 
 let jobData = getJobData();
+let showAppliedJobs = localStorage.getItem("showAppliedJobs") === "true";
 
 // DOM
 const domElements = {
@@ -69,6 +70,7 @@ const domElements = {
 // initialization
 function init() {
   handleUnauthUser();
+  addShowAppliedJobsToggle();
   generateFilters();
   setupSalarySlider();
   renderFilteredJobs(jobData);
@@ -82,6 +84,27 @@ function handleUnauthUser() {
     alert("You are not authorized to access this page.");
     window.location.href = "home.html";
   }
+}
+
+function addShowAppliedJobsToggle() {
+  const toggleContainer = document.createElement("div");
+  toggleContainer.classList.add("applied-jobs-toggle");
+  toggleContainer.innerHTML = `
+    <div class="toggle-container filter-category">
+      <label class="switch">
+        <input type="checkbox" id="show-applied-toggle" ${
+          showAppliedJobs ? "checked" : ""
+        }>
+        <span class="slider round"></span>
+      </label>
+      <span class="toggle-label">Show jobs I've applied to</span>
+    </div>
+  `;
+
+  domElements.filtersContainer.insertAdjacentElement(
+    "afterbegin",
+    toggleContainer
+  );
 }
 
 // filters
@@ -181,18 +204,30 @@ function setupSalarySlider() {
 
 // rendering job cards
 function renderFilteredJobs(jobs) {
-  jobs = jobs.filter((job) => !hasUserApplied(job.id, user.id));
+  const sortedJobs = [...jobs].sort((a, b) => {
+    return new Date(b.postedAt) - new Date(a.postedAt);
+  });
 
   domElements.jobCardsContainer.innerHTML = "";
-  jobs.forEach((job) => {
+  sortedJobs.forEach((job) => {
     const card = createJobCard(job);
-    card.querySelector(".apply-button").addEventListener("click", () => {
-      if (isUserLoggedIn()) {
-        showApplyModal(job);
-      } else {
-        window.location.href = "login.html";
-      }
-    });
+    const applyButton = card.querySelector(".apply-button");
+
+    if (hasUserApplied(job.id, user.id)) {
+      applyButton.textContent = "Applied";
+      applyButton.classList.add("already-applied");
+      applyButton.addEventListener("click", () => {
+        failMessage("You have already applied for this job.");
+      });
+    } else {
+      applyButton.addEventListener("click", () => {
+        if (isUserLoggedIn()) {
+          showApplyModal(job);
+        } else {
+          window.location.href = "login.html";
+        }
+      });
+    }
 
     card.querySelector(".details-button").addEventListener("click", () => {
       showDetailsModal(job);
@@ -289,25 +324,23 @@ function clearFilters() {
 }
 
 function updateFilterCounts() {
-  jobData = jobData.filter((job) => !hasUserApplied(job.id, user.id));
-
+  let jobsForCounting = [...jobData];
   const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
+
   const filteredBySearch = searchTerm
-    ? jobData.filter(
+    ? jobsForCounting.filter(
         (job) =>
           job.title.toLowerCase().includes(searchTerm) ||
           job.company.toLowerCase().includes(searchTerm) ||
           job.location.toLowerCase().includes(searchTerm)
       )
-    : jobData;
+    : jobsForCounting;
 
-  // Reset all counts
   FILTER_CONFIG.forEach((category) => {
     if (category.filters)
       category.filters.forEach((filter) => (filter.count = 0));
   });
 
-  // Count within the search-filtered jobs
   filteredBySearch.forEach((job) => {
     FILTER_CONFIG.forEach((category) => {
       if (!category.filters) return;
@@ -330,7 +363,6 @@ function updateFilterCounts() {
     });
   });
 
-  // Update DOM counts
   FILTER_CONFIG.forEach((category) => {
     if (!category.filters) return;
 
@@ -358,14 +390,16 @@ function handleApplyFilters() {
   const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
   const filters = getSelectedFilters();
 
-  const filtered = filterJobs(jobData, filters).filter((job) => {
-    return (
-      !searchTerm ||
-      job.title.toLowerCase().includes(searchTerm) ||
-      job.company.toLowerCase().includes(searchTerm) ||
-      job.location.toLowerCase().includes(searchTerm)
+  let filtered = filterJobs(jobData, filters);
+
+  if (searchTerm) {
+    filtered = filtered.filter(
+      (job) =>
+        job.title.toLowerCase().includes(searchTerm) ||
+        job.company.toLowerCase().includes(searchTerm) ||
+        job.location.toLowerCase().includes(searchTerm)
     );
-  });
+  }
 
   renderFilteredJobs(filtered);
 }
@@ -445,7 +479,7 @@ function showApplyModal(job) {
       applyToJob(job.id, user.id);
       successMessage("Application submitted successfully!");
       closeModal();
-      renderFilteredJobs(jobData);
+      handleApplyFilters();
       updateFilterCounts();
     }
   });
@@ -514,7 +548,11 @@ function showDetailsModal(job) {
         </div>
       </div>
       <div class="modal-footer">
-        <a href="#" class="button apply-button large-button">Apply Now</a>
+        ${
+          hasUserApplied(job.id, user.id)
+            ? '<a class="button apply-button large-button already-applied">Already Applied</a>'
+            : '<a href="#" class="button apply-button large-button">Apply Now</a>'
+        }
       </div>
     </div>
   `;
@@ -545,13 +583,14 @@ function showDetailsModal(job) {
 
   const applyButton = modal.querySelector(".apply-button");
   applyButton.addEventListener("click", () => {
-    if (hasUserApplied(job.id)) {
+    if (hasUserApplied(job.id, user.id)) {
       failMessage("You have already applied for this job.");
-      closeModal();
     } else {
       applyToJob(job.id, user.id);
       successMessage("Application submitted successfully!");
       closeModal();
+      handleApplyFilters();
+      updateFilterCounts();
     }
   });
 }
@@ -575,6 +614,16 @@ function handleEscKey(e) {
   }
 }
 
+function handleAppliedJobsToggle() {
+  const toggleCheckbox = document.getElementById("show-applied-toggle");
+  if (!toggleCheckbox) return;
+
+  showAppliedJobs = toggleCheckbox.checked;
+  localStorage.setItem("showAppliedJobs", showAppliedJobs);
+  handleApplyFilters();
+  updateFilterCounts();
+}
+
 // setup
 function setupEventListeners() {
   domElements.findButton?.addEventListener("click", handleSearch);
@@ -588,6 +637,11 @@ function setupEventListeners() {
   document
     .getElementById("clear-filters")
     ?.addEventListener("click", clearFilters);
+
+  const toggleCheckbox = document.getElementById("show-applied-toggle");
+  if (toggleCheckbox) {
+    toggleCheckbox.addEventListener("change", handleAppliedJobsToggle);
+  }
 }
 
 function restoreSearchTerm() {
