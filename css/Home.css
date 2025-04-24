@@ -1,164 +1,81 @@
 body {
-    background-color: var(--white_2);
-    color: var(--dark);
-    text-align: center;
+  background-color: var(--white_2);
 }
 
 .hero {
-    background-color: var(--white_2);
-    padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  min-height: 90vh;
 }
 
 .hero-title {
-    margin-top: 3rem;
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  color: var(--black_1);
+}
+
+.button.see-more-button {
+  background-color: var(--accent);
+  color: var(--white_1);
+  padding: 1em 9vw;
+  border: none;
+  border-radius: 8px;
+  cursor: default;
+  user-select: none;
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 1500px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .button.see-more-button {
+    padding: 1em 7vw;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .button.see-more-button {
+    padding: 1em 6vw;
+    font-size: 0.9rem;
+  }
+
+  .hero {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .hero-title {
     font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-/* Recommended Jobs */
-.recommended-jobs {
-    font-size: larger;
-    padding: 20px;
-    min-height: fit-content;
-    max-height: 800px;  
+  }
+
+  .button.see-more-button {
+    padding: 1em 5vw;
+    font-size: 0.9rem;
+  }
 }
 
-.job-card {
-    background-color: var(--white_4);
-    color: black;
-    padding: 40px;
-    margin: 10px auto;
-    min-width:min-content;
-    max-width: fit-content;
-    border-radius: 20px;
-}
+@media screen and (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
 
-.company {
-    display: flex;
-    text-align: left;
-    margin-bottom: 10px;
-    gap: 10px;
-}
+  .hero .container {
+    padding: 0.5em 1em;
+  }
 
-.company span {
-    font-size: larger;
-    padding-top: 2px;
-}
-
-.company p {
-    margin-bottom: 5px;
-}
-
-.company img {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;   
-}
-
-#company-logo { 
-    font-weight: bold;
-}
-
-.job-tags button {
-    background: var(--accent);
-    color: white;
-    border:none;
-    font-size: medium;
-    margin-bottom: 5px;
-    padding: 5px 10px 5px 10px;
-    border-radius: 15px;
-    cursor: pointer
-}
-
-
-.job-actions {
-    gap: 10px;
-}
-
-.job-actions button {
-    padding: 5px 10px;
-    margin-top: 15px;
-    font-size:medium;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.apply {
-    background-color: var(--accent);
-    color: white;
-}
-
-.details {
-    background-color: gray;
-    color: white;
-}
-
-.see-more {
-    background-color: var(--white_4);
-    color: black;
-    padding: 10px;
-    margin-top: 10px;
-    height: 50px;
-    font-weight: bold;
-    font-size: large;
-    width: 30%;
-    min-width:max-content;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-}
-
-/* Footer */
-footer {
-    background-color: var(--white_4);
-    padding: 20px;
-}
-
-.footer-content {
-    text-align: left;
-    max-width: 600px;
-}
-
-.footer-content h4 {
-    margin-bottom: 10px;
-    margin-top: 40px;
-}
-
-.sitemap ul li {
-    list-style-type: none;
-    margin-bottom: 7px;
-}
-
-a {
-    color: var(--dark);
-    text-decoration: none;
-}
-
-a:hover {
-    color: gray;
-}
-
-.see-more:hover {
-    color:gray;
-    background-color: whitesmoke;
-}
-
-.job-tags button:hover {
-    color:black;
-    background-color: darkgray;
-}
-
-
-.job-tags button:disabled {
-    background-color: wheat;
-}
-
-.job-actions button:hover {
-    color: black;
-}
-
-.footer-note {
-    margin-top: 10px;
-    font-style: italic;
+  .button.see-more-button {
+    font-size: 1rem;
+  }
 }

@@ -49,7 +49,7 @@ function createNav(isLoggedIn = false, isAdmin = false) {
   const navContent = document.querySelector(".nav-content");
   menuToggle.addEventListener("click", () => {
     navContent.classList.toggle("active");
-    authButtons.classList.toggle("active");
+    if (authButtons) authButtons.classList.toggle("active");
     menuToggle.classList.toggle("active");
   });
 }

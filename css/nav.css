@@ -18,7 +18,7 @@ nav {
   background-color: var(--dark);
   border-radius: 3px;
   transition: 0.1s;
-  transform-origin: center; /* This ensures rotations happen from the center */
+  transform-origin: center;
 }
 
 .menu-toggle:hover span {
@@ -146,7 +146,6 @@ nav {
   .main-nav {
     justify-content: space-between;
     padding: 2rem 2rem;
-    /* position: relative; */
   }
 
   .menu-toggle {
@@ -158,7 +157,6 @@ nav {
   }
 
   .main-nav .nav-content {
-    display: none;
     flex-direction: column;
     width: 100%;
     position: absolute;
@@ -168,18 +166,33 @@ nav {
     z-index: 10;
     padding: 20px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
   .main-nav .nav-content.active {
-    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .auth-buttons,
+  .profile {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .nav-content.active .auth-buttons,
+  .nav-content.active .profile {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .auth-buttons {
-    display: none;
-  }
-
-  .main-nav .nav-content .auth-buttons.active {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
@@ -202,18 +215,6 @@ nav {
   .main-nav .profile .profile-image {
     width: 40px;
     height: 40px;
-  }
-
-  .visible {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .nav-content.active .profile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 
