@@ -2,6 +2,8 @@ import { getCurrentUser } from "./auth.js";
 
 import { getJobById } from "./job-data.js";
 
+import { createNav } from "./nav.js";
+
 export function createJobCard(job, isAdmin = false) {
   const html = `
         <div class="job-card">

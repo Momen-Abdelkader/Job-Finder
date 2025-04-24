@@ -6,7 +6,10 @@ import {
   googleAuth,
 } from "./auth.js";
 
+import { authValidation } from "./login.js";
+
 document.addEventListener("DOMContentLoaded", () => {
+  authValidation();
   // DOM
   const buttons = document.querySelectorAll(".toggle-button");
   const companySection = document.querySelector(".Company_name");

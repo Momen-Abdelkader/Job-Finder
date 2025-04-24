@@ -1,6 +1,14 @@
-import { validateEmail, loginUser, googleAuth } from "./auth.js";
+import {
+  validateEmail,
+  loginUser,
+  googleAuth,
+  isUserAdmin,
+  getCurrentUser,
+  isUserLoggedIn,
+} from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  authValidation();
   // DOM
   const loginBtn = document.getElementById("create_button");
   const useGoogleBtn = document.getElementById("use_button");
@@ -23,10 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Please enter a valid email address.");
 
       const user = loginUser(email, password);
-      alert(`Welcome back, ${user.name}!`);
-      window.location.href = "home.html";
+      if (isUserAdmin(user)) {
+        window.location.href = "admin.html";
+      } else {
+        window.location.href = "home.html";
+      }
     } catch (error) {
       alert(error.message);
+    } finally {
     }
   });
 
@@ -40,3 +52,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+export function authValidation() {
+  if (isUserLoggedIn()) {
+    alert("You are already logged in.");
+    if (isUserAdmin()) {
+      window.location.href = "admin.html";
+    } else {
+      window.location.href = "home.html";
+    }
+  }
+}

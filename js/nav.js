@@ -1,4 +1,6 @@
-function createNav(isLoggedIn = false, isAdmin = false) {
+import { loginUser, logoutUser } from "./auth.js";
+
+export function createNav(isLoggedIn = false, isAdmin = false) {
   let navHtml = `
     <nav class="main-nav">
         <a href="${
@@ -21,6 +23,7 @@ function createNav(isLoggedIn = false, isAdmin = false) {
                 }">
                     <img src="../assets/temp-profile.webp" class="profile-image">
                 </a>
+                <a class="signout-button" id="signout-button">Sign Out</a>
             </div>`
                 : `<div class="auth-buttons">
                 <a href="login.html" class="login">Login</a>
@@ -47,9 +50,18 @@ function createNav(isLoggedIn = false, isAdmin = false) {
   const menuToggle = document.querySelector(".menu-toggle");
   const authButtons = document.querySelector(".auth-buttons");
   const navContent = document.querySelector(".nav-content");
+  const signoutButton = document.getElementById("signout-button");
+
   menuToggle.addEventListener("click", () => {
     navContent.classList.toggle("active");
     if (authButtons) authButtons.classList.toggle("active");
     menuToggle.classList.toggle("active");
   });
+
+  if (signoutButton) {
+    signoutButton.addEventListener("click", () => {
+      logoutUser();
+      window.location.href = "login.html";
+    });
+  }
 }

@@ -1,4 +1,8 @@
+import { authValidation } from "./login.js";
+
 document.addEventListener("DOMContentLoaded", () => {
+  authValidation();
+
   const emailInput = document.getElementById("email");
   const resetBtn = document.getElementById("create_button");
   const newPasswordSection = document.getElementById("new-password-section");

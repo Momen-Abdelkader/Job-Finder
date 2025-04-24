@@ -142,6 +142,24 @@ nav {
   color: var(--white_1);
 }
 
+.signout-button {
+  background-color: transparent;
+  color: var(--dark);
+  font-size: 16px;
+  padding: 0.8em 1.5em;
+  text-decoration: none;
+  border: 2px solid var(--dark);
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signout-button:hover {
+  background-color: var(--dark);
+  color: var(--white_1);
+}
+
 @media screen and (max-width: 767px) {
   .main-nav {
     justify-content: space-between;
@@ -215,6 +233,12 @@ nav {
   .main-nav .profile .profile-image {
     width: 40px;
     height: 40px;
+  }
+
+  .signout-button {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
   }
 }
 
