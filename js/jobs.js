@@ -47,7 +47,7 @@ const MIN_SALARY_GAP = 100;
 
 const jobData = getJobData();
 
-const currentUser = getCurrentUser();
+const user = getCurrentUser();
 
 // DOM
 const domElements = {
@@ -60,12 +60,20 @@ const domElements = {
 
 // initialization
 function init() {
+  handleUnauthUser();
   generateFilters();
   setupSalarySlider();
   renderFilteredJobs(jobData);
   updateFilterCounts();
   setupEventListeners();
   restoreSearchTerm();
+}
+
+function handleUnauthUser() {
+  if (user.role === "Admin") {
+    alert("You are not authorized to access this page.");
+    window.location.href = "home.html";
+  }
 }
 
 // filters

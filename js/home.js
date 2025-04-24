@@ -1,4 +1,16 @@
+import { getCurrentUser } from "./auth.js";
+
+function handleUnauthUser() {
+  const user = getCurrentUser();
+  if (user.role === "Admin") {
+    alert("You are not authorized to view this page.");
+    window.location.href = "admin.html";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  handleUnauthUser();
+
   const searchInput = document.querySelector(".search-input");
   const findButton = document.querySelector(".find-button");
 
