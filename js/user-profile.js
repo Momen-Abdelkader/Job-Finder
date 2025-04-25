@@ -110,39 +110,8 @@ function populatePreferences() {
   refreshInterestTags();
 }
 
-// Populate job applications tab
 function populateJobApplications() {
-  const jobApplicationsContainer = jobApplicationsTab;
-  
-  // Clear existing content except for the heading
-  const heading = jobApplicationsContainer.querySelector('h1');
-  jobApplicationsContainer.innerHTML = '';
-  jobApplicationsContainer.appendChild(heading);
-  
-  if (!userProfile.jobApplications || userProfile.jobApplications.length === 0) {
-    const noApplicationsMsg = document.createElement('p');
-    noApplicationsMsg.textContent = 'You have not applied to any jobs yet.';
-    jobApplicationsContainer.appendChild(noApplicationsMsg);
-    return;
-  }
-  
-  // Here you would fetch job details using the application IDs
-  // For now, just display the application IDs as placeholders
-  const applicationsList = document.createElement('div');
-  applicationsList.className = 'applications-list';
-  
-  userProfile.jobApplications.forEach(appId => {
-    const appCard = document.createElement('div');
-    appCard.className = 'application-card';
-    appCard.innerHTML = `
-      <h3>Application ID: ${appId}</h3>
-      <p>Status: Pending</p>
-      <button class="btn-small">View Details</button>
-    `;
-    applicationsList.appendChild(appCard);
-  });
-  
-  jobApplicationsContainer.appendChild(applicationsList);
+  // TODO: implement
 }
 
 // Helper Functions
@@ -259,7 +228,7 @@ function initializeEventListeners() {
   confirmSavingBtn.addEventListener('click', processConfirmedSave);
   cancelSavingBtn.addEventListener('click', function() {
     closeModal();
-    failMessage("Canceled saving changes.");
+    failMessage("Changes discarded.");
   });
   closeModalBtn.addEventListener('click', closeModal);
   

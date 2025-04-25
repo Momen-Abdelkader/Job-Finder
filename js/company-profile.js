@@ -25,11 +25,8 @@ const user = getCurrentUser();
 const profileId = user.id;
 const companyProfile = getProfileById(profileId);
 
-// Tabs DOM elements
-const companyInfoTab = document.getElementById('personal-info');
-const postedJobsTab = document.getElementById('job-applications');
-
 // Company Info DOM elements
+const companyInfoTab = document.getElementById('personal-info');
 const emailInput = document.getElementById('email');
 const companyNameInput = document.getElementById('company-name');
 const adminNameInput = document.getElementById('admin-name');
@@ -44,7 +41,6 @@ const closeModalBtn = saveProfileInfoModal.querySelector('.close');
 function init() {
   updateCompanyInfoDisplay();
   populateCompanyInfo();
-  populatePostedJobs();
   initializeEventListeners();
 }
 
@@ -61,36 +57,6 @@ function populateCompanyInfo() {
   companyNameInput.value = companyProfile.companyName || "";
   adminNameInput.value = companyProfile.adminName || "";
   phoneInput.value = companyProfile.phone || "";
-}
-
-function populatePostedJobs() {
-  const postedJobsContainer = postedJobsTab;
-  const heading = postedJobsContainer.querySelector('h1');
-  postedJobsContainer.innerHTML = '';
-  postedJobsContainer.appendChild(heading);
-
-  if (!companyProfile.postedJobs || companyProfile.postedJobs.length === 0) {
-    const noJobsMsg = document.createElement('p');
-    noJobsMsg.textContent = 'No jobs posted yet.';
-    postedJobsContainer.appendChild(noJobsMsg);
-    return;
-  }
-
-  const jobsList = document.createElement('div');
-  jobsList.className = 'posted-jobs-list';
-
-  companyProfile.postedJobs.forEach(jobId => {
-    const jobCard = document.createElement('div');
-    jobCard.className = 'job-card';
-    jobCard.innerHTML = `
-      <h3>Job ID: ${jobId}</h3>
-      <p>Status: Active</p>
-      <button class="btn-small">View Applications</button>
-    `;
-    jobsList.appendChild(jobCard);
-  });
-
-  postedJobsContainer.appendChild(jobsList);
 }
 
 function showSaveModal() {
