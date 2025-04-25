@@ -80,7 +80,7 @@ function init() {
 }
 
 function handleUnauthUser() {
-  if (user.role === "Admin") {
+  if (user?.role === "Admin") {
     alert("You are not authorized to access this page.");
     window.location.href = "home.html";
   }
@@ -97,7 +97,7 @@ function addShowAppliedJobsToggle() {
         }>
         <span class="slider round"></span>
       </label>
-      <span class="toggle-label">Show jobs I've applied to</span>
+      <span class="toggle-label">Show jobs I've already applied to</span>
     </div>
   `;
 
@@ -119,6 +119,11 @@ function generateFilters() {
     } else {
       category.filters.forEach((filter) => {
         categoryDiv.innerHTML += createCheckboxFilter(filter);
+
+        const checkbox = document.getElementById(filter.id);
+        if (checkbox) {
+          checkbox.addEventListener("change", handleApplyFilters);
+        }
       });
     }
 
@@ -168,7 +173,6 @@ function createCheckboxFilter(filter) {
 function createActionButtons() {
   return `
     <div class="button-container">
-      <a class="button apply-button" id="apply-filters">Apply Filters</a>
       <a class="button clear-button" id="clear-filters">Clear Filters</a>
     </div>`;
 }
@@ -195,6 +199,8 @@ function setupSalarySlider() {
         : (toSlider.value = parseInt(fromSlider.value) + MIN_SALARY_GAP);
     }
     updateLabels();
+    handleApplyFilters();
+    updateFilterCounts();
   };
 
   fromSlider.addEventListener("input", enforceRange);
@@ -213,7 +219,7 @@ function renderFilteredJobs(jobs) {
     const card = createJobCard(job);
     const applyButton = card.querySelector(".apply-button");
 
-    if (hasUserApplied(job.id, user.id)) {
+    if (user && hasUserApplied(job.id, user.id)) {
       applyButton.textContent = "Applied";
       applyButton.classList.add("already-applied");
       applyButton.addEventListener("click", () => {
@@ -281,8 +287,12 @@ function getSelectedFilters() {
 function filterJobs(jobs, { employmentType, level, salary }) {
   return jobs.filter((job) => {
     const salaryValue = parseInt(job.salary.replace(/[^0-9]/g, ""));
+    const hasApplied = hasUserApplied(job.id, user.id);
+
+    const appliedFilterPassed = showAppliedJobs || !hasApplied;
 
     return (
+      appliedFilterPassed &&
       (employmentType.length === 0 ||
         employmentType.some(
           (type) =>
@@ -326,6 +336,20 @@ function clearFilters() {
 function updateFilterCounts() {
   let jobsForCounting = [...jobData];
   const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
+  const filters = getSelectedFilters();
+
+  if (!showAppliedJobs) {
+    jobsForCounting = jobsForCounting.filter(
+      (job) => !hasUserApplied(job.id, user.id)
+    );
+  }
+
+  jobsForCounting = jobsForCounting.filter((job) => {
+    const salaryValue = parseInt(job.salary.replace(/[^0-9]/g, ""));
+    return (
+      salaryValue >= filters.salary.min && salaryValue <= filters.salary.max
+    );
+  });
 
   const filteredBySearch = searchTerm
     ? jobsForCounting.filter(
@@ -619,7 +643,7 @@ function handleAppliedJobsToggle() {
   if (!toggleCheckbox) return;
 
   showAppliedJobs = toggleCheckbox.checked;
-  localStorage.setItem("showAppliedJobs", showAppliedJobs);
+  localStorage.setItem("showAppliedJobs", showAppliedJobs.toString());
   handleApplyFilters();
   updateFilterCounts();
 }
@@ -632,11 +656,12 @@ function setupEventListeners() {
   });
 
   document
-    .getElementById("apply-filters")
-    ?.addEventListener("click", handleApplyFilters);
-  document
     .getElementById("clear-filters")
     ?.addEventListener("click", clearFilters);
+
+  document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+    checkbox.addEventListener("change", handleApplyFilters);
+  });
 
   const toggleCheckbox = document.getElementById("show-applied-toggle");
   if (toggleCheckbox) {

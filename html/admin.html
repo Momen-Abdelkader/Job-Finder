@@ -56,7 +56,7 @@
         </div>
       </div>
       
-      <!-- Add Job Modal -->
+      <!-- Add/Edit Job Modal -->
       <div class="modal" id="add-job-modal">
         <div class="modal-content">
           <span class="close">&times;</span>
@@ -98,7 +98,7 @@
 
             <div class="form-group">
               <label class="lab" for="job-salary">Salary:</label>
-              <input type="number" id="job-salary" required pattern="^(0|[1-9]\d*)$" min="0" max="20000" placeholder="$0-20000" required>
+              <input type="text" id="job-salary" pattern="^(0|([1-9]\d{0,3}|1\d{4}|20000))$" title="A number from 0 to 20000" placeholder="$0-20000" required>
             </div>
 
             <div class="form-group">

@@ -209,68 +209,18 @@ input[type="range"] {
   padding-top: 0;
   justify-content: space-between;
   text-align: center;
+  gap: 0.5em;
 }
 
 .button-container .button {
   width: 100%;
+  margin: 0;
 }
 
 .modal .tags {
   padding-left: 0;
   margin-bottom: 0;
 }
-/*
- MODAL IS FUCKED
-*/
-/*
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-  display: none;
-  z-index: 1000;
-}
-
-.apply-modal {
-  display: none;
-}
-
-.modal-content {
-  background-color: var(--white_1);
-  padding: 20px;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 600px;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-header h2 {
-  font-size: 1.5rem;
-}
-
-.modal-header .close {
-  background-color: transparent;
-  border: none;
-  font-size: 2rem;
-  cursor: default;
-  transition: 0.1s;
-}
-
-.modal-header .close:hover {
-  color: var(--accent);
-}
-
-*/
 
 .modal-container {
   position: fixed;
@@ -422,7 +372,6 @@ input[type="range"] {
   text-align: center;
 }
 
-/* Toggle Switch Styles */
 .applied-jobs-toggle {
   margin-bottom: 20px;
   padding: 10px 0;
@@ -432,29 +381,33 @@ input[type="range"] {
 .toggle-container {
   display: flex;
   align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .toggle-label {
-  margin-left: 10px;
   font-weight: 500;
+  font-size: 0.95rem;
+  white-space: normal;
+  word-break: break-word;
+  flex: 1;
+  min-width: 150px;
 }
 
-/* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
   width: 50px;
   height: 24px;
+  flex-shrink: 0;
 }
 
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -464,17 +417,19 @@ input[type="range"] {
   bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
+  border-radius: 34px;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 16px;
-  width: 16px;
-  left: 4px;
-  bottom: 4px;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
   background-color: white;
   transition: 0.4s;
+  border-radius: 50%;
 }
 
 input:checked + .slider {
@@ -489,7 +444,6 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
@@ -498,10 +452,9 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/* Already applied button style */
 .already-applied {
   background-color: var(--white_5) !important;
-  cursor: default !important;
+  cursor: not-allowed !important;
 }
 
 @media screen and (max-width: 767px) {
@@ -539,6 +492,29 @@ input:checked + .slider:before {
 
   .job-highlights {
     grid-template-columns: 1fr;
+  }
+
+  .toggle-container {
+    gap: 8px;
+  }
+
+  .toggle-label {
+    font-size: 0.9rem;
+    white-space: normal;
+  }
+
+  .switch {
+    width: 45px;
+    height: 22px;
+  }
+
+  .slider:before {
+    height: 16px;
+    width: 16px;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(23px);
   }
 }
 
@@ -717,5 +693,27 @@ input:checked + .slider:before {
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .job-highlights {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .toggle-label {
+    font-size: 0.85rem;
+  }
+
+  .switch {
+    width: 40px;
+    height: 20px;
+  }
+
+  .slider:before {
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(20px);
   }
 }
