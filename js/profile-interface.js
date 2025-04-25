@@ -42,10 +42,10 @@ function CompanyProfile({
     this.postedJobs = postedJobs;
 }
 
+// --------------------------- PROFILE STORAGE
+
 const PROFILES_KEY = "profiles";
 
-
-// --------------------------- PROFILE STORAGE
 function getProfilesStorage() {
     const profiles = localStorage.getItem(PROFILES_KEY);
     return profiles ? JSON.parse(profiles) : {};
@@ -267,12 +267,11 @@ function removePostedJob(profileId, jobId) {
     }
 
     const existingProfile = profiles[profileId];
-    const updatedPostedJobs = existingProfile.postedJobs.filter(job => job.id !== jobId);
+    const updatedPostedJobs = existingProfile.postedJobs.filter(job => job !== jobId);
 
     updateCompanyProfile(profileId, { postedJobs: updatedPostedJobs });
 }
 
-// --------------------------- EXPORTS
 export {
     UserProfile,
     CompanyProfile,
