@@ -1,5 +1,5 @@
 body {
-    background-color: #357dec; /* Light gray background */
+    background-color: var(--accent);
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 100;
@@ -7,7 +7,6 @@ body {
     margin: 0;
     overflow-x: hidden;
 }
-
 
 section  {
     margin-bottom: 20px;
