@@ -18,7 +18,7 @@ if (!isUserLoggedIn()) {
 
 if (!isUserAdmin()) {
   alert("You are not an admin. Redirecting to user profile.");
-  window.location.href = "../html/profile.html";
+  window.location.href = "../html/user-profile.html";
 }
 
 const user = getCurrentUser();
