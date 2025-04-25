@@ -122,12 +122,17 @@ function updateUserProfile(profileId, updatedData) {
             ...existingProfile.preferences || {},
             ...updates.preferences
         };
+        
+        // Prevent duplicate interests if present
+        if (updates.preferences.interests && Array.isArray(updates.preferences.interests)) {
+            updates.preferences.interests = Array.from(new Set(updates.preferences.interests));
+        }
     }
     
     // Handle skills updates
     if (updates.skills !== undefined) {
         if (Array.isArray(updates.skills)) {
-            updates.skills = [...existingProfile.skills || [], ...updates.skills];
+            updates.skills = Array.from(new Set(updates.skills));
         } 
         else {
             updates.skills = [updates.skills];
@@ -137,10 +142,20 @@ function updateUserProfile(profileId, updatedData) {
     // Handle jobApplications updates
     if (updates.jobApplications !== undefined) {
         if (Array.isArray(updates.jobApplications)) {
-            updates.jobApplications = [...existingProfile.jobApplications || [], ...updates.jobApplications];
+            // Keep existing applications and only add new ones
+            const existingApps = existingProfile.jobApplications || [];
+            const newApps = updates.jobApplications.filter(app => !existingApps.includes(app));
+            updates.jobApplications = [...existingApps, ...newApps];
         } 
-        else{
-            updates.jobApplications = [updates.jobApplications];
+        else {
+            // If it's a single application, check if it's already there before adding
+            const existingApps = existingProfile.jobApplications || [];
+            if (!existingApps.includes(updates.jobApplications)) {
+                updates.jobApplications = [...existingApps, updates.jobApplications];
+            } 
+            else {
+                updates.jobApplications = existingApps;
+            }
         }
     }
     
@@ -162,6 +177,11 @@ function updatePreferences(profileId, newPreferences) {
         ...newPreferences
     };
     
+    // Prevent duplicates
+    if (updatedPreferences.interests !== undefined) {
+        updatedPreferences.interests = Array.from(new Set(updatedPreferences.interests));
+    }
+    
     updateUserProfile(profileId, { preferences: updatedPreferences });
 }
 
@@ -174,10 +194,14 @@ function addSkill(profileId, newSkill) {
     
     const existingProfile = profiles[profileId];
 
-    if (!existingProfile.skills.includes(newSkill)) {
-        const updatedSkills = [...existingProfile.skills, newSkill];
+    // Only add the skill if it doesn't already exist
+    if (!existingProfile.skills || !existingProfile.skills.includes(newSkill)) {
+        const updatedSkills = [...(existingProfile.skills || []), newSkill];
         updateUserProfile(profileId, { skills: updatedSkills });
+        return true; // Skill was added
     }
+    
+    return false; // Skill already exists
 }
 
 function removeSkill(profileId, skillToRemove) {
@@ -201,12 +225,18 @@ function addJobApplication(profileId, applicationId) {
     }
     
     const existingProfile = profiles[profileId];
+
+    if (existingProfile.jobApplications && existingProfile.jobApplications.includes(applicationId)) {
+        return false;
+    }
+    
     const updatedJobApplications = [
-        ...existingProfile.jobApplications,
+        ...(existingProfile.jobApplications || []),
         applicationId
     ];
     
     updateUserProfile(profileId, { jobApplications: updatedJobApplications });
+    return true; // Application was added
 }
 
 function removeJobApplication(profileId, applicationId) {
@@ -254,9 +284,15 @@ function addPostedJob(profileId, jobId) {
     }
 
     const existingProfile = profiles[profileId];
-    const updatedPostedJobs = [...existingProfile.postedJobs, jobId];
+    
+    if (existingProfile.postedJobs && existingProfile.postedJobs.includes(jobId)) {
+        return false; 
+    }
+    
+    const updatedPostedJobs = [...(existingProfile.postedJobs || []), jobId];
 
     updateCompanyProfile(profileId, { postedJobs: updatedPostedJobs });
+    return true; 
 }
 
 function removePostedJob(profileId, jobId) {

@@ -84,24 +84,6 @@
             <label>Skills</label>
   
             <div class="tags-container" id="skills-tags">
-              <span class="skill-tag"
-                >Internships <span class="tag-remove">x</span></span
-              >
-              <span class="skill-tag"
-                >Software Engineering <span class="tag-remove">x</span></span
-              >
-              <span class="skill-tag"
-                >AI & Machine Learning <span class="tag-remove">x</span></span
-              >
-              <span class="skill-tag"
-                >Random Bullshit <span class="tag-remove">x</span></span
-              >
-              <span class="skill-tag"
-                >Random Bullshit <span class="tag-remove">x</span></span
-              >
-              <span class="skill-tag"
-                >Random Bullshit <span class="tag-remove">x</span></span
-              >
             </div>
             <div class="add-tag">
               <input
@@ -114,6 +96,7 @@
           </div>
 
           <button class="btn">Save Changes</button>
+
         </div>
 
         <div id="preferences" class="tab-content">
@@ -122,6 +105,7 @@
           <div class="input-group">
             <label>Experience Level</label>
             <select id="experience-level">
+              <option value="" disabled selected>Select experience level</option>
               <option>Student</option>
               <option>Fresh Graduate</option>
               <option>Junior</option>
@@ -129,19 +113,21 @@
               <option>Senior</option>
             </select>
           </div>
-
+          
           <div class="input-group">
             <label>Work Mode</label>
-            <select id="experience-level">
+            <select id="work-mode">
+              <option value="" disabled selected>Select work mode</option>
               <option>On-site</option>
               <option>Remote</option>
               <option>Hybrid</option>
             </select>
           </div>
-
+          
           <div class="input-group">
             <label>Employment Type</label>
-            <select id="experience-level">
+            <select id="employment-type"> 
+              <option value="" disabled selected>Select employment type</option>
               <option>Full time</option>
               <option>Part time</option>
               <option>Internship</option>
@@ -152,24 +138,6 @@
             <label>Industry/Interests</label>
 
             <div class="tags-container" id="interests-tags">
-              <span class="interest-tag"
-                >Internships <span class="tag-remove">x</span></span
-              >
-              <span class="interest-tag"
-                >Software Engineering <span class="tag-remove">x</span></span
-              >
-              <span class="interest-tag"
-                >AI & Machine Learning <span class="tag-remove">x</span></span
-              >
-              <span class="interest-tag"
-                >Random Bullshit <span class="tag-remove">x</span></span
-              >
-              <span class="interest-tag"
-                >Random Bullshit <span class="tag-remove">x</span></span
-              >
-              <span class="interest-tag"
-                >Random Bullshit <span class="tag-remove">x</span></span
-              >
             </div>
             <div class="add-tag">
               <input
@@ -187,6 +155,15 @@
         <div id="job-applications" class="tab-content">
           <h1>Job Applications</h1>
         </div>
+      </div>
+    </div>
+
+    <div class="modal" id="save-modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Are you sure you want to save these changes?</h2>
+        <button id="confirm-saving">Save</button>
+        <button id="cancel-saving">Cancel</button>
       </div>
     </div>
 
