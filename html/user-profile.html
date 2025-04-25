@@ -50,34 +50,67 @@
             <input
               type="email"
               id="email"
-              value="john.doe@example.com"
               disabled
             />
           </div>
 
           <div class="input-group">
             <label for="fullname">Full Name</label>
-            <input type="text" id="fullname" value="John Doe" />
+            <input type="text" id="fullname"/>
           </div>
 
           <div class="input-group">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" value="55555555555555" />
+            <input type="tel" id="phone"/>
+          </div>
+         
+          <div class="input-group">
+            <label for="location">Location</label>
+            <input type="text" id="location"/>
           </div>
 
           <div class="input-group">
-            <label for="role">Role</label>
-            <input type="text" id="role" value="Software Engineer" />
+            <label for="job-title">Job Title</label>
+            <input type="text" id="job-title"/>
           </div>
 
           <!-- TODO: Replace with actual resume rather than URL -->
           <div class="input-group">
             <label for="resume">Resume URL</label>
-            <input
-              type="url"
-              id="resume"
-              value="https://example.com/resume.pdf"
-            />
+            <input type="url" id="resume"/>
+          </div>
+
+          <div class="input-group">
+            <label>Skills</label>
+  
+            <div class="tags-container" id="skills-tags">
+              <span class="skill-tag"
+                >Internships <span class="tag-remove">x</span></span
+              >
+              <span class="skill-tag"
+                >Software Engineering <span class="tag-remove">x</span></span
+              >
+              <span class="skill-tag"
+                >AI & Machine Learning <span class="tag-remove">x</span></span
+              >
+              <span class="skill-tag"
+                >Random Bullshit <span class="tag-remove">x</span></span
+              >
+              <span class="skill-tag"
+                >Random Bullshit <span class="tag-remove">x</span></span
+              >
+              <span class="skill-tag"
+                >Random Bullshit <span class="tag-remove">x</span></span
+              >
+            </div>
+            <div class="add-tag">
+              <input
+                type="text"
+                id="new-tag"
+                class="add-tag-input"
+                placeholder="Add skill"
+              />
+            </div>
           </div>
 
           <button class="btn">Save Changes</button>
