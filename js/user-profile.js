@@ -2,7 +2,7 @@ import { getCurrentUser, isUserLoggedIn, isUserAdmin } from "./auth.js";
 
 if (!isUserLoggedIn()) {
   alert("You are not logged in. Redirecting to login page.");
-  window.location.href = "/login.html";
+  window.location.href = "../html/login.html";
 }
 
 if (isUserAdmin()) {
