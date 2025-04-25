@@ -1,3 +1,5 @@
+import {createNewProfile} from "./profile-interface.js";
+
 // constants
 const NAME_REGEX = /^[a-zA-Z ]{2,}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -72,6 +74,7 @@ function registerUser({ name, email, password, role, companyName }) {
     companyName: role === "Admin" ? companyName : null,
   };
 
+  createNewProfile(newUser);
   setUsers([...users, newUser]);
   return newUser;
 }
