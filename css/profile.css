@@ -227,7 +227,7 @@ color: var(--dark);
 }
 
 .modal #confirm-saving {
-background-color: var(--red);
+background-color: var(--accent);
 font-size: 1rem;
 font-weight: bold;
 color: white;
@@ -239,7 +239,62 @@ margin-right: 0.6em;
 }
 
 .modal #confirm-saving:hover {
-background-color: var(--dark-red);
+background-color: var(--accent-dark);
+}
+
+#cancel-saving, #cancel {
+background-color: var(--white_2);
+font-size: 1rem;
+font-weight: bold;
+color: var(--dark);
+padding: 10px 20px;
+border: none;
+border-radius: 8px;
+transition: 0.1s;
+}
+
+#cancel-saving:hover, #cancel:hover {
+background-color: var(--white_4);
+}
+
+.close {
+color: var(--dark);
+float: right;
+font-size: 2rem;
+font-weight: bold;
+cursor: default;
+user-select: none;
+transition: 0.1s;
+}
+
+.close:hover,
+.close:focus {
+color: var(--accent);
+text-decoration: none;
+cursor: pointer;
+}
+
+.modal h2 {
+margin: 0;
+margin-bottom: 1em;
+font-size: 24px;
+color: var(--dark);
+}
+
+.modal #confirm-saving {
+background-color: var(--accent);
+font-size: 1rem;
+font-weight: bold;
+color: white;
+padding: 10px 20px;
+border: none;
+border-radius: 8px;
+transition: 0.1s;
+margin-right: 0.6em;
+}
+
+.modal #confirm-saving:hover {
+background-color: var(--accent-dark);
 }
 
 #cancel-saving, #cancel {
