@@ -226,9 +226,11 @@ function createErrorMessageElement() {
 
 function updateSaveButtonState() {
   const personalSaveButton = personalInfoTab.querySelector('.btn');
-  const phoneValid = isValidPhoneNumber(phoneInput.value);
-  const resumeValid = isValidURL(resumeInput.value);
-  personalSaveButton.disabled = !(phoneValid && resumeValid);
+  const phone = phoneInput.value.trim();
+  const resume = resumeInput.value.trim();
+  const isValidPhone = !phone  || isValidPhoneNumber(phone );
+  const isValidResume = !resume || isValidURL(resume);
+  personalSaveButton.disabled = !(isValidPhone && isValidResume);
 }
 
 function initializeEventListeners() {

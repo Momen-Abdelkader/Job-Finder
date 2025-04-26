@@ -1,4 +1,4 @@
-import { getCurrentUser, isUserLoggedIn, isUserAdmin } from "./auth.js";
+import { getCurrentUser, isUserLoggedIn, isUserAdmin, isValidPhoneNumber} from "./auth.js";
 import { 
   getProfileById, 
   updateCompanyProfile,
@@ -42,6 +42,7 @@ function init() {
   updateCompanyInfoDisplay();
   populateCompanyInfo();
   initializeEventListeners();
+  initializeValidation()
 }
 
 function updateCompanyInfoDisplay() {
@@ -86,11 +87,22 @@ function closeModal() {
   enableScrolling();
 }
 
+function updateSaveButtonState() {
+  const personalSaveButton = companyInfoTab.querySelector('.btn');
+  const phone = phoneInput.value.trim();
+  const isValidPhone = !phone || isValidPhoneNumber(phone);
+  personalSaveButton.disabled = !(isValidPhone);
+}
+
+function createErrorMessageElement() {
+  const error = document.createElement('div');
+  error.className = 'error-message';
+  return error;
+}
+
 function initializeEventListeners() {
-  // Save button
   companyInfoTab.querySelector('.btn').addEventListener('click', saveCompanyInfo);
 
-  // Modal buttons
   confirmSavingBtn.addEventListener('click', processConfirmedSave);
   cancelSavingBtn.addEventListener('click', () => {
     closeModal();
@@ -103,6 +115,29 @@ function initializeEventListeners() {
     if (event.target === saveProfileInfoModal) {
       closeModal();
     }
+  });
+}
+
+function initializeValidation() {
+  const error = createErrorMessageElement();
+  phoneInput.parentNode.insertBefore(error, phoneInput.nextElementSibling);
+
+  phoneInput.addEventListener('input', function(e) {
+    const value = e.target.value.trim();
+    const isValid = isValidPhoneNumber(value);
+    const errorElement = this.nextElementSibling;
+    
+    if (value && !isValid) {
+      this.classList.add('invalid-input');
+      errorElement.textContent = 'Please enter a valid phone number.';
+      errorElement.style.display = 'block';
+    } 
+    else {
+      this.classList.remove('invalid-input');
+      errorElement.style.display = 'none';
+    }
+
+    updateSaveButtonState();
   });
 }
 
