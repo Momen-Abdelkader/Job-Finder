@@ -1,17 +1,17 @@
-import {
-  validateName,
-  validateEmail,
-  validatePassword,
-  registerUser,
-  googleAuth,
-  isUserLoggedIn,
-  isUserAdmin,
-} from "./auth.js";
+// import {
+//   validateName,
+//   validateEmail,
+//   validatePassword,
+//   registerUser,
+//   googleAuth,
+//   isUserLoggedIn,
+//   isUserAdmin,
+// } from "./auth.js";
 
-import {
-  successMessage,
-  failMessage,
-} from "./main.js";
+// import {
+//   successMessage,
+//   failMessage,
+// } from "./main.js";
 
 function authValidation() {
   if (isUserLoggedIn()) {

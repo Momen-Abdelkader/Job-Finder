@@ -1,5 +1,5 @@
-import { getJobData } from "./job-data.js";
-import { getCurrentUser } from "./auth.js";
+// import { getJobData } from "./job-data.js";
+// import { getCurrentUser } from "./auth.js";
 
 /*
 example applications object:
@@ -15,16 +15,16 @@ const applicantsExample = {
 };
 */
 
-export function getApplications() {
+function getApplications() {
   return JSON.parse(localStorage.getItem("applications")) || {};
 }
 
-export function getApplicationByJobID(jobId) {
+function getApplicationByJobID(jobId) {
   const applications = getApplications();
   return Object.values(applications).filter((app) => app.jobId === jobId);
 }
 
-export function getApplicationByUserID(userId) {
+function getApplicationByUserID(userId) {
   const applications = getApplications();
   let application = null;
   for (const id in applications) {
@@ -36,30 +36,30 @@ export function getApplicationByUserID(userId) {
   return application;
 }
 
-export function getAllApplicationsByUserID(userId) {
+function getAllApplicationsByUserID(userId) {
   const allApplications = getApplications();
   const userApplications = [];
-  
+
   for (const applicationId in allApplications) {
     const application = allApplications[applicationId];
-    
+
     if (application.applicantId === userId) {
       userApplications.push({
         ...application,
-        applicationId: applicationId
+        applicationId: applicationId,
       });
     }
   }
-  
+
   return userApplications;
 }
 
-export function getApplicationByID(applicationID) {
+function getApplicationByID(applicationID) {
   const applications = getApplications();
   return applications[applicationID] || null;
 }
 
-export function addApplication(application) {
+function addApplication(application) {
   const applications = getApplications();
   let maxID = Math.max(0, ...Object.keys(applications).map(Number));
   let id = maxID + 1;
@@ -67,7 +67,7 @@ export function addApplication(application) {
   localStorage.setItem("applications", JSON.stringify(applications));
 }
 
-export function applyToJob(jobID, userID) {
+function applyToJob(jobID, userID) {
   if (hasUserApplied(jobID, userID)) {
     console.log("User has already applied to this job.");
     return;
@@ -91,7 +91,7 @@ export function applyToJob(jobID, userID) {
   addApplication(newApplication);
 }
 
-export function updateApplicationStatus(applicationID, status) {
+function updateApplicationStatus(applicationID, status) {
   const applications = getApplications();
   if (applications[applicationID]) {
     applications[applicationID].status = status;
@@ -99,13 +99,13 @@ export function updateApplicationStatus(applicationID, status) {
   }
 }
 
-export function deleteApplication(applicationID) {
+function deleteApplication(applicationID) {
   const applications = getApplications();
   delete applications[applicationID];
   localStorage.setItem("applications", JSON.stringify(applications));
 }
 
-export function deleteApplicationsByJobID(jobId) {
+function deleteApplicationsByJobID(jobId) {
   const applications = getApplications();
   for (const id in applications) {
     if (applications[id].jobId === jobId) {
@@ -115,7 +115,7 @@ export function deleteApplicationsByJobID(jobId) {
   localStorage.setItem("applications", JSON.stringify(applications));
 }
 
-export function deleteApplicationsByUserID(userId) {
+function deleteApplicationsByUserID(userId) {
   const applications = getApplications();
   for (const id in applications) {
     if (applications[id].applicantId === userId) {
@@ -125,24 +125,24 @@ export function deleteApplicationsByUserID(userId) {
   localStorage.setItem("applications", JSON.stringify(applications));
 }
 
-export function getApplicationCountByJobID(jobId) {
+function getApplicationCountByJobID(jobId) {
   const applications = getApplications();
   return Object.values(applications).filter((app) => app.jobId === jobId)
     .length;
 }
 
-export function getApplicationCountByUserID(userId) {
+function getApplicationCountByUserID(userId) {
   const applications = getApplications();
   return Object.values(applications).filter((app) => app.applicantId === userId)
     .length;
 }
 
-export function getApplicationCount() {
+function getApplicationCount() {
   const applications = getApplications();
   return Object.keys(applications).length;
 }
 
-export function getApplicationID(jobID, userID) {
+function getApplicationID(jobID, userID) {
   const applications = getApplications();
   for (const id in applications) {
     const { jobId, applicantId } = applications[id];
@@ -153,7 +153,7 @@ export function getApplicationID(jobID, userID) {
   return null;
 }
 
-export function hasUserApplied(jobID, userID) {
+function hasUserApplied(jobID, userID) {
   const applications = getApplications();
   for (const id in applications) {
     const { jobId, applicantId } = applications[id];
@@ -164,7 +164,7 @@ export function hasUserApplied(jobID, userID) {
   return false;
 }
 
-function generateMockApplications(jobData, count = 20) {
+function generateMockApplications(jobDataVar, count = 20) {
   const applications = {};
   const firstNames = [
     "Sarah",
@@ -195,7 +195,7 @@ function generateMockApplications(jobData, count = 20) {
 
   for (let i = 1; i <= count; i++) {
     // Select a random job
-    const job = jobData[Math.floor(Math.random() * jobData.length)];
+    const job = jobDataVar[Math.floor(Math.random() * jobDataVar.length)];
 
     // Generate random applicant details
     const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
@@ -225,7 +225,7 @@ function generateMockApplications(jobData, count = 20) {
 //   !localStorage.getItem("applications") ||
 //   localStorage.getItem("applications") === "{}"
 // ) {
-//   const jobData = getJobData();
-//   const mockApplications = generateMockApplications(jobData, 50);
+//   const jobDataVar = getJobData();
+//   const mockApplications = generateMockApplications(jobDataVar, 50);
 //   localStorage.setItem("applications", JSON.stringify(mockApplications));
 // }

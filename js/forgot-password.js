@@ -1,9 +1,9 @@
-import { authValidation } from "./login.js";
+// import { authValidation } from "./login.js";
 
-import {
-  successMessage,
-  failMessage,
-} from "./main.js";
+// import {
+//   successMessage,
+//   failMessage,
+// } from "./main.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   authValidation();

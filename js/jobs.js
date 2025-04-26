@@ -1,22 +1,22 @@
-import {
-  getJobData,
-  getJobById,
-  updateJob,
-  addJob,
-  deleteJob,
-} from "./job-data.js";
+// import {
+//   getJobData,
+//   getJobById,
+//   updateJob,
+//   addJob,
+//   deleteJob,
+// } from "./job-data.js";
 
-import { hasUserApplied, addApplication, applyToJob } from "./app-data.js";
+// import { hasUserApplied, addApplication, applyToJob } from "./app-data.js";
 
-import { getCurrentUser, isUserAdmin, isUserLoggedIn } from "./auth.js";
+// import { getCurrentUser, isUserAdmin, isUserLoggedIn } from "./auth.js";
 
-import {
-  createJobCard,
-  enableScrolling,
-  disableScrolling,
-  successMessage,
-  failMessage,
-} from "./main.js";
+// import {
+//   createJobCard,
+//   enableScrolling,
+//   disableScrolling,
+//   successMessage,
+//   failMessage,
+// } from "./main.js";
 
 // constants
 const FILTER_CONFIG = [
@@ -55,7 +55,7 @@ const MIN_SALARY_GAP = 100;
 
 const user = getCurrentUser();
 
-let jobData = getJobData();
+const jobDataArr = getJobData();
 let showAppliedJobs = localStorage.getItem("showAppliedJobs") === "true";
 
 // DOM
@@ -73,7 +73,7 @@ function init() {
   addShowAppliedJobsToggle();
   generateFilters();
   setupSalarySlider();
-  renderFilteredJobs(jobData);
+  renderFilteredJobs(jobDataArr);
   updateFilterCounts();
   setupEventListeners();
   restoreSearchTerm();
@@ -247,9 +247,9 @@ function renderFilteredJobs(jobs) {
 // filteration logic
 function filterJobsSearch() {
   const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
-  if (!searchTerm) return renderFilteredJobs(jobData);
+  if (!searchTerm) return renderFilteredJobs(jobDataArr);
 
-  const filteredJobs = jobData.filter(
+  const filteredJobs = jobDataArr.filter(
     (job) =>
       job.title.toLowerCase().includes(searchTerm) ||
       job.company.toLowerCase().includes(searchTerm) ||
@@ -334,7 +334,7 @@ function clearFilters() {
 }
 
 function updateFilterCounts() {
-  let jobsForCounting = [...jobData];
+  let jobsForCounting = [...jobDataArr];
   const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
   const filters = getSelectedFilters();
 
@@ -414,7 +414,7 @@ function handleApplyFilters() {
   const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
   const filters = getSelectedFilters();
 
-  let filtered = filterJobs(jobData, filters);
+  let filtered = filterJobs(jobDataArr, filters);
 
   if (searchTerm) {
     filtered = filtered.filter(

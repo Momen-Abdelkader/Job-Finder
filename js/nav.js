@@ -1,6 +1,6 @@
-import { loginUser, logoutUser } from "./auth.js";
+// import { loginUser, logoutUser } from "./auth.js";
 
-export function createNav(isLoggedIn = false, isAdmin = false) {
+function createNav(isLoggedIn = false, isAdmin = false) {
   let navHtml = `
     <nav class="main-nav">
         <a href="${

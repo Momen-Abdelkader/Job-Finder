@@ -1,17 +1,17 @@
-import { getCurrentUser, isUserLoggedIn, isUserAdmin, isValidPhoneNumber, isValidURL} from "./auth.js";
-import { 
-  getProfileById, 
-  updateUserProfile, 
-  updatePreferences, 
-} from "./profile-interface.js";
+// import { getCurrentUser, isUserLoggedIn, isUserAdmin, isValidPhoneNumber, isValidURL} from "./auth.js";
+// import {
+//   getProfileById,
+//   updateUserProfile,
+//   updatePreferences,
+// } from "./profile-interface.js";
 
-import {
-  createJobCard,
-  enableScrolling,
-  disableScrolling,
-  successMessage,
-  failMessage,
-} from "./main.js";
+// import {
+//   createJobCard,
+//   enableScrolling,
+//   disableScrolling,
+//   successMessage,
+//   failMessage,
+// } from "./main.js";
 
 if (!isUserLoggedIn()) {
   failMessage("You are not logged in. Redirecting to login page.");
@@ -32,32 +32,32 @@ let uiSkills = [];
 let uiInterests = [];
 
 // Tabs DOM elements
-const personalInfoTab = document.getElementById('personal-info');
-const preferencesTab = document.getElementById('preferences');
-const jobApplicationsTab = document.getElementById('job-applications');
+const personalInfoTab = document.getElementById("personal-info");
+const preferencesTab = document.getElementById("preferences");
+const jobApplicationsTab = document.getElementById("job-applications");
 
 // Personal Info DOM elements
-const emailInput = document.getElementById('email');
-const fullNameInput = document.getElementById('fullname');
-const phoneInput = document.getElementById('phone');
-const locationInput = document.getElementById('location');
-const jobTitleInput = document.getElementById('job-title');
-const resumeInput = document.getElementById('resume');
-const skillsContainer = document.getElementById('skills-tags');
-const newSkillInput = personalInfoTab.querySelector('.add-tag-input');
+const emailInput = document.getElementById("email");
+const fullNameInput = document.getElementById("fullname");
+const phoneInput = document.getElementById("phone");
+const locationInput = document.getElementById("location");
+const jobTitleInput = document.getElementById("job-title");
+const resumeInput = document.getElementById("resume");
+const skillsContainer = document.getElementById("skills-tags");
+const newSkillInput = personalInfoTab.querySelector(".add-tag-input");
 
 // Preferences DOM elements
-const experienceLevelSelect = document.getElementById('experience-level');
-const workModeSelect = preferencesTab.querySelectorAll('select')[1];
-const employmentTypeSelect = preferencesTab.querySelectorAll('select')[2];
-const interestsContainer = document.getElementById('interests-tags');
-const newInterestInput = preferencesTab.querySelector('.add-tag-input');
+const experienceLevelSelect = document.getElementById("experience-level");
+const workModeSelect = preferencesTab.querySelectorAll("select")[1];
+const employmentTypeSelect = preferencesTab.querySelectorAll("select")[2];
+const interestsContainer = document.getElementById("interests-tags");
+const newInterestInput = preferencesTab.querySelector(".add-tag-input");
 
 // Modal DOM elements
-const saveProfileInfoModal = document.getElementById('save-modal');
-const confirmSavingBtn = document.getElementById('confirm-saving');
-const cancelSavingBtn = document.getElementById('cancel-saving');
-const closeModalBtn = saveProfileInfoModal.querySelector('.close');
+const saveProfileInfoModal = document.getElementById("save-modal");
+const confirmSavingBtn = document.getElementById("confirm-saving");
+const cancelSavingBtn = document.getElementById("cancel-saving");
+const closeModalBtn = saveProfileInfoModal.querySelector(".close");
 let currentSaveAction = null; // Tracks which save action to perform when confirmed
 
 function init() {
@@ -70,9 +70,9 @@ function init() {
 }
 
 function updateUserInfoDisplay() {
-  const userNameDisplay = document.querySelector('.user-name');
-  const userEmailDisplay = document.querySelector('.user-email');
-  
+  const userNameDisplay = document.querySelector(".user-name");
+  const userEmailDisplay = document.querySelector(".user-email");
+
   if (userNameDisplay) userNameDisplay.textContent = userProfile.name || "User";
   if (userEmailDisplay) userEmailDisplay.textContent = userProfile.email || "";
 }
@@ -84,29 +84,29 @@ function populatePersonalInfo() {
   locationInput.value = userProfile.location || "";
   jobTitleInput.value = userProfile.jobTitle || "";
   resumeInput.value = userProfile.resume || "";
-  
+
   uiSkills = [...(userProfile.skills || [])];
-  
+
   refreshSkillTags();
 }
 
 function populatePreferences() {
   const preferences = userProfile.preferences || {};
-  
+
   if (preferences.experienceLevel) {
     selectOptionByText(experienceLevelSelect, preferences.experienceLevel);
   }
-  
+
   if (preferences.workMode) {
     selectOptionByText(workModeSelect, preferences.workMode);
   }
-  
+
   if (preferences.employmentType) {
     selectOptionByText(employmentTypeSelect, preferences.employmentType);
   }
-  
+
   uiInterests = [...(preferences.interests || [])];
-  
+
   refreshInterestTags();
 }
 
@@ -126,198 +126,202 @@ function selectOptionByText(selectElement, optionText) {
 
 function refreshSkillTags() {
   skillsContainer.innerHTML = "";
-  uiSkills.forEach(skill => {
-    const skillTag = document.createElement('span');
-    skillTag.className = 'skill-tag';
+  uiSkills.forEach((skill) => {
+    const skillTag = document.createElement("span");
+    skillTag.className = "skill-tag";
     skillTag.innerHTML = `${skill} <span class="tag-remove">x</span>`;
-    
+
     // Add event listener to remove button (UI only)
-    skillTag.querySelector('.tag-remove').addEventListener('click', () => {
-      uiSkills = uiSkills.filter(s => s !== skill);
+    skillTag.querySelector(".tag-remove").addEventListener("click", () => {
+      uiSkills = uiSkills.filter((s) => s !== skill);
       refreshSkillTags();
     });
-    
+
     skillsContainer.appendChild(skillTag);
   });
 }
 
 function refreshInterestTags() {
   interestsContainer.innerHTML = "";
-  uiInterests.forEach(interest => {
-    const interestTag = document.createElement('span');
-    interestTag.className = 'interest-tag';
+  uiInterests.forEach((interest) => {
+    const interestTag = document.createElement("span");
+    interestTag.className = "interest-tag";
     interestTag.innerHTML = `${interest} <span class="tag-remove">x</span>`;
-    
+
     // Add event listener to remove button (UI only)
-    interestTag.querySelector('.tag-remove').addEventListener('click', () => {
-      uiInterests = uiInterests.filter(i => i !== interest);
+    interestTag.querySelector(".tag-remove").addEventListener("click", () => {
+      uiInterests = uiInterests.filter((i) => i !== interest);
       refreshInterestTags();
     });
-    
+
     interestsContainer.appendChild(interestTag);
   });
 }
 
 function showSaveModal(saveType) {
   currentSaveAction = saveType;
-  saveProfileInfoModal.style.display = 'flex';
-  disableScrolling(); 
+  saveProfileInfoModal.style.display = "flex";
+  disableScrolling();
 }
 
 function savePersonalInfo() {
-  showSaveModal('personal');
+  showSaveModal("personal");
 }
 
 function savePreferences() {
-  showSaveModal('preferences');
+  showSaveModal("preferences");
 }
 
 function processConfirmedSave() {
-  if (currentSaveAction === 'personal') {
+  if (currentSaveAction === "personal") {
     const updatedData = {
       name: fullNameInput.value.trim(),
       phone: phoneInput.value.trim(),
       location: locationInput.value.trim(),
       jobTitle: jobTitleInput.value.trim(),
       resume: resumeInput.value.trim(),
-      skills: [...uiSkills]
+      skills: [...uiSkills],
     };
-    
+
     updateUserProfile(profileId, updatedData);
     updateUserInfoDisplay();
     successMessage("Personal information saved successfully!");
-  } 
-  else if (currentSaveAction === 'preferences') {
+  } else if (currentSaveAction === "preferences") {
     const newPreferences = {};
-    
+
     // Only add preferences that have actual selections (not the placeholder)
     if (experienceLevelSelect.selectedIndex > 0) {
-      newPreferences.experienceLevel = experienceLevelSelect.options[experienceLevelSelect.selectedIndex].text;
+      newPreferences.experienceLevel =
+        experienceLevelSelect.options[experienceLevelSelect.selectedIndex].text;
     }
-    
+
     if (workModeSelect.selectedIndex > 0) {
-      newPreferences.workMode = workModeSelect.options[workModeSelect.selectedIndex].text;
+      newPreferences.workMode =
+        workModeSelect.options[workModeSelect.selectedIndex].text;
     }
-    
+
     if (employmentTypeSelect.selectedIndex > 0) {
-      newPreferences.employmentType = employmentTypeSelect.options[employmentTypeSelect.selectedIndex].text;
+      newPreferences.employmentType =
+        employmentTypeSelect.options[employmentTypeSelect.selectedIndex].text;
     }
-    
+
     newPreferences.interests = [...uiInterests];
-    
+
     updatePreferences(profileId, newPreferences);
     successMessage("Preferences saved successfully!");
   }
-  
+
   closeModal();
 }
 
 function closeModal() {
-  saveProfileInfoModal.style.display = 'none';
+  saveProfileInfoModal.style.display = "none";
   currentSaveAction = null;
   enableScrolling();
 }
 
 function createErrorMessageElement() {
-  const error = document.createElement('div');
-  error.className = 'error-message';
+  const error = document.createElement("div");
+  error.className = "error-message";
   return error;
 }
 
 function updateSaveButtonState() {
-  const personalSaveButton = personalInfoTab.querySelector('.btn');
+  const personalSaveButton = personalInfoTab.querySelector(".btn");
   const phone = phoneInput.value.trim();
   const resume = resumeInput.value.trim();
-  const isValidPhone = !phone  || isValidPhoneNumber(phone );
+  const isValidPhone = !phone || isValidPhoneNumber(phone);
   const isValidResume = !resume || isValidURL(resume);
   personalSaveButton.disabled = !(isValidPhone && isValidResume);
 }
 
 function initializeEventListeners() {
-  personalInfoTab.querySelector('.btn').addEventListener('click', savePersonalInfo);
-  preferencesTab.querySelector('.btn').addEventListener('click', savePreferences);
+  personalInfoTab
+    .querySelector(".btn")
+    .addEventListener("click", savePersonalInfo);
+  preferencesTab
+    .querySelector(".btn")
+    .addEventListener("click", savePreferences);
 
-  confirmSavingBtn.addEventListener('click', processConfirmedSave);
-  cancelSavingBtn.addEventListener('click', function() {
+  confirmSavingBtn.addEventListener("click", processConfirmedSave);
+  cancelSavingBtn.addEventListener("click", function () {
     closeModal();
     failMessage("Changes discarded.");
   });
-  closeModalBtn.addEventListener('click', closeModal);
-  
+  closeModalBtn.addEventListener("click", closeModal);
+
   // Close modal when clicking outside of it
-  window.addEventListener('click', function(event) {
+  window.addEventListener("click", function (event) {
     if (event.target === saveProfileInfoModal) {
       closeModal();
     }
   });
 
-  newSkillInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter' && this.value.trim() !== '') {
+  newSkillInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter" && this.value.trim() !== "") {
       const newSkill = this.value.trim();
-      
+
       if (!uiSkills.includes(newSkill)) {
         uiSkills.push(newSkill);
         refreshSkillTags();
       }
-      
-      this.value = '';
+
+      this.value = "";
     }
   });
 
-  newInterestInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter' && this.value.trim() !== '') {
+  newInterestInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter" && this.value.trim() !== "") {
       const newInterest = this.value.trim();
-      
+
       if (!uiInterests.includes(newInterest)) {
         uiInterests.push(newInterest);
         refreshInterestTags();
       }
-      
-      this.value = '';
+
+      this.value = "";
     }
   });
 }
 
 function initializeValidation() {
-  [phoneInput, resumeInput].forEach(input => {
+  [phoneInput, resumeInput].forEach((input) => {
     const error = createErrorMessageElement();
     input.parentNode.insertBefore(error, input.nextElementSibling);
   });
 
-  phoneInput.addEventListener('input', function(e) {
+  phoneInput.addEventListener("input", function (e) {
     const value = e.target.value.trim();
     const isValid = isValidPhoneNumber(value);
     const errorElement = this.nextElementSibling;
-    
+
     if (value && !isValid) {
-      this.classList.add('invalid-input');
-      errorElement.textContent = 'Please enter a valid phone number';
-      errorElement.style.display = 'block';
-    } 
-    else {
-      this.classList.remove('invalid-input');
-      errorElement.style.display = 'none';
+      this.classList.add("invalid-input");
+      errorElement.textContent = "Please enter a valid phone number";
+      errorElement.style.display = "block";
+    } else {
+      this.classList.remove("invalid-input");
+      errorElement.style.display = "none";
     }
     updateSaveButtonState();
   });
 
-  resumeInput.addEventListener('input', function(e) {
+  resumeInput.addEventListener("input", function (e) {
     const value = e.target.value.trim();
     const isValid = isValidURL(value);
     const errorElement = this.nextElementSibling;
-    
+
     if (value && !isValid) {
-      this.classList.add('invalid-input');
-      errorElement.textContent = 'Please enter a valid URL (e.g. https://example.com)';
-      errorElement.style.display = 'block';
-    } 
-    else {
-      this.classList.remove('invalid-input');
-      errorElement.style.display = 'none';
+      this.classList.add("invalid-input");
+      errorElement.textContent =
+        "Please enter a valid URL (e.g. https://example.com)";
+      errorElement.style.display = "block";
+    } else {
+      this.classList.remove("invalid-input");
+      errorElement.style.display = "none";
     }
     updateSaveButtonState();
   });
 }
-
 
 document.addEventListener("DOMContentLoaded", init);

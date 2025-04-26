@@ -1,10 +1,10 @@
-import { getCurrentUser } from "./auth.js";
+// import { getCurrentUser } from "./auth.js";
 
-import { getJobById } from "./job-data.js";
+// import { getJobById } from "./job-data.js";
 
-import { createNav } from "./nav.js";
+// import { createNav } from "./nav.js";
 
-export function createJobCard(job, isAdmin = false) {
+function createJobCard(job, isAdmin = false) {
   const html = `
         <div class="job-card">
             <div class="company-info">
@@ -52,15 +52,15 @@ export function createJobCard(job, isAdmin = false) {
   return element;
 }
 
-export function disableScrolling() {
+function disableScrolling() {
   document.body.style.overflow = "hidden";
 }
 
-export function enableScrolling() {
+function enableScrolling() {
   document.body.style.overflow = "";
 }
 
-export function successMessage(message) {
+function successMessage(message) {
   const messageContainer = document.createElement("div");
   messageContainer.className = "message-container success";
   messageContainer.innerHTML = `<p>${message}</p>`;
@@ -74,7 +74,7 @@ export function successMessage(message) {
   }, 3000);
 }
 
-export function failMessage(message) {
+function failMessage(message) {
   const messageContainer = document.createElement("div");
   messageContainer.className = "message-container fail";
   messageContainer.innerHTML = `<p>${message}</p>`;

@@ -1,15 +1,48 @@
-import {createNewProfile} from "./profile-interface.js";
+// import {createNewProfile} from "./profile-interface.js";
 
 // constants
 const NAME_REGEX = /^[a-zA-Z ]{2,}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX = /^[a-zA-Z0-9]{8,}$/;
-const PHONE_REGEX = /^(?:(?:\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}|01[0125]\d{8})$/;
-const URL_REGEX = /^(https?|ftp):\/\/(?:www\.)?(localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d+)?(?:\/[^\s?#]*)?(?:\?[^\s#]*)?(?:#\S*)?$/i;
+const PHONE_REGEX =
+  /^(?:(?:\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}|01[0125]\d{8})$/;
+const URL_REGEX =
+  /^(https?|ftp):\/\/(?:www\.)?(localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d+)?(?:\/[^\s?#]*)?(?:\?[^\s#]*)?(?:#\S*)?$/i;
 const VALID_TLDS = [
-  'com', 'org', 'net', 'edu', 'gov', 'io', 'co', 'me', 'info', 'biz', 'app',
-  'dev', 'ai', 'tech', 'uk', 'ca', 'au', 'de', 'fr', 'jp', 'cn', 'ru', 'in',
-  'br', 'it', 'es', 'nl', 'eu', 'us', 'xyz', 'online', 'store', 'shop', 'blog'
+  "com",
+  "org",
+  "net",
+  "edu",
+  "gov",
+  "io",
+  "co",
+  "me",
+  "info",
+  "biz",
+  "app",
+  "dev",
+  "ai",
+  "tech",
+  "uk",
+  "ca",
+  "au",
+  "de",
+  "fr",
+  "jp",
+  "cn",
+  "ru",
+  "in",
+  "br",
+  "it",
+  "es",
+  "nl",
+  "eu",
+  "us",
+  "xyz",
+  "online",
+  "store",
+  "shop",
+  "blog",
 ];
 
 // storage Functions
@@ -53,16 +86,16 @@ function validateEmail(email) {
 }
 
 function isValidTLD(email) {
-  if (!email || typeof email !== 'string') {
+  if (!email || typeof email !== "string") {
     return false;
   }
 
-  const domain = email.split('@')[1];
+  const domain = email.split("@")[1];
   if (!domain) {
     return false;
   }
-  
-  const tld = domain.split('.').pop().toLowerCase();
+
+  const tld = domain.split(".").pop().toLowerCase();
   return VALID_TLDS.includes(tld);
 }
 
@@ -129,17 +162,17 @@ function googleAuth() {
   throw new Error("Google authentication is not yet implemented.");
 }
 
-export {
-  getCurrentUser,
-  isUserAdmin,
-  isUserLoggedIn,
-  validateName,
-  validateEmail,
-  validatePassword,
-  isValidPhoneNumber,
-  isValidURL,
-  registerUser,
-  loginUser,
-  logoutUser,
-  googleAuth,
-};
+// export {
+//   getCurrentUser,
+//   isUserAdmin,
+//   isUserLoggedIn,
+//   validateName,
+//   validateEmail,
+//   validatePassword,
+//   isValidPhoneNumber,
+//   isValidURL,
+//   registerUser,
+//   loginUser,
+//   logoutUser,
+//   googleAuth,
+// };

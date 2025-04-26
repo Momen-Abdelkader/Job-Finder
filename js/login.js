@@ -1,13 +1,13 @@
-import {
-  validateEmail,
-  loginUser,
-  googleAuth,
-  isUserAdmin,
-  getCurrentUser,
-  isUserLoggedIn,
-} from "./auth.js";
+// import {
+//   validateEmail,
+//   loginUser,
+//   googleAuth,
+//   isUserAdmin,
+//   getCurrentUser,
+//   isUserLoggedIn,
+// } from "./auth.js";
 
-import { failMessage } from "./main.js";
+// import { failMessage } from "./main.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   authValidation();

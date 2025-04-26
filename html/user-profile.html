@@ -33,7 +33,9 @@
           <div class="user-email"></div>
         </div>
         <ul class="nav-tabs">
-          <li class="tab-link active" data-tab="personal-info">Personal Info</li>
+          <li class="tab-link active" data-tab="personal-info">
+            Personal Info
+          </li>
           <li class="tab-link" data-tab="preferences">Preferences</li>
           <!--
           <li class="tab-link" data-tab="job-applications">Job Applications</li>
@@ -47,44 +49,39 @@
 
           <div class="input-group">
             <label for="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              disabled
-            />
+            <input type="email" id="email" disabled />
           </div>
 
           <div class="input-group">
             <label for="fullname">Full Name</label>
-            <input type="text" id="fullname"/>
+            <input type="text" id="fullname" />
           </div>
 
           <div class="input-group">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone"/>
+            <input type="tel" id="phone" />
           </div>
-         
+
           <div class="input-group">
             <label for="location">Location</label>
-            <input type="text" id="location"/>
+            <input type="text" id="location" />
           </div>
 
           <div class="input-group">
             <label for="job-title">Job Title</label>
-            <input type="text" id="job-title"/>
+            <input type="text" id="job-title" />
           </div>
 
           <!-- TODO: Replace with actual resume rather than URL -->
           <div class="input-group">
             <label for="resume">Resume URL</label>
-            <input type="url" id="resume"/>
+            <input type="url" id="resume" />
           </div>
 
           <div class="input-group">
             <label>Skills</label>
-  
-            <div class="tags-container" id="skills-tags">
-            </div>
+
+            <div class="tags-container" id="skills-tags"></div>
             <div class="add-tag">
               <input
                 type="text"
@@ -96,7 +93,6 @@
           </div>
 
           <button class="btn">Save Changes</button>
-
         </div>
 
         <div id="preferences" class="tab-content">
@@ -105,7 +101,9 @@
           <div class="input-group">
             <label>Experience Level</label>
             <select id="experience-level">
-              <option value="" disabled selected>Select experience level</option>
+              <option value="" disabled selected>
+                Select experience level
+              </option>
               <option>Student</option>
               <option>Fresh Graduate</option>
               <option>Junior</option>
@@ -113,7 +111,7 @@
               <option>Senior</option>
             </select>
           </div>
-          
+
           <div class="input-group">
             <label>Work Mode</label>
             <select id="work-mode">
@@ -123,10 +121,10 @@
               <option>Hybrid</option>
             </select>
           </div>
-          
+
           <div class="input-group">
             <label>Employment Type</label>
-            <select id="employment-type"> 
+            <select id="employment-type">
               <option value="" disabled selected>Select employment type</option>
               <option>Full time</option>
               <option>Part time</option>
@@ -137,8 +135,7 @@
           <div class="input-group">
             <label>Industry/Interests</label>
 
-            <div class="tags-container" id="interests-tags">
-            </div>
+            <div class="tags-container" id="interests-tags"></div>
             <div class="add-tag">
               <input
                 type="text"
@@ -166,9 +163,11 @@
         <button id="cancel-saving">Cancel</button>
       </div>
     </div>
-
-    <script src="../js/main.js" type="module"></script>
-    <script src="../js/user-profile.js" type="module"></script>
+    <script src="../js/profile-interface.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/nav.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/user-profile.js"></script>
     <script src="../js/profile-nav.js"></script>
   </body>
 </html>

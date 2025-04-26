@@ -1,4 +1,4 @@
-export const jobData = [
+const jobData = [
   {
     id: 1,
     logo: "../assets/google.png",
@@ -184,28 +184,28 @@ if (
   localStorage.setItem("jobData", JSON.stringify(jobData));
 }
 
-export function getJobData() {
+function getJobData() {
   return JSON.parse(localStorage.getItem("jobData") || "[]");
 }
 
-export function getJobsByCompany(companyId) {
+function getJobsByCompany(companyId) {
   const jobs = getJobData();
   return jobs.filter((job) => job.companyId === companyId);
 }
 
-export function getJobById(jobId) {
+function getJobById(jobId) {
   const jobs = getJobData();
   return jobs.find((job) => job.id === jobId);
 }
 
-export function addJob(job) {
+function addJob(job) {
   const jobs = getJobData();
   job.id = jobs.length ? jobs[jobs.length - 1].id + 1 : 1;
   jobs.push(job);
   localStorage.setItem("jobData", JSON.stringify(jobs));
 }
 
-export function updateJob(updatedJob) {
+function updateJob(updatedJob) {
   const jobs = getJobData();
   const index = jobs.findIndex((job) => job.id === updatedJob.id);
   if (index !== -1) {
@@ -214,7 +214,7 @@ export function updateJob(updatedJob) {
   }
 }
 
-export function deleteJob(jobId) {
+function deleteJob(jobId) {
   const jobs = getJobData();
   const updatedJobs = jobs.filter((job) => job.id !== jobId);
   localStorage.setItem("jobData", JSON.stringify(updatedJobs));

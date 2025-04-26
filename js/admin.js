@@ -1,70 +1,70 @@
-import {
-  getJobsByCompany,
-  getJobById,
-  updateJob,
-  addJob,
-  deleteJob,
-} from "./job-data.js";
+// import {
+//   getJobsByCompany,
+//   getJobById,
+//   updateJob,
+//   addJob,
+//   deleteJob,
+// } from "./job-data.js";
 
-import {
-  getApplications,
-  getApplicationByJobID,
-  getApplicationByUserID,
-  getApplicationByID,
-  addApplication,
-  updateApplicationStatus,
-  deleteApplication,
-  deleteApplicationsByJobID,
-  deleteApplicationsByUserID,
-  getApplicationCountByJobID,
-  getApplicationCountByUserID,
-  getApplicationCount,
-  getApplicationID,
-} from "./app-data.js";
+// import {
+//   getApplications,
+//   getApplicationByJobID,
+//   getApplicationByUserID,
+//   getApplicationByID,
+//   addApplication,
+//   updateApplicationStatus,
+//   deleteApplication,
+//   deleteApplicationsByJobID,
+//   deleteApplicationsByUserID,
+//   getApplicationCountByJobID,
+//   getApplicationCountByUserID,
+//   getApplicationCount,
+//   getApplicationID,
+// } from "./app-data.js";
 
-import { isUserLoggedIn, isUserAdmin, getCurrentUser } from "./auth.js";
+// import { isUserLoggedIn, isUserAdmin, getCurrentUser } from "./auth.js";
 
-import {
-  createJobCard,
-  disableScrolling,
-  enableScrolling,
-  successMessage,
-  failMessage,
-} from "./main.js";
+// import {
+//   createJobCard,
+//   disableScrolling,
+//   enableScrolling,
+//   successMessage,
+//   failMessage,
+// } from "./main.js";
 
-import { getProfileById } from "./profile-interface.js"
+// import { getProfileById } from "./profile-interface.js"
 
-const skillsContainer = document.getElementById('skills-tags');
-const newSkillInput = document.querySelector('.add-skill-button');
+const skillsContainer = document.getElementById("skills-tags");
+const newSkillInput = document.querySelector(".add-skill-button");
 let newSkill;
 let uiSkills = [];
 // Tags input listeners
-newSkillInput.addEventListener('click', function() {
-  if (newSkill.value.trim() !== '') {
+newSkillInput.addEventListener("click", function () {
+  if (newSkill.value.trim() !== "") {
     const newSkills = newSkill.value.trim();
-    
+
     if (!uiSkills.includes(newSkills)) {
       uiSkills.push(newSkills);
       refreshSkillTags();
     }
-    
-    newSkill.value = '';
+
+    newSkill.value = "";
   }
 });
 
 function refreshSkillTags() {
   skillsContainer.innerHTML = "";
-  uiSkills.forEach(skill => {
-    const skillTag = document.createElement('span');
-    skillTag.className = 'skill-tag';
+  uiSkills.forEach((skill) => {
+    const skillTag = document.createElement("span");
+    skillTag.className = "skill-tag";
     skillTag.innerHTML = `${skill} <span class="tag-remove">x</span>`;
-    
+
     // Add event listener to remove button (UI only)
-    skillTag.querySelector('.tag-remove').addEventListener('click', () => {
-      uiSkills = uiSkills.filter(s => s !== skill);
+    skillTag.querySelector(".tag-remove").addEventListener("click", () => {
+      uiSkills = uiSkills.filter((s) => s !== skill);
       refreshSkillTags();
     });
-    
+
     skillsContainer.appendChild(skillTag);
   });
 }
@@ -77,7 +77,7 @@ function showAddJobModal() {
   const user = getCurrentUser();
 
   uiSkills = [];
-  newSkill = document.querySelector('.add-tag-input');
+  newSkill = document.querySelector(".add-tag-input");
 
   modal.querySelector("#add-job-button").innerHTML = "Add Job";
 
@@ -94,7 +94,6 @@ function showAddJobModal() {
   });
 
   jobForm.addEventListener("submit", function () {
-
     const workLocation = document.querySelector(
       'input[name="workLocation"]:checked'
     ).value;
@@ -121,7 +120,7 @@ function showAddJobModal() {
       salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
       jobType: jobType,
       workMode: workLocation,
-      skills: uiSkills, // TODO: implement skills input // DONE 
+      skills: uiSkills, // TODO: implement skills input // DONE
       experienceLevel: experience,
       postedAt: new Date(),
       description: jobForm.querySelector("#job-description").value,
@@ -166,7 +165,7 @@ function showEditJobModal(job) {
 
   uiSkills = job.skills;
   refreshSkillTags();
-  newSkill = document.querySelector('.add-tag-input');
+  newSkill = document.querySelector(".add-tag-input");
 
   modal.querySelector("#add-job-button").innerHTML = "Confirm";
 
@@ -183,7 +182,6 @@ function showEditJobModal(job) {
   });
 
   jobForm.addEventListener("submit", function () {
-
     const workLocation = document.querySelector(
       'input[name="workLocation"]:checked'
     ).value;
