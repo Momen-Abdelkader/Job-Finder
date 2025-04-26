@@ -4,6 +4,8 @@ import {createNewProfile} from "./profile-interface.js";
 const NAME_REGEX = /^[a-zA-Z ]{2,}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX = /^[a-zA-Z0-9]{8,}$/;
+const PHONE_REGEX = /^(?:(?:\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}|01[0125]\d{8})$/;
+const URL_REGEX = /^(https?|ftp):\/\/(?:www\.)?(localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d+)?(?:\/[^\s?#]*)?(?:\?[^\s#]*)?(?:#\S*)?$/i;
 const VALID_TLDS = [
   'com', 'org', 'net', 'edu', 'gov', 'io', 'co', 'me', 'info', 'biz', 'app',
   'dev', 'ai', 'tech', 'uk', 'ca', 'au', 'de', 'fr', 'jp', 'cn', 'ru', 'in',
@@ -68,6 +70,14 @@ function validatePassword(password) {
   return PASSWORD_REGEX.test(password);
 }
 
+function isValidPhoneNumber(phoneNumber) {
+  return PHONE_REGEX.test(phoneNumber);
+}
+
+function isValidURL(url) {
+  return URL_REGEX.test(url);
+}
+
 // auth operations
 function registerUser({ name, email, password, role, companyName }) {
   const users = getUsers();
@@ -126,6 +136,8 @@ export {
   validateName,
   validateEmail,
   validatePassword,
+  isValidPhoneNumber,
+  isValidURL,
   registerUser,
   loginUser,
   logoutUser,

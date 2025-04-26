@@ -1,4 +1,4 @@
-import { getCurrentUser, isUserLoggedIn, isUserAdmin } from "./auth.js";
+import { getCurrentUser, isUserLoggedIn, isUserAdmin, isValidPhoneNumber, isValidURL} from "./auth.js";
 import { 
   getProfileById, 
   updateUserProfile, 
@@ -66,6 +66,7 @@ function init() {
   populatePreferences();
   populateJobApplications();
   initializeEventListeners();
+  initializeValidation();
 }
 
 function updateUserInfoDisplay() {
@@ -217,6 +218,19 @@ function closeModal() {
   enableScrolling();
 }
 
+function createErrorMessageElement() {
+  const error = document.createElement('div');
+  error.className = 'error-message';
+  return error;
+}
+
+function updateSaveButtonState() {
+  const personalSaveButton = personalInfoTab.querySelector('.btn');
+  const phoneValid = isValidPhoneNumber(phoneInput.value);
+  const resumeValid = isValidURL(resumeInput.value);
+  personalSaveButton.disabled = !(phoneValid && resumeValid);
+}
+
 function initializeEventListeners() {
   personalInfoTab.querySelector('.btn').addEventListener('click', savePersonalInfo);
   preferencesTab.querySelector('.btn').addEventListener('click', savePreferences);
@@ -261,5 +275,47 @@ function initializeEventListeners() {
     }
   });
 }
+
+function initializeValidation() {
+  [phoneInput, resumeInput].forEach(input => {
+    const error = createErrorMessageElement();
+    input.parentNode.insertBefore(error, input.nextElementSibling);
+  });
+
+  phoneInput.addEventListener('input', function(e) {
+    const value = e.target.value.trim();
+    const isValid = isValidPhoneNumber(value);
+    const errorElement = this.nextElementSibling;
+    
+    if (value && !isValid) {
+      this.classList.add('invalid-input');
+      errorElement.textContent = 'Please enter a valid phone number';
+      errorElement.style.display = 'block';
+    } 
+    else {
+      this.classList.remove('invalid-input');
+      errorElement.style.display = 'none';
+    }
+    updateSaveButtonState();
+  });
+
+  resumeInput.addEventListener('input', function(e) {
+    const value = e.target.value.trim();
+    const isValid = isValidURL(value);
+    const errorElement = this.nextElementSibling;
+    
+    if (value && !isValid) {
+      this.classList.add('invalid-input');
+      errorElement.textContent = 'Please enter a valid URL (e.g. https://example.com)';
+      errorElement.style.display = 'block';
+    } 
+    else {
+      this.classList.remove('invalid-input');
+      errorElement.style.display = 'none';
+    }
+    updateSaveButtonState();
+  });
+}
+
 
 document.addEventListener("DOMContentLoaded", init);
