@@ -1,5 +1,5 @@
 function UserProfile({
-    profileId,
+    profileId, // Profile ID = User ID
     name,
     email,
     phone = "",
@@ -24,7 +24,7 @@ function UserProfile({
 }
 
 function CompanyProfile({
-    profileId,
+    profileId, // Profile ID = User ID
     adminName,
     email,
     companyName,
@@ -306,6 +306,92 @@ function removePostedJob(profileId, jobId) {
     const updatedPostedJobs = existingProfile.postedJobs.filter(job => job !== jobId);
 
     updateCompanyProfile(profileId, { postedJobs: updatedPostedJobs });
+}
+
+// --------------------------- USER PROFILE GET OPERATIONS
+function getUserPersonalInfo(profileId) {
+    const profiles = getProfilesStorage();
+    const profile = profiles[profileId];
+
+    if (!profile) {
+        throw new Error("Profile not found.");
+    }
+
+    return {
+        name: profile.name,
+        email: profile.email,
+        phone: profile.phone,
+        location: profile.location,
+        jobTitle: profile.jobTitle,
+        skills: profile.skills,
+        resume: profile.resume
+    };
+}
+
+function getUserPreferences(profileId) {
+    const profiles = getProfilesStorage();
+    const profile = profiles[profileId];
+
+    if (!profile) {
+        throw new Error("Profile not found.");
+    }
+
+    return profile.preferences || {};
+}
+
+function getUserJobApplications(profileId) {
+    const profiles = getProfilesStorage();
+    const profile = profiles[profileId];
+
+    if (!profile) {
+        throw new Error("Profile not found.");
+    }
+
+    return profile.jobApplications || [];
+}
+
+function getUserSkills(profileId) {
+    const profiles = getProfilesStorage();
+    const profile = profiles[profileId];
+
+    if (!profile) {
+        throw new Error("Profile not found.");
+    }
+
+    return profile.skills || [];
+}
+
+function getUserJobTitle(profileId) {
+    const profiles = getProfilesStorage();
+    const profile = profiles[profileId];
+
+    if (!profile) {
+        throw new Error("Profile not found.");
+    }
+
+    return profile.jobTitle || "";
+}
+
+function getUserLocation(profileId) {
+    const profiles = getProfilesStorage();
+    const profile = profiles[profileId];
+
+    if (!profile) {
+        throw new Error("Profile not found.");
+    }
+
+    return profile.location || "";
+}
+
+function getUserResume(profileId) {
+    const profiles = getProfilesStorage();
+    const profile = profiles[profileId];
+
+    if (!profile) {
+        throw new Error("Profile not found.");
+    }
+
+    return profile.resume || "";
 }
 
 export {
