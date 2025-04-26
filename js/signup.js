@@ -8,9 +8,14 @@ import {
   isUserAdmin,
 } from "./auth.js";
 
+import {
+  successMessage,
+  failMessage,
+} from "./main.js";
+
 function authValidation() {
   if (isUserLoggedIn()) {
-    alert("You are already logged in.");
+    failMessage("You are already logged in.");
     if (isUserAdmin()) {
       window.location.href = "admin.html";
     } else {
@@ -83,10 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // add user to local storage
       registerUser({ name, email, password, role, companyName });
 
-      alert("Account created successfully!");
+      successMessage("Account created successfully!");
       window.location.href = "login.html";
     } catch (error) {
-      alert(error.message);
+      failMessage(error.message);
     }
   });
 
@@ -94,9 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
   useButton.addEventListener("click", () => {
     try {
       googleAuth();
-      alert("Google Account is selected successfully!");
+      successMessage("Google Account is selected successfully!");
     } catch (error) {
-      alert(error.message);
+      failMessage(error.message);
     }
   });
 });

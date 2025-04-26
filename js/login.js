@@ -7,6 +7,8 @@ import {
   isUserLoggedIn,
 } from "./auth.js";
 
+import { failMessage } from "./main.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   authValidation();
   // DOM
@@ -37,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "home.html";
       }
     } catch (error) {
-      alert(error.message);
+      failMessage(error.message);
     } finally {
     }
   });
@@ -46,16 +48,16 @@ document.addEventListener("DOMContentLoaded", () => {
   useGoogleBtn.addEventListener("click", () => {
     try {
       googleAuth();
-      alert("Google login coming soon!");
+      failMessage("Google login coming soon!");
     } catch (error) {
-      alert(error.message);
+      failMessage(error.message);
     }
   });
 });
 
 function authValidation() {
   if (isUserLoggedIn()) {
-    alert("You are already logged in.");
+    failMessage("You are already logged in.");
     if (isUserAdmin()) {
       window.location.href = "admin.html";
     } else {

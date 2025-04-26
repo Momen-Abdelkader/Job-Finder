@@ -12,12 +12,12 @@ import {
 } from "./main.js";
 
 if (!isUserLoggedIn()) {
-  alert("You are not logged in. Redirecting to login page.");
+  failMessage("You are not logged in. Redirecting to login page.");
   window.location.href = "../html/login.html";
 }
 
 if (!isUserAdmin()) {
-  alert("You are not an admin. Redirecting to user profile.");
+  failMessage("You are not an admin. Redirecting to user profile.");
   window.location.href = "../html/user-profile.html";
 }
 

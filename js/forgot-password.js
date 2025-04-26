@@ -1,5 +1,10 @@
 import { authValidation } from "./login.js";
 
+import {
+  successMessage,
+  failMessage,
+} from "./main.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   authValidation();
 
@@ -23,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         newPasswordSection.style.display = "none";
         confirmPasswordSection.style.display = "none";
-        alert("No user found with this email.");
+        failMessage("No user found with this email.");
       }
     }
   });
@@ -36,21 +41,21 @@ document.addEventListener("DOMContentLoaded", () => {
       .value.trim();
 
     if (!email || !newPassword || !confirmPassword) {
-      alert("Please fill in all fields.");
+      failMessage("Please fill in all fields.");
       return;
     }
 
     const passwordRegex = /^[a-zA-Z0-9]{8,}$/;
 
     if (!passwordRegex.test(newPassword)) {
-      alert(
+      failMessage(
         "Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character."
       );
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      alert("Passwords do not match.");
+      failMessage("Passwords do not match.");
       return;
     }
 
@@ -60,10 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (matchedUser) {
       matchedUser.password = newPassword;
       localStorage.setItem("users", JSON.stringify(users));
-      alert("Your password has been reset successfully!");
+      successMessage("Your password has been reset successfully!");
       window.location.href = "login.html";
     } else {
-      alert("No user found with this email.");
+      failMessage("No user found with this email.");
     }
   });
 });
