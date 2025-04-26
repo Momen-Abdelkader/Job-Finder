@@ -252,7 +252,7 @@ select:focus {
   }
   
   .modal #confirm-saving {
-    background-color: var(--red);
+    background-color: var(--accent);
     font-size: 1rem;
     font-weight: bold;
     color: white;
@@ -264,7 +264,7 @@ select:focus {
   }
   
   .modal #confirm-saving:hover {
-    background-color: var(--dark-red);
+    background-color: var(--accent-dark);
   }
   
   #cancel-saving, #cancel {
