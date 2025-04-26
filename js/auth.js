@@ -4,6 +4,11 @@ import {createNewProfile} from "./profile-interface.js";
 const NAME_REGEX = /^[a-zA-Z ]{2,}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX = /^[a-zA-Z0-9]{8,}$/;
+const VALID_TLDS = [
+  'com', 'org', 'net', 'edu', 'gov', 'io', 'co', 'me', 'info', 'biz', 'app',
+  'dev', 'ai', 'tech', 'uk', 'ca', 'au', 'de', 'fr', 'jp', 'cn', 'ru', 'in',
+  'br', 'it', 'es', 'nl', 'eu', 'us', 'xyz', 'online', 'store', 'shop', 'blog'
+];
 
 // storage Functions
 function getUsers() {
@@ -42,7 +47,21 @@ function validateName(name) {
 }
 
 function validateEmail(email) {
-  return EMAIL_REGEX.test(email);
+  return EMAIL_REGEX.test(email) && isValidTLD(email);
+}
+
+function isValidTLD(email) {
+  if (!email || typeof email !== 'string') {
+    return false;
+  }
+
+  const domain = email.split('@')[1];
+  if (!domain) {
+    return false;
+  }
+  
+  const tld = domain.split('.').pop().toLowerCase();
+  return VALID_TLDS.includes(tld);
 }
 
 function validatePassword(password) {
