@@ -219,7 +219,7 @@ function renderFilteredJobs(jobs) {
     const card = createJobCard(job);
     const applyButton = card.querySelector(".apply-button");
 
-    if (user && hasUserApplied(job.id, user.id)) {
+    if (isUserLoggedIn() && hasUserApplied(job.id, user.id)) {
       applyButton.textContent = "Applied";
       applyButton.classList.add("already-applied");
       applyButton.addEventListener("click", () => {
@@ -287,7 +287,7 @@ function getSelectedFilters() {
 function filterJobs(jobs, { employmentType, level, salary }) {
   return jobs.filter((job) => {
     const salaryValue = parseInt(job.salary.replace(/[^0-9]/g, ""));
-    const hasApplied = hasUserApplied(job.id, user.id);
+    const hasApplied = isUserLoggedIn() && hasUserApplied(job.id, user.id);
 
     const appliedFilterPassed = showAppliedJobs || !hasApplied;
 
@@ -338,7 +338,7 @@ function updateFilterCounts() {
   const searchTerm = localStorage.getItem("searchTerm")?.toLowerCase() || "";
   const filters = getSelectedFilters();
 
-  if (!showAppliedJobs) {
+  if (isUserLoggedIn() && !showAppliedJobs) {
     jobsForCounting = jobsForCounting.filter(
       (job) => !hasUserApplied(job.id, user.id)
     );
@@ -496,6 +496,11 @@ function showApplyModal(job) {
 
   const applyButton = modal.querySelector(".apply-button");
   applyButton.addEventListener("click", () => {
+    if (!isUserLoggedIn()) {
+      window.location.href = "login.html";
+      return;
+    }
+
     if (hasUserApplied(job.id, user.id)) {
       failMessage("You have already applied for this job.");
       closeModal();
@@ -573,7 +578,7 @@ function showDetailsModal(job) {
       </div>
       <div class="modal-footer">
         ${
-          hasUserApplied(job.id, user.id)
+          isUserLoggedIn() && hasUserApplied(job.id, user.id)
             ? '<a class="button apply-button large-button already-applied">Already Applied</a>'
             : '<a href="#" class="button apply-button large-button">Apply Now</a>'
         }
@@ -607,6 +612,11 @@ function showDetailsModal(job) {
 
   const applyButton = modal.querySelector(".apply-button");
   applyButton.addEventListener("click", () => {
+    if (!isUserLoggedIn()) {
+      window.location.href = "login.html";
+      return;
+    }
+
     if (hasUserApplied(job.id, user.id)) {
       failMessage("You have already applied for this job.");
     } else {
