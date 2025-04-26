@@ -29,3 +29,33 @@
   margin: 0 auto;
   padding: 20px;
 }
+
+.message-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 16px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  user-select: none;
+}
+
+.message-container.success {
+  background-color: var(--green);
+  color: white;
+}
+
+.message-container.fail {
+  background-color: var(--red);
+  color: white;
+}
+
+.message-container.hide {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-20px);
+}

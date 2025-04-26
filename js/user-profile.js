@@ -14,12 +14,12 @@ import {
 } from "./main.js";
 
 if (!isUserLoggedIn()) {
-  alert("You are not logged in. Redirecting to login page.");
+  failMessage("You are not logged in. Redirecting to login page.");
   window.location.href = "../html/login.html";
 }
 
 if (isUserAdmin()) {
-  alert("You are an admin. Redirecting to admin page.");
+  failMessage("You are an admin. Redirecting to admin page.");
   window.location.href = "../html/admin.html";
 }
 
@@ -60,7 +60,6 @@ const cancelSavingBtn = document.getElementById('cancel-saving');
 const closeModalBtn = saveProfileInfoModal.querySelector('.close');
 let currentSaveAction = null; // Tracks which save action to perform when confirmed
 
-// Initialization
 function init() {
   updateUserInfoDisplay();
   populatePersonalInfo();
@@ -209,7 +208,6 @@ function processConfirmedSave() {
     successMessage("Preferences saved successfully!");
   }
   
-
   closeModal();
 }
 
@@ -220,11 +218,9 @@ function closeModal() {
 }
 
 function initializeEventListeners() {
-  // Save buttons for both tabs
   personalInfoTab.querySelector('.btn').addEventListener('click', savePersonalInfo);
   preferencesTab.querySelector('.btn').addEventListener('click', savePreferences);
 
-  // Modal buttons
   confirmSavingBtn.addEventListener('click', processConfirmedSave);
   cancelSavingBtn.addEventListener('click', function() {
     closeModal();
@@ -239,7 +235,6 @@ function initializeEventListeners() {
     }
   });
 
-  // Tags input listeners
   newSkillInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter' && this.value.trim() !== '') {
       const newSkill = this.value.trim();

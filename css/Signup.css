@@ -1,5 +1,5 @@
 body {
-    background-color: #357dec; /* Light gray background */
+    background-color: var(--accent);
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 100;
@@ -15,63 +15,17 @@ section  {
     /*max-width: 450px;*/
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .Page_con {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
-    gap: 10%; /* space between header and form */
+    gap: 10%;
     padding-top: 100px;
-    flex-wrap: wrap; /* allows stacking on small screens */
+    flex-wrap: wrap;
 }
 
-/* Optional: set width for header and form */
 .Header_con, .Form_con {
-    /*flex: 1 1 200px; !* makes them responsive *!*/
     max-width: 600px;
     box-sizing: border-box;
 }
@@ -103,24 +57,11 @@ section  {
     min-width: 540px;
 }
 
-
-
-
-
-* {
-    box-sizing: border-box;
-}
-
 .Form_con section:not(.Toggle-container , .Use-container , .Create-container) {
     /*width: 100%;*/
     display: flex;
     flex-direction: column;
-    /*gap: 5px; !* Adds space between the label and input *!*/
 }
-
-
-
-
 
 .Form_con section div:not(.Log_in div){
     font-size: 15px;
@@ -171,30 +112,11 @@ section  {
 }
 .Text input {
     /*left:0px;*/
-    padding-left: 35px; /* creates space for the icon inside the box */
+    padding-left: 35px;
     /*height: 30px;*/
     font-size: 14px;
-    /*box-sizing: border-box;*/
     width:100%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #create_container,
 #use_button{
@@ -212,13 +134,10 @@ section  {
 
 }
 
-
-
-
 #create_button,
 #use_button{
     /*padding: 10px ;*/
-    font-size: 15px;  /* Adjust font size */
+    font-size: 15px;
     color: black;
     border: #e4edfe;
     cursor: pointer;
@@ -232,16 +151,12 @@ section  {
     max-height: 40px;
 }
 
-
-
 #create_button,
 #use_button{
     background-color: #e4edfe;
     border-left:2px solid #e4edfe;
 
 }
-
-
 
 #use_button,
 #create_button{
@@ -264,14 +179,14 @@ section  {
 
 .bt_icon {
     position: absolute;
-    left: 10px; /* Adjust as needed */
+    left: 10px;
     top: 50%;
     transform: translateY(-50%);
 }
 
 .bt_icon img {
     padding-left: 5px;
-    width: 25px; /* Adjust size as needed */
+    width: 25px;
     height: 16px;
     padding-top: 2%;
 }
@@ -281,15 +196,6 @@ section  {
     text-align: center;
     width: 100%;
 }
-
-
-
-
-
-
-
-
-
 
 .Toggle-container {
     display: flex;
@@ -306,12 +212,9 @@ section  {
     box-sizing: border-box;
 }
 
-
-
-
 .toggle-button {
-    flex: 1; /* equally distributes space */
-    margin: 0 2px; /* small gap between buttons */
+    flex: 1;
+    margin: 0 2px;
     font-size: 15px;
     color: white;
     border: none;
@@ -326,30 +229,13 @@ section  {
     box-sizing: border-box;
 }
 
-/* Active button: light background, dark text */
 .toggle-button.active {
     background-color: #e4edfe;
     color: black;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .Log_in div{
     font-size: 12px;
-    /*font-weight: normal;*/
     color: white;
     text-align: center;
     /*min-width: 376px;*/
@@ -359,11 +245,9 @@ section  {
 
 }
 
-
 .t1{
     font-weight: normal;
 }
-
 
 .t2 {
     text-decoration: underline;
@@ -378,28 +262,16 @@ section  {
 }
 
 
-
-/* Media Query for screens smaller than 768px */
 @media (max-width: 768px) {
     .Page_con {
-        flex-direction: column; /* Stack header and form vertically */
-        /*gap: 20px; !* reduced gap between header and form *!*/
-        justify-content: center; /* Center horizontally */
-        /*padding-top: 50px; !* Adjust top padding *!*/
+        flex-direction: column;
+        justify-content: center;
         padding-top: 0;
     }
 
     .Header_con, .Form_con {
         width:100%;
-        max-width: 100%; /* Make both header and form width more flexible on smaller screens */
-        margin: 0 auto; /* Center the elements horizontally */
+        max-width: 100%;
+        margin: 0 auto;
     }
 }
-
-
-
-
-
-
-
-  
