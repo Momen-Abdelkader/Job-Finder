@@ -36,6 +36,24 @@ export function getApplicationByUserID(userId) {
   return application;
 }
 
+export function getAllApplicationsByUserID(userId) {
+  const allApplications = getApplications();
+  const userApplications = [];
+  
+  for (const applicationId in allApplications) {
+    const application = allApplications[applicationId];
+    
+    if (application.applicantId === userId) {
+      userApplications.push({
+        ...application,
+        applicationId: applicationId
+      });
+    }
+  }
+  
+  return userApplications;
+}
+
 export function getApplicationByID(applicationID) {
   const applications = getApplications();
   return applications[applicationID] || null;
