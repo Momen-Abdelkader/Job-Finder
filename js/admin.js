@@ -120,7 +120,7 @@ function showAddJobModal() {
       salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
       jobType: jobType,
       workMode: workLocation,
-      skills: uiSkills, // TODO: implement skills input // DONE
+      skills: uiSkills, 
       experienceLevel: experience,
       postedAt: new Date(),
       description: jobForm.querySelector("#job-description").value,
@@ -286,14 +286,16 @@ function showJobApplicantsModal(job) {
         </select>
       </div>
       <div class="applicant-actions">
-        <a class="button resume-button" href="${
-          applicant.resumeUrl
-        }" target="_blank">View Resume</a>
-        <a class="button profile-button" href="../profile.html?userId=${
-          applicant.applicantId
-        }" target="_blank">View Profile</a>
+        <!-- Removed View Resume/Profile Temp. -->
       </div>
     </div>`;
+
+    // <a class="button resume-button" href="${
+    //   applicant.resumeUrl
+    // }" target="_blank">View Resume</a>
+    // <a class="button profile-button" href="../profile.html?userId=${
+    //   applicant.applicantId
+    // }" target="_blank">View Profile</a>
 
     const listItem = document.createElement("li");
     listItem.classList.add("applicant-item");
