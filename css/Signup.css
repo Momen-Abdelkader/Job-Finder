@@ -179,7 +179,7 @@ body {
   color: var(--dark);
 }
 
-.form-footer-link {
+.form-link {
   font-size: 1rem;
   font-weight: 800;
   margin: 0;
@@ -188,7 +188,7 @@ body {
   transition: 0.1s;
 }
 
-.form-footer-link:hover {
+.form-link:hover {
   text-decoration: underline;
   color: var(--accent-dark);
 }
