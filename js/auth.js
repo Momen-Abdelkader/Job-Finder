@@ -162,6 +162,23 @@ function googleAuth() {
   throw new Error("Google authentication is not yet implemented.");
 }
 
+// send reset password email placeholder
+async function sendPasswordResetEmail(email) {
+  // In a real app, this would:
+  // 1. Check if email exists in your database
+  // 2. Generate a unique reset token
+  // 3. Send email with reset link
+
+  // Simulate API call delay
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log(`Password reset email would be sent to: ${email}`);
+      // In production, you would actually send an email here
+      resolve();
+    }, 1500);
+  });
+}
+
 // export {
 //   getCurrentUser,
 //   isUserAdmin,

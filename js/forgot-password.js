@@ -1,74 +1,63 @@
-// import { authValidation } from "./login.js";
+// Import statements (uncomment when you have these modules)
+// import { validateEmail, sendPasswordResetEmail } from './auth.js';
+// import { successMessage, failMessage } from './main.js';
 
-// import {
-//   successMessage,
-//   failMessage,
-// } from "./main.js";
+document.addEventListener("DOMContentLoaded", function () {
+  // DOM Elements
+  const form = document.getElementById("forgot-password-form");
+  const emailInput = document.getElementById("email");
+  const submitButton = document.querySelector(".confirm-button");
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   authValidation();
+  // State
+  let isProcessing = false;
 
-//   const emailInput = document.getElementById("email");
-//   const resetBtn = document.getElementById("create_button");
-//   const newPasswordSection = document.getElementById("new-password-section");
-//   const confirmPasswordSection = document.getElementById(
-//     "confirm-password-section"
-//   );
+  // Handle form submission
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-//   emailInput.addEventListener("blur", () => {
-//     const email = emailInput.value.trim();
+    if (isProcessing) return;
+    isProcessing = true;
 
-//     if (email) {
-//       const users = JSON.parse(localStorage.getItem("users")) || [];
-//       const matchedUser = users.find((user) => user.email === email);
+    try {
+      const email = emailInput.value.trim();
 
-//       if (matchedUser) {
-//         newPasswordSection.style.display = "block";
-//         confirmPasswordSection.style.display = "block";
-//       } else {
-//         newPasswordSection.style.display = "none";
-//         confirmPasswordSection.style.display = "none";
-//         failMessage("No user found with this email.");
-//       }
-//     }
-//   });
+      // Validate email
+      if (!email) {
+        throw new Error("Please enter your email address");
+      }
 
-//   resetBtn.addEventListener("click", () => {
-//     const email = emailInput.value.trim();
-//     const newPassword = document.getElementById("newPassword").value.trim();
-//     const confirmPassword = document
-//       .getElementById("confirmPassword")
-//       .value.trim();
+      if (!validateEmail(email)) {
+        throw new Error("Please enter a valid email address");
+      }
 
-//     if (!email || !newPassword || !confirmPassword) {
-//       failMessage("Please fill in all fields.");
-//       return;
-//     }
+      // Show loading state
+      submitButton.textContent = "Sending...";
+      submitButton.disabled = true;
 
-//     const passwordRegex = /^[a-zA-Z0-9]{8,}$/;
+      // Send reset email (replace with your actual implementation)
+      await sendPasswordResetEmail(email);
 
-//     if (!passwordRegex.test(newPassword)) {
-//       failMessage(
-//         "Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character."
-//       );
-//       return;
-//     }
+      // Show success message
+      successMessage("Password reset email sent! Check your inbox.");
 
-//     if (newPassword !== confirmPassword) {
-//       failMessage("Passwords do not match.");
-//       return;
-//     }
+      // Optional: Redirect after delay
+      setTimeout(() => {
+        window.location.href = "./login.html";
+      }, 3000);
+    } catch (error) {
+      console.error("Password reset error:", error);
+      failMessage(
+        error.message || "Failed to send reset email. Please try again."
+      );
+    } finally {
+      // Reset button state
+      isProcessing = false;
+      submitButton.textContent = "Send a recovery code";
+      submitButton.disabled = false;
+    }
+  }
 
-//     const users = JSON.parse(localStorage.getItem("users")) || [];
-//     const matchedUser = users.find((user) => user.email === email);
-
-//     if (matchedUser) {
-//       matchedUser.password = newPassword;
-//       localStorage.setItem("users", JSON.stringify(users));
-//       successMessage("Your password has been reset successfully!");
-//       window.location.href = "login.html";
-//     } else {
-//       failMessage("No user found with this email.");
-//     }
-//   });
-// });
+  // Event listeners
+  form.addEventListener("submit", handleSubmit);
+  submitButton.addEventListener("click", handleSubmit);
+});
