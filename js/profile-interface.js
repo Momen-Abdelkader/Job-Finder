@@ -72,7 +72,7 @@ function createNewProfile(user) {
   if (user.role === "Admin") {
     newProfile = new CompanyProfile({
       profileId: user.id,
-      name: user.name,
+      adminName: user.name,
       email: user.email,
       companyName: user.companyName,
     });
