@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../css/signup.css" />
     <link rel="stylesheet" href="../css/nav.css" />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/job-card.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,107 +16,79 @@
     <title>Sign Up</title>
   </head>
   <body>
-    <div id="nav"></div>
-    <div class="Page_con">
-      <div class="Header_con">
-        <section class="Header">
-          <div class="Header">Welcome to Job Finder!</div>
-        </section>
-
-        <section class="Subheader">
-          <div class="Subheader">
-            Login / Sign Up to access hundreds of job postings around you.
+    <main>
+      <div id="nav"></div>
+      <div class="container">
+        <div class="form-container">
+          <div class="form-header-container">
+            <h2 class="form-header">Welcome To Job Search!</h2>
+            <h3 class="form-sub-header">Create an account to get started</h3>
           </div>
-        </section>
+          <div class="form-input-container">
+            <form id="signup-form" class="form" action="" method="POST">
+              <div class="input-container">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Please enter your name"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <label for="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Please enter your email address"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Please enter your password"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <label for="confirm-password">Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirm-password"
+                  name="confirm-password"
+                  placeholder="Please confirm your password"
+                  required
+                />
+              </div>
+              <div class="input-container toggle-container">
+                <a class="admin">Company Admin</a>
+                <a class="user active">Regular User</a>
+              </div>
+              <a class="button confirm-button">Sign Up</a>
+              <div class="form-footer-container">
+                <p class="form-footer-text">Already have an account?</p>
+                <a href="./login.html" class="form-footer-link">Log In</a>
+              </div>
+              <a class="button google-account">
+                <img
+                  src="../assets/google.png"
+                  alt="Google Logo"
+                  class="google-logo"
+                />
+                Use a Google Account
+              </a>
+            </form>
+          </div>
+        </div>
       </div>
+    </main>
 
-      <div class="Form_con">
-        <section class="Name">
-          <div class="name">Name</div>
-          <div class="bt_name">
-            <div class="Icon">
-              <img src="../assets/user.png" />
-            </div>
-            <div class="Text">
-              <input type="text" placeholder="Enter your name" />
-            </div>
-          </div>
-        </section>
-
-        <section class="Email">
-          <div class="email">E-Mail Address</div>
-          <div class="bt_email">
-            <div class="Icon">
-              <img src="../assets/mail.png" />
-            </div>
-            <div class="Text">
-              <input type="email" placeholder="Enter your email" />
-            </div>
-          </div>
-        </section>
-
-        <section class="Password">
-          <div class="password">Password</div>
-          <div class="bt_password">
-            <div class="Icon">
-              <img src="../assets/door-key.png" />
-            </div>
-            <div class="Text">
-              <input type="password" placeholder="Enter your password" />
-            </div>
-          </div>
-        </section>
-
-        <section class="Password">
-          <div class="password">Confirm Password</div>
-          <div class="bt_password">
-            <div class="Icon">
-              <img src="../assets/door-key.png" />
-            </div>
-            <div class="Text">
-              <input type="password" placeholder="Confirm password" />
-            </div>
-          </div>
-        </section>
-
-        <section class="Toggle-container">
-          <button class="toggle-button active" id="AdminBtn">
-            Company Admin
-          </button>
-          <button class="toggle-button" id="UserBtn">Regular User</button>
-        </section>
-
-        <section class="Company_name">
-          <div class="company_name">Company name</div>
-          <div class="bt_company_name">
-            <div class="Icon">
-              <img src="../assets/user.png" />
-            </div>
-            <div class="Text">
-              <input type="text" placeholder="Enter your company name" />
-            </div>
-          </div>
-        </section>
-
-        <section id="Create-container">
-          <button id="create_button">Create Account</button>
-        </section>
-
-        <section class="Log_in">
-          <div class="t1">Already Have an Account</div>
-          <a href="login.html" class="t2"><div>Sign in</div></a>
-        </section>
-
-        <section id="Use-container">
-          <button id="use_button">
-            Use a Google Account
-            <div class="bt_icon">
-              <img src="../assets/google.png" />
-            </div>
-          </button>
-        </section>
-      </div>
-    </div>
     <script src="../js/profile-interface.js"></script>
     <script src="../js/auth.js"></script>
     <script src="../js/nav.js"></script>
