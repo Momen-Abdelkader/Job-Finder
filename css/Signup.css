@@ -166,6 +166,7 @@ body {
 
 .button.confirm-button:hover {
   background-color: var(--accent-dark);
+  border-color: var(--accent-dark);
 }
 
 .form-footer-container {
