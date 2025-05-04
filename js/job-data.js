@@ -81,7 +81,7 @@ const jobData = [
   },
   {
     id: 6,
-    logo: "../assets/facebook.png",
+    logo: "../assets/meta.png",
     company: "Meta",
     companyId: 1006,
     title: "Frontend Developer",
