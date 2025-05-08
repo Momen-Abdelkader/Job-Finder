@@ -35,6 +35,7 @@
   border: none;
   outline: none;
   font-size: 20px;
+  color: var(--dark);
   flex: 1;
   width: 100%;
   margin-left: 20px;
@@ -44,7 +45,6 @@
   background-color: var(--accent);
   padding: 20px 30px;
   border-radius: 7px;
-  color: var(--white_1);
   font-weight: bold;
   cursor: pointer;
   transition: 0.1s;
@@ -70,6 +70,7 @@
   .search-input {
     font-size: 16px;
     margin-left: 10px;
+    color: var(--dark);
   }
 
   .find-button {

@@ -125,6 +125,11 @@ select:focus {
     outline: none;
 }
 
+input, select {
+    background-color: var(--white_2);
+    color: var(--dark);
+}
+
 .btn {
     background-color: var(--accent);
     color: white;

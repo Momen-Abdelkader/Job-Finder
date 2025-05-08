@@ -5,6 +5,10 @@ body {
   min-height: 100vh;
 }
 
+input {
+  color: var(--dark);
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -153,7 +157,7 @@ body {
   width: 100%;
   padding: 0.7em;
   background-color: var(--accent);
-  color: var(--white_1);
+  color: white;
   border-radius: 0.7em;
   text-align: center;
   font-size: 1.2rem;

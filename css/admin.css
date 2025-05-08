@@ -4,6 +4,11 @@ body {
   color: var(--dark);
 }
 
+input {
+  background-color: var(--white_2);
+  color: var(--dark);
+}
+
 .dashboard-container {
   display: flex;
   gap: 20px;
@@ -38,7 +43,7 @@ button:active {
   background-color: var(--accent);
   font-size: 1rem;
   font-weight: bold;
-  color: var(--white_1);
+  color: white;
   border: none;
   padding: 1em 2em;
   border-radius: 8px;
@@ -58,6 +63,10 @@ button:active {
   padding: 0.9em 1.2em;
 }
 
+.skill-tag {
+  color: #000;  
+}
+
 #description-label {
   margin-top: 21px;
 }
@@ -66,7 +75,7 @@ button:active {
   background-color: var(--accent);
   font-size: 0.8rem;
   font-weight: bold;
-  color: var(--white_1);
+  color: var(white);
   border: none;
   padding: 1em 2em;
   border-radius: 8px;
@@ -202,6 +211,8 @@ input, textarea {
 textarea {
   height: 100px;
   resize: vertical;
+  background-color: var(--white_2);
+  color: var(--dark)
 }
 
 .close {

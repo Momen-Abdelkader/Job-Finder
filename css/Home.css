@@ -19,7 +19,6 @@ body {
 
 .button.see-more-button {
   background-color: var(--accent);
-  color: var(--white_1);
   padding: 1em 9vw;
   border: none;
   border-radius: 8px;
@@ -29,6 +28,7 @@ body {
 }
 
 .button.see-more-button:hover {
+  color: var(--white_1);
   background-color: var(--dark);
 }
 

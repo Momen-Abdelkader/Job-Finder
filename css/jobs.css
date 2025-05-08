@@ -100,7 +100,7 @@ input[type="checkbox"] {
 
 .count {
   background-color: var(--accent);
-  color: var(--white_1);
+  color: white;
   font-weight: 600;
   padding: 2px 9px;
   border-radius: 5px;

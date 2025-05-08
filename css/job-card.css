@@ -44,7 +44,7 @@
 
 .tag {
   background-color: var(--accent);
-  color: var(--white_1);
+  color: white;
   padding: 10px 15px;
   border-radius: 50px;
   cursor: default;
@@ -72,7 +72,7 @@
 }
 
 .apply-button {
-  color: var(--white_1);
+  color: #fff;
   background-color: var(--accent);
   padding: 10px 20px;
   margin-right: 7px;
