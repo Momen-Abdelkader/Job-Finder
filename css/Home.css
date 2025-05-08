@@ -19,6 +19,7 @@ body {
 
 .button.see-more-button {
   background-color: var(--accent);
+  color: white;
   padding: 1em 9vw;
   border: none;
   border-radius: 8px;

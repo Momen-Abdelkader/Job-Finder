@@ -43,6 +43,7 @@
 
 .find-button {
   background-color: var(--accent);
+  color: white;
   padding: 20px 30px;
   border-radius: 7px;
   font-weight: bold;
