@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/signup.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <main>
+      <div class="container">
+        <div class="form-container">
+          <div class="form-header-container">
+            <h2 class="form-header">Welcome Back!</h2>
+            <h3 class="form-sub-header">
+              Login to access hundreds of job postings
+            </h3>
+          </div>
+          <div class="form-input-container">
+            <form id="login-form" class="form" action="" method="POST">
+              <div class="input-container">
+                <label for="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Please enter your email address"
+                  required
+                />
+              </div>
+              <div class="input-container">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Please enter your password"
+                  required
+                />
+              </div>
+              <div class="forgot-password-container">
+                <a href="forgot-password.html" class="form-link"
+                  >Forgot Password</a
+                >
+              </div>
+              <a class="button confirm-button">Login</a>
+              <div class="form-footer-container">
+                <p class="form-footer-text">Don't have an account?</p>
+                <a href="{% url 'signup' %}" class="form-link">Create an Account</a>
+              </div>
+              <a class="button google-account">
+                <img
+                  src="{% static '/assets/google.png' %}"
+                  alt="Google Logo"
+                  class="google-logo"
+                />
+                Use a Google Account
+              </a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,86 @@
+body {
+  background-color: var(--white_2);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  min-height: 90vh;
+}
+
+.hero-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  color: var(--black_1);
+}
+
+.button.see-more-button {
+  background-color: var(--accent);
+  color: white;
+  padding: 1em 9vw;
+  border: none;
+  border-radius: 8px;
+  cursor: default;
+  user-select: none;
+  font-size: 1rem;
+}
+
+.button.see-more-button:hover {
+  color: var(--white_1);
+  background-color: var(--dark);
+}
+
+@media screen and (max-width: 1500px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .button.see-more-button {
+    padding: 1em 7vw;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .button.see-more-button {
+    padding: 1em 6vw;
+    font-size: 0.9rem;
+  }
+
+  .hero {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .button.see-more-button {
+    padding: 1em 5vw;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero .container {
+    padding: 0.5em 1em;
+  }
+
+  .button.see-more-button {
+    font-size: 1rem;
+  }
+}

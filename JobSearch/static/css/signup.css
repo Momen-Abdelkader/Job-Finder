@@ -1,0 +1,289 @@
+body {
+  background-color: var(--white_3);
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+input {
+  color: var(--dark);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 90vh;
+  padding: 1.5em;
+  box-sizing: border-box;
+}
+
+.form-container {
+  background-color: var(--white_2);
+  border: 2px solid var(--white_4);
+  padding: 2em;
+  border-radius: 1.3em;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  transition: height 0.3s ease-out;
+}
+
+.form-header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1.5em;
+  text-align: center;
+}
+
+.form-header {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  color: var(--dark);
+}
+
+.form-sub-header {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0;
+  margin-bottom: 0.5em;
+  color: var(--dark);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+  gap: 1em;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5em;
+  transition: margin 0.3s ease-out;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 1.2em;
+  border: 2px solid var(--white_4);
+  background-color: var(--white_1);
+  border-radius: 0.9em;
+  transition: 0.1s;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.input-container input:hover {
+  border: 2px solid var(--white_6);
+}
+
+.input-container input:focus {
+  border: 2px solid var(--accent);
+  outline: none;
+}
+
+.toggle-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  justify-content: space-between;
+  margin-top: 0.5em;
+  background-color: var(--white_4);
+  border-radius: 1.2em;
+  border: 2px solid var(--white_5);
+  padding: 0.3em;
+  overflow: hidden;
+}
+
+.toggle-indicator {
+  position: absolute;
+  height: calc(100% - 0.6em);
+  background-color: var(--white_3);
+  border: 2px solid var(--white_5);
+  border-radius: 1em;
+  transition: all 0.2s cubic-bezier(0, 0.53, 0, 1.16);
+  z-index: 0;
+  left: 0.3em;
+  width: calc(50% - 0.3em);
+}
+
+.toggle-container a {
+  position: relative;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  text-decoration: none;
+  width: 100%;
+  padding: 1em;
+  border-radius: 1em;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.1s ease;
+  z-index: 1;
+  background: transparent;
+  text-align: center;
+  flex: 1;
+}
+
+.toggle-container a:hover:not(.active) {
+  color: var(--accent);
+}
+
+.company-field {
+  transition: all 0.3s ease-out;
+  will-change: height, opacity;
+}
+
+.button.confirm-button {
+  width: 100%;
+  padding: 0.7em;
+  background-color: var(--accent);
+  color: white;
+  border-radius: 0.7em;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 1em;
+  border: 2px solid var(--accent-semi-dark);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.button.confirm-button:hover {
+  background-color: var(--accent-dark);
+  border-color: var(--accent-dark);
+}
+
+.form-footer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.3em;
+  margin: 1em 0;
+}
+
+.form-footer-text {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  color: var(--dark);
+}
+
+.form-link {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0;
+  color: var(--accent);
+  text-decoration: none;
+  transition: 0.1s;
+}
+
+.form-link:hover {
+  text-decoration: underline;
+  color: var(--accent-dark);
+}
+
+.button.google-account {
+  width: 100%;
+  padding: 0.7em;
+  color: var(--dark);
+  border: 2px solid var(--white_5);
+  border-radius: 0.7em;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  transition: all 0.2s ease;
+  background-color: var(--white_3);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+}
+
+.button.google-account:hover {
+  background-color: var(--white_5);
+}
+
+.button.google-account img.google-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: 1.5em;
+  }
+
+  .form-header {
+    font-size: 1.8rem;
+  }
+
+  .form-sub-header {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1em;
+    min-height: calc(100vh - 60px);
+  }
+
+  .form-container {
+    padding: 1.2em;
+  }
+
+  .form-header {
+    font-size: 1.6rem;
+  }
+
+  .form-sub-header {
+    font-size: 1rem;
+  }
+
+  .input-container input {
+    padding: 1em;
+  }
+
+  .button.confirm-button,
+  .button.google-account {
+    padding: 0.6em;
+    font-size: 1rem;
+  }
+
+  .toggle-container {
+    border-radius: 0.8em;
+  }
+
+  .toggle-indicator {
+    border-radius: 0.7em;
+  }
+
+  .toggle-container a {
+    font-size: 0.75rem;
+  }
+}

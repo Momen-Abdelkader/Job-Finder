@@ -13,3 +13,9 @@ def jobs(request):
 
 def adminDashboard(request):
     return HttpResponse("Hello, world. You're at the base adminDashboard.")
+
+def loginView(request):
+    return render(request, 'login.html')
+
+def signupView(request):
+    return render(request, 'signup.html')

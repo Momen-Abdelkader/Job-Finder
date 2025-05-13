@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    {% comment %} <link rel="stylesheet" href="../css/job-card.css" /> {% endcomment %}
+{% endblock %}
+
+{% block content %}
+    <section class="hero">
+      <h2 class="hero-title">Let's get you hired!</h2>
+      <div class="container">
+        {% include 'search.html' %}
+      </div>
+
+      <div class="container">
+        <a href="{% url 'jobs' %}" class="button see-more-button">See More Jobs</a>
+      </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    {% comment %} <script src="../js/search.js"></script>
+    <script src="../js/profile-interface.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/nav.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/home.js"></script> {% endcomment %}
+{% endblock %}
