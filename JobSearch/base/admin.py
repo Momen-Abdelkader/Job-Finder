@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User, Job, UserSkill, UserInterest, RequiredSkill, AdminProfile, UserProfile
+from .models import User, Job, UserSkill, Interest, Skill, AdminProfile, UserProfile, JobApplication
 
 # Register your models here.
 
@@ -14,6 +14,8 @@ admin.site.register(Job)
 
 admin.site.register(UserSkill)
 
-admin.site.register(UserInterest)
+admin.site.register(Interest)
 
-admin.site.register(RequiredSkill)
+admin.site.register(Skill)
+
+admin.site.register(JobApplication)
