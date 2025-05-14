@@ -19,16 +19,16 @@
                 <li><a href="{% url 'jobs' %}">Jobs</a></li>
                 {% endif %}
             </ul>
-            {% if requeset.user.is_authenticated %}
+            {% if request.user.is_authenticated %}
                 <div class="profile" id="profile-nav">
                     {% if request.user.is_admin %}
                     <a href="company-profile.html" class="profile-name">
                     {% else %}
-                    <a> href="user-profile.html" class="profile-name">
+                    <a href="user-profile.html" class="profile-name">
                     {% endif %}
                     <img src="../assets/temp-profile.webp" class="profile-image">
                     </a>
-                    <a class="signout-button" id="signout-button">Sign Out</a>
+                    <a class="signout-button" id="signout-button" href="{% url 'logout' %}">Sign Out</a>
                 </div>
             {% else %}
             <div class="auth-buttons">

@@ -13,7 +13,6 @@
         {% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="../css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -34,8 +33,20 @@
 
     {% endblock %}
 
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+      {% if messages %}
+          {% for message in messages %}
+              {% if message.tags == 'success' %}
+                  successMessage("{{ message }}");
+              {% else %}
+                  failMessage("{{ message }}");
+              {% endif %}
+          {% endfor %}
+      {% endif %}
+    </script>
     {% block scripts %}
-    
+
     {% endblock %}
 </body>
 </html>

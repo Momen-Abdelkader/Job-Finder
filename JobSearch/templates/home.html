@@ -13,7 +13,11 @@ Home
 
 {% block content %}
     <section class="hero">
-      <h2 class="hero-title">Let's get you hired!</h2>
+      <h2 class="hero-title">
+      {% if request.user.is_authenticated %}
+      Welcome, {{ request.user.username }}! <br> 
+      {% endif %}
+      Let's get you hired!</h2>
       <div class="container">
         {% include 'search.html' %}
       </div>
