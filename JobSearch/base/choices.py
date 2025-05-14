@@ -17,8 +17,3 @@ JOB_TYPE_CHOICES = [
     ('part_time', 'Part-Time'),
     ('internship', 'Internship'),
 ]
-
-USER_TYPE_CHOICES = [
-    ('normal', 'Normal User'),
-    ('company', 'Company User'),
-]
