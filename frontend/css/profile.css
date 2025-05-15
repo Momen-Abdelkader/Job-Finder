@@ -101,6 +101,22 @@ h1 {
     margin-bottom: 20px;
 }
 
+.display-group:not(#skills) {
+    margin-bottom: 22px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2)
+}
+
+.display-group label {
+    display: block;
+    margin-bottom: 22px;
+    font-weight: 500;
+    width: 200px;
+}
+
+.display-group p, a {
+    margin: 0px;
+}
+
 label {
     display: block;
     margin-bottom: 8px;

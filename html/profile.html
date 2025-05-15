@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/profile.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+    <title>Profile</title>
+  </head>
+  <body>
+    <header>
+      <div id="nav"></div>
+    </header>
+
+    <div class="container">
+      <div class="sidebar">
+        <div class="user-info">
+          <img
+            src="../assets/temp-profile.webp"
+            alt="user avatar"
+            class="avatar"
+          />
+          <div class="user-name"></div>
+          <div class="user-email"></div>
+        </div>
+        <ul class="nav-tabs">
+          <li class="tab-link active" data-tab="personal-info">Applicant Info</li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <div id="applicant-info" class="tab-content active">
+          <h1>Applicant Information</h1>
+
+          <div class="display-group">
+            <label for="email">Email Address</label>
+            <p id="email"></p>
+          </div>
+
+          <div class="display-group">
+            <label for="fullname">Full Name</label>
+            <p id="fullname"></p>
+          </div>
+
+          <div class="display-group">
+            <label for="phone">Phone Number</label>
+            <p id="phone"></p>
+          </div>
+         
+          <div class="display-group">
+            <label for="location">Location</label>
+            <p id="location"></p>
+          </div>
+
+          <div class="display-group">
+            <label for="job-title">Job Title</label>
+            <p id="job-title"></p>
+          </div>
+
+          <div class="display-group">
+            <label for="resume">Resume URL</label>
+            <a id="resume"></a>
+          </div>
+
+          <div class="display-group" id="skills">
+            <label>Skills</label>
+            <div class="tags-container" id="skills-tags"></div>
+          </div>
+        </div>
+    </div>
+    <script type="module" src="../js/admin.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const myValue = urlParams.get('myValue');
+        console.log(myValue); 
+    function applicantProfileSetup(user) {
+
+
+        const applicantInfo = document.querySelector('.content'); 
+
+        applicantInfo.querySelector('#email').innerHTML = user.email;
+        applicantInfo.querySelector('#fullname').innerHTML = user.name;
+        applicantInfo.querySelector('#phone').innerHTML = user.phone;
+        applicantInfo.querySelector('#location').innerHTML = user.location;
+        applicantInfo.querySelector('#job-title').innerHTML = user.jobTitle;
+        applicantInfo.querySelector('#resume').innerHTML = "Resume";
+        applicantInfo.querySelector('#resume').href = user.resume;
+        uiSkills = user.skills;
+
+        const skillsContainer = document.querySelector('#skills-tags');
+        skillsContainer.innerHTML = "";
+        uiSkills.forEach(skill => {
+        const skillTag = document.createElement('span');
+        skillTag.className = 'skill-tag';
+        skillTag.innerHTML = skill;
+  
+        skillsContainer.appendChild(skillTag);
+        });
+}   ;
+    </script>
+  </body>
+</html>
