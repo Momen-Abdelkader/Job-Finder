@@ -32,7 +32,7 @@
 //   failMessage,
 // } from "./main.js";
 
-// import { getProfileById } from "./profile-interface.js"
+import { getProfileById, getUserPersonalInfo } from "./profile-interface.js"
 
 const skillsContainer = document.getElementById("skills-tags");
 const newSkillInput = document.querySelector(".add-skill-button");
@@ -253,6 +253,39 @@ function showDeleteJobModal(job) {
   disableScrolling();
 }
 
+function applicantProfileSetup(user) {
+
+  fetch('profile.html')
+  .then(response => response.text())
+  .then(html => {
+    const parser = new DOMParser();
+    const anotherDoc = parser.parseFromString(html, 'text/html');
+    
+  
+
+  const applicantInfo = anotherDoc.querySelector('.content'); 
+
+  applicantInfo.querySelector('#email').innerHTML = user.email;
+  applicantInfo.querySelector('#fullname').innerHTML = user.name;
+  applicantInfo.querySelector('#phone').innerHTML = user.phone;
+  applicantInfo.querySelector('#location').innerHTML = user.location;
+  applicantInfo.querySelector('#job-title').innerHTML = user.jobTitle;
+  applicantInfo.querySelector('#resume').innerHTML = "Resume";
+  applicantInfo.querySelector('#resume').href = user.resume;
+  uiSkills = user.skills;
+
+  const skillsContainer = document.querySelector('#skills-tags');
+  skillsContainer.innerHTML = "";
+  uiSkills.forEach(skill => {
+    const skillTag = document.createElement('span');
+    skillTag.className = 'skill-tag';
+    skillTag.innerHTML = skill;
+    
+    skillsContainer.appendChild(skillTag);
+  });
+});
+};
+
 function showJobApplicantsModal(job) {
   const modal = document.getElementById("job-applicants-modal");
   const closeButton = modal.querySelector(".close");
@@ -286,14 +319,18 @@ function showJobApplicantsModal(job) {
         </select>
       </div>
       <div class="applicant-actions">
-        <!-- Removed View Resume/Profile Temp. -->
+        <a class="button resume-button" href="${
+          applicant.resumeUrl
+        }" target="_blank">View Resume</a>
+        <a class="button profile-button" href="../html/profile.html?userId=${
+          applicant.applicantId
+        }" target="_blank">View Profile</a>
       </div>
     </div>`;
 
-    // <a class="button resume-button" href="${
-    //   applicant.resumeUrl
-    // }" target="_blank">View Resume</a>
-    // <a class="button profile-button" href="../profile.html?userId=${
+    
+
+    // <a class="button profile-button" href="../html/profile.html?userId=${  // NOTE: this will be used in the next phase
     //   applicant.applicantId
     // }" target="_blank">View Profile</a>
 
@@ -302,6 +339,17 @@ function showJobApplicantsModal(job) {
     listItem.innerHTML = applicationDataHTML;
     applicantsList.appendChild(listItem);
   });
+
+  // const viewApplicantProfile = applicantsList.querySelectorAll('.profile-button');
+  // viewApplicantProfile.addEventListener("click", () => {
+  //   // const applicantInfo = getUserPersonalInfo(applicant.id);
+  //   const app = (getProfileById(viewApplicantProfile.id));
+  //   // const app2 = getUserPersonalInfo(viewApplicantProfile.id);
+  //   console.log(viewApplicantProfile.id);
+  //   console.log("app: " + app);
+  //   // console.log(app2);
+  //   // applicantProfileSetup(app);
+  // });
 
   closeButton.addEventListener("click", () => {
     modal.style.display = "none";
