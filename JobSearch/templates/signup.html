@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load socialaccount %}
 {% block title %}
 Sign Up
 {% endblock %}
@@ -68,7 +69,7 @@ Sign Up
           <p class="form-footer-text">Already have an account?</p>
           <a href="{% url 'login' %}" class="form-link">Log In</a>
         </div>
-        <a class="button google-account">
+        <a class="button google-account" href="{% provider_login_url 'google' %}">
           <img
             src="{% static 'assets/google.png' %}"
             alt="Google Logo"
