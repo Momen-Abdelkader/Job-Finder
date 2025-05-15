@@ -9,6 +9,7 @@ urlpatterns = [
     path('login/', views.loginView, name='login'),
     path('signup/', views.signupView, name='signup'),
     path('logout/', views.logoutUser, name='logout'),
+    path('forgot-password/', views.resetPassword, name='resetPassword'),
     path('accounts/', include('allauth.urls')),
 
 ]

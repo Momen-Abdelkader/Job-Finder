@@ -88,6 +88,9 @@ def signupView(request):
     print("Rendering signup page")
     return render(request, 'signup.html')
 
+def resetPassword(request):
+    return render(request, 'forgot-password.html')
+
 def logoutUser(request):
     logout(request)
     messages.success(request, "You have been logged out.")
