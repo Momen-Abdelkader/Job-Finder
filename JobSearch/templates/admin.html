@@ -1,0 +1,140 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Admin Dashboard
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href= "{% static 'css/admin.css' %}" />
+    <link rel="stylesheet" href= "{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href= "{% static 'css/job-card.css' %}" />
+{% endblock %}
+{% block scripts %}
+<script src = "{% static 'js/admin-dashboard.js' %}"></script>
+{% endblock %}
+{% block content %}
+  <main>
+    <!-- Top Navigation -->
+    <div id="nav"></div>
+    <div class="dashboard-container">
+      <!-- Applicants Chart -->
+      <!-- <section class="app_chart">
+        <h3>Applicants Chart</h3>
+      </section>  -->
+      
+      <!-- Job Postings -->
+      <section class="job_chart">
+        <div class="job-chart-header">
+          <h3 class="job_posting">My Job Postings</h3>
+          <a class="button add-button" id="add-button">Add</a>
+        </div>
+
+        <div class="job-cards">
+          {% for job in jobs %}
+          {% include 'job-card.html' %}
+          {% endfor %}
+        </div>
+      </section>
+
+      <!-- Delete Job Modal-->
+      <div class="modal" id="delete-job-modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Are you sure you want to delete this job?</h2>
+          <button id="confirm-delete">Delete</button>
+          <button id="cancel-delete">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Applicant Job Modal -->
+      <div class="modal" id="job-applicants-modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Job Applicants</h2>
+          <div class="applicants-list"></div>
+          <button id="close-applicants-modal">Ok</button>
+        </div>
+      </div>
+      
+      <!-- Add/Edit Job Modal -->
+      <div class="modal" id="add-job-modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Add New Job</h2>
+          <form class="job-form">
+            <div class="form-group">
+              <label class="lab" for="job-title">Job Title:</label>
+              <input type="text" id="job-title" required>
+            </div>
+
+            <div class="form-group">
+              <label class="lab">Work Type:</label>
+              <div class="radio-group">
+                <label><input type="radio" name="workLocation" value="On-Site" checked> On-Site</label>
+                <label><input type="radio" name="workLocation" value="Remote"> Remote</label>
+                <label><input type="radio" name="workLocation" value="Hybrid"> Hybrid</label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="lab">Job Type:</label>
+              <div class="radio-group">
+                <label><input type="radio" name="jobType" value="Full Time" checked> Full Time</label>
+                <label><input type="radio" name="jobType" value="Part Time"> Part Time</label>
+                <label><input type="radio" name="jobType" value="Internship"> Internship</label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="lab">Experience Level:</label>
+              <div class="radio-group">
+                <label><input type="radio" name="experience" value="Student" checked> Student</label>
+                <label><input type="radio" name="experience" value="Fresh Graduate">Fresh Graduate</label>
+                <label><input type="radio" name="experience" value="Junior"> Junior</label>
+                <label><input type="radio" name="experience" value="Mid-Level"> Mid-Level</label>
+                <label><input type="radio" name="experience" value="Senior"> Senior</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="lab" for="job-salary">Salary:</label>
+              <input type="text" id="job-salary" pattern="^(0|([1-9]\d{0,3}|1\d{4}|20000))$" title="A number from 0 to 20000" placeholder="$0-20000" required>
+            </div>
+
+            <div class="form-group" id="location">
+              <label class="lab" for="job-location">Location:</label>
+              <input type="text" id="job-location" required>
+            </div>
+
+            <div class="tags-container" id="skills-tags">
+            </div>
+            <div class="add-tag">
+              <label class="lab" for="new-tag">Skills</label>
+              <input
+                type="text"
+                id="new-tag"
+                class="add-tag-input"
+                placeholder="Add skill"
+              />
+            </div>
+            <a class="add-skill-button">Add Skill</a>
+
+            <div class="form-group">
+              <label class="lab" id="description-label" for="job-description">Description:</label>
+              <textarea id="job-description" required></textarea>
+            </div>
+            <div class="button-container">
+              <button type="submit" class="add-job-button" id="add-job-button">Add Job</button>
+              <button id="cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- <script src="../js/profile-interface.js"></script>
+      <script src="../js/auth.js"></script>
+      <script src="../js/nav.js"></script>
+      <script src="../js/main.js"></script>
+      <script src="../js/job-data.js"></script>
+      <script src="../js/app-data.js"></script>
+      <script src="../js/admin.js"></script> -->
+  </main>
+{% endblock %}

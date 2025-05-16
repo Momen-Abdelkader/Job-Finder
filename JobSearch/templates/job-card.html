@@ -16,8 +16,8 @@
     <div class="buttons">
         {% if user.is_admin %}
             <a class="edit-button button">Edit</a>
-            <a class="applicants-button button"">Applicants</a>
-            <a class="delete-button button"">Delete</a>
+            <a class="applicants-button button">Applicants</a>
+            <a class="delete-button button">Delete</a>
         {% else %}
             {% if user.is_authenticated and job.has_applied %}
                 <a class="applied-button button">Applied</a>

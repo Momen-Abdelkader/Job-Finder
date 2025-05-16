@@ -1,7 +1,8 @@
     <nav class="main-nav">
         <div class="nav-left">
             {% if request.user.is_admin %}
-            <a href="admin.html" class="logo">Job Finder</a>
+            <a href="{% url 'adminDashboard' request.user.id %}" class="logo">Job Finder</a>
+            <p>{{ request.user.id }}</p>
             {% else %}
             <a href="{% url 'home' %}" class="logo">Job Finder</a>
             {% endif %}
@@ -13,7 +14,7 @@
         <div class="nav-content">
             <ul class="nav-list">   
                 {% if request.user.is_admin %}
-                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="{% url 'adminDashboard' request.user.id %}">Dashboard</a></li>
                 {% else %}
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'jobs' %}">Jobs</a></li>
