@@ -240,6 +240,9 @@ def signupView(request):
     
     return render(request, 'signup.html')
 
+def resetPassword(request):
+    return render(request, 'forgot-password.html')
+
 def logoutUser(request):
     """Handle user logout."""
     logout(request)
