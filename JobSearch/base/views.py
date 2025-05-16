@@ -149,20 +149,13 @@ def jobs(request):
 
     return render(request, 'jobs.html', context)
 
-# def adminDashboard(request):
-#     return HttpResponse("Hello, world. You're at the base adminDashboard.")
 
-# def adminDashboard(request, adminId):
 def adminDashboard(request, pk):
-    # admin = AdminProfile.objects.get(field_name = "yassotube")
-    # company = admin.company_name
-    # jobs = Job.objects.filter(company = 2)
-    # obj = get_object_or_404(Job, company = company_name)
     
     user = User.objects.get(id = int(pk))
     company_name = user.adminprofile.company_name
     admin = AdminProfile.objects.get(user = user)
-    jobs = Job.objects.filter(company__company_name = admin.company_name) # company = admin.company_name
+    jobs = Job.objects.filter(company__company_name = admin.company_name) 
     
     context = {
         'jobs' : jobs
@@ -183,7 +176,8 @@ def loginView(request):
             if auth_user:
                 login(request, auth_user)
                 messages.success(request, "Login successful!")
-                return redirect(f"adminDashboard/{auth_user.username}" if auth_user.is_admin else 'home')
+                # return redirect(f"adminDashboard/{auth_user.id}" if auth_user.is_admin else 'home') Will work on it later
+                return redirect('/')
             
             messages.error(request, "Invalid email or password.")
         except User.DoesNotExist:
