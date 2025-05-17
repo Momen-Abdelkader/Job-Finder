@@ -8,7 +8,6 @@ Home
 
 {% block styles %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}" />
-    {% comment %} <link rel="stylesheet" href="../css/job-card.css" /> {% endcomment %}
 {% endblock %}
 
 {% block content %}
@@ -26,13 +25,4 @@ Home
         <a href="{% url 'jobs' %}" class="button see-more-button">See More Jobs</a>
       </div>
     </section>
-{% endblock %}
-
-{% block scripts %}
-    {% comment %} <script src="../js/search.js"></script>
-    <script src="../js/profile-interface.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/nav.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/home.js"></script> {% endcomment %}
 {% endblock %}

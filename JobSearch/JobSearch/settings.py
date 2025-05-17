@@ -164,5 +164,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jobsearch98786@gmail.com'
-EMAIL_HOST_PASSWORD = 'yivu uyii ycah qmjg' 
+EMAIL_HOST_PASSWORD = 'sgjl uand xyiy ctvz' 
 DEFAULT_FROM_EMAIL = 'jobsearch98786@gmail.com'
