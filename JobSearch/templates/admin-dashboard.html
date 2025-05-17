@@ -60,49 +60,56 @@ Admin Dashboard
         <div class="modal-content">
           <span class="close">&times;</span>
           <h2>Add New Job</h2>
-          <form class="job-form">
+          <form class="job-form" action="{% url 'adminDashboard' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+              <label class="lab" for="company">Company:</label>
+              <input type="text" id="company" name="company" value="{{ admin.company_name }}" disabled>
+            </div>
+
             <div class="form-group">
               <label class="lab" for="job-title">Job Title:</label>
-              <input type="text" id="job-title" required>
+              <input type="text" id="job-title" name="title" required>
             </div>
 
             <div class="form-group">
               <label class="lab">Work Type:</label>
               <div class="radio-group">
-                <label><input type="radio" name="workLocation" value="On-Site" checked> On-Site</label>
-                <label><input type="radio" name="workLocation" value="Remote"> Remote</label>
-                <label><input type="radio" name="workLocation" value="Hybrid"> Hybrid</label>
+                <label><input type="radio" name="work-type" value="on_site" checked> On-Site</label>
+                <label><input type="radio" name="work-type" value="remote"> Remote</label>
+                <label><input type="radio" name="work-type" value="hybrid"> Hybrid</label>
               </div>
             </div>
             
             <div class="form-group">
               <label class="lab">Job Type:</label>
               <div class="radio-group">
-                <label><input type="radio" name="jobType" value="Full Time" checked> Full Time</label>
-                <label><input type="radio" name="jobType" value="Part Time"> Part Time</label>
-                <label><input type="radio" name="jobType" value="Internship"> Internship</label>
+                <label><input type="radio" name="job-type" value="full_time" checked> Full Time</label>
+                <label><input type="radio" name="job-type" value="part_time"> Part Time</label>
+                <label><input type="radio" name="job-type" value="internship"> Internship</label>
               </div>
             </div>
             
             <div class="form-group">
               <label class="lab">Experience Level:</label>
               <div class="radio-group">
-                <label><input type="radio" name="experience" value="Student" checked> Student</label>
-                <label><input type="radio" name="experience" value="Fresh Graduate">Fresh Graduate</label>
-                <label><input type="radio" name="experience" value="Junior"> Junior</label>
-                <label><input type="radio" name="experience" value="Mid-Level"> Mid-Level</label>
-                <label><input type="radio" name="experience" value="Senior"> Senior</label>
+                <label><input type="radio" name="experience" value="student" checked> Student</label>
+                <label><input type="radio" name="experience" value="fresh_graduate">Fresh Graduate</label>
+                <label><input type="radio" name="experience" value="junior"> Junior</label>
+                <label><input type="radio" name="experience" value="mid_level"> Mid-Level</label>
+                <label><input type="radio" name="experience" value="senior"> Senior</label>
               </div>
             </div>
 
             <div class="form-group">
               <label class="lab" for="job-salary">Salary:</label>
-              <input type="text" id="job-salary" pattern="^(0|([1-9]\d{0,3}|1\d{4}|20000))$" title="A number from 0 to 20000" placeholder="$0-20000" required>
+              <input type="text" id="job-salary" name="salary" pattern="^(0|([1-9]\d{0,3}|1\d{4}|20000))$" title="A number from 0 to 20000" placeholder="$0-20000" required>
             </div>
 
             <div class="form-group" id="location">
               <label class="lab" for="job-location">Location:</label>
-              <input type="text" id="job-location" required>
+              <input type="text" id="job-location" name="location" required>
             </div>
 
             <div class="tags-container" id="skills-tags">
@@ -120,7 +127,7 @@ Admin Dashboard
 
             <div class="form-group">
               <label class="lab" id="description-label" for="job-description">Description:</label>
-              <textarea id="job-description" required></textarea>
+              <textarea id="job-description" name="description" required></textarea>
             </div>
             <div class="button-container">
               <button type="submit" class="add-job-button" id="add-job-button">Add Job</button>

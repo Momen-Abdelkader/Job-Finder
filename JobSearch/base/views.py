@@ -150,19 +150,36 @@ def jobs(request):
     return render(request, 'jobs.html', context)
 
 
-def adminDashboard(request, pk):
-    
-    user = User.objects.get(id = int(pk))
-    company_name = user.adminprofile.company_name
-    admin = AdminProfile.objects.get(user = user)
+def adminDashboard(request):
+    admin = AdminProfile.objects.get(user = request.user)
     jobs = Job.objects.filter(company__company_name = admin.company_name) 
     
     context = {
-        'jobs' : jobs
+        'jobs' : jobs,
+        'admin' : admin,
     }
 
+    if request.method == 'POST':
+        # skills_json = request.POST.get('skills', '[]')
+        # skills = json.loads(skills_json)
+        try:
+            new_job = Job.objects.create(
+                company = admin,
+                job_title = request.POST.get('title'),
+                work_type = request.POST.get('work-type'),
+                job_type = request.POST.get('job-type'),
+                exp_level = request.POST.get('experience'),
+                salary = request.POST.get('salary'),
+                location = request.POST.get('location'),
+                description = request.POST.get('description'),
+            )
+        except Exception as e:
+            messages.error(request, f"Error creating job: {str(e)}")
+        
+        return redirect('adminDashboard')
+
     """Render admin dashboard page"""
-    return render(request, "admin.html", context)
+    return render(request, "admin-dashboard.html", context)
 
 def loginView(request):
     if request.method == 'POST':
@@ -176,8 +193,7 @@ def loginView(request):
             if auth_user:
                 login(request, auth_user)
                 messages.success(request, "Login successful!")
-                # return redirect(f"adminDashboard/{auth_user.id}" if auth_user.is_admin else 'home') Will work on it later
-                return redirect('/')
+                return redirect('adminDashboard' if auth_user.is_admin else 'home')
             
             messages.error(request, "Invalid email or password.")
         except User.DoesNotExist:
