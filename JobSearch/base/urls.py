@@ -13,23 +13,16 @@ urlpatterns = [
     path(
         'forgot-password/', 
          auth_views.PasswordResetView.as_view(
-             template_name='forgot-password.html'
-             ), 
+             template_name='forgot-password.html'), 
          name='forgot_password'),
     path('forgot-password-sent/', 
-         auth_views.PasswordResetDoneView.as_view(
-             template_name='forgot-password-sent.html'
-             ), 
+         auth_views.PasswordResetDoneView.as_view(template_name='forgot-password-sent.html'), 
          name='password_reset_done'),
     path('forgot/<uidb64>/<token>/', 
-         auth_views.PasswordResetConfirmView.as_view(
-             template_name='forgot-password-confirm.html'
-             ), 
+         auth_views.PasswordResetConfirmView.as_view(template_name='forgot-password-confirm.html'), 
          name='password_reset_confirm'),
     path('forgot-password-complete/', 
-         auth_views.PasswordResetCompleteView.as_view(
-             template_name='forgot-password-complete.html'
-             ), 
+         auth_views.PasswordResetCompleteView.as_view(template_name='forgot-password-complete.html'), 
          name='password_reset_complete'),
     path('accounts/', include('allauth.urls')),
 
