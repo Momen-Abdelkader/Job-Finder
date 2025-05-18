@@ -7,6 +7,10 @@ from django.db.models import Q, Exists, OuterRef
 from django.template.loader import render_to_string
 from .models import User, UserProfile, AdminProfile, Job, JobApplication, Skill
 from .choices import JOB_TYPE_CHOICES, WORK_MODE_CHOICES, EXP_LEVEL_CHOICES
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.template.defaultfilters import date as _date_filter
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 # Constants
 MAX_SALARY_RANGE = 20000
@@ -38,6 +42,75 @@ FILTER_CONFIG = [
         ]
     }
 ]
+
+def get_job_details_api(request, job_id):
+    job = get_object_or_404(Job, pk=job_id)
+    
+    user_has_applied = False
+    if request.user.is_authenticated and not request.user.is_admin:
+        try:
+            # Assuming your User model has a one-to-one relation to UserProfile named 'userprofile'
+            # If it's different (e.g., 'profile'), adjust request.user.userprofile accordingly
+            user_profile = request.user.userprofile 
+            user_has_applied = JobApplication.objects.filter(user=user_profile, job=job).exists()
+        except UserProfile.DoesNotExist:
+            user_has_applied = False 
+        except AttributeError: # In case user has no 'userprofile' attribute (e.g. admin user)
+             user_has_applied = False
+
+
+    skills_list = [skill.skill for skill in job.skills_required.all()]
+    print (skills_list)
+
+    # Provide a default logo path if company logo is not set
+    # Make sure 'images/default_logo.png' exists in your static files directory
+    # e.g., static/images/default_logo.png
+    company_logo_url = staticfiles_storage.url('images/default_logo.png') 
+    if job.company.user.profile_photo and hasattr(job.company.user.profile_photo, 'url'):
+        company_logo_url = job.company.user.profile_photo.url
+
+    job_data = {
+        'id': job.id,
+        'title': job.job_title,
+        'company_name': job.company.company_name,
+        'company_logo_url': company_logo_url,
+        'location': job.location,
+        'posted_at': _date_filter(job.published_date, "M d, Y"), # Format: Apr 20, 2025
+        'salary': f"${job.salary}" if job.salary is not None else "N/A",
+        'job_type_display': job.get_job_type_display(),
+        'experience_level_display': job.get_exp_level_display(),
+        'work_mode_display': job.get_work_type_display(), 
+        'description': job.description,
+        'skills': skills_list,
+        'user_has_applied': user_has_applied,
+    }
+    return JsonResponse(job_data)
+
+@login_required
+@require_POST # Ensures this view only accepts POST requests
+def apply_for_job_api(request, job_id):
+    if request.user.is_admin: # Admins cannot apply
+        return JsonResponse({'success': False, 'message': 'Admins cannot apply for jobs.'}, status=403)
+
+    job_to_apply = get_object_or_404(Job, pk=job_id)
+    
+    try:
+        user_profile = request.user.userprofile # Assumes User has a 'userprofile' related object
+    except UserProfile.DoesNotExist:
+        # This case should ideally be handled by ensuring UserProfile is created upon user registration
+        return JsonResponse({'success': False, 'message': 'User profile not found. Please complete your profile.'}, status=400)
+
+    # Check if already applied
+    if JobApplication.objects.filter(user=user_profile, job=job_to_apply).exists():
+        return JsonResponse({'success': False, 'message': 'You have already applied for this job.'})
+
+    try:
+        JobApplication.objects.create(user=user_profile, job=job_to_apply)
+        return JsonResponse({'success': True, 'message': 'Application submitted successfully!'})
+    except Exception as e:
+        # Log the error e for debugging
+        print(f"Error during application: {e}")
+        return JsonResponse({'success': False, 'message': 'An error occurred. Please try again.'}, status=500)
 
 def home(request):
     """Render the home page."""

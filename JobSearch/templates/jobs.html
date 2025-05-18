@@ -1,85 +1,214 @@
 {% extends 'layout.html' %}
-
 {% load static %}
-
 {% block title %}
 Jobs
 {% endblock %}
-
 {% block styles %}
-    <link rel="stylesheet" href="{% static '/css/jobs.css' %}" />
-    <link rel="stylesheet" href="{% static '/css/job-card.css' %}" />
-{% endblock %}
+<link rel="stylesheet" href="{% static '/css/jobs.css' %}" />
+<link rel="stylesheet" href="{% static '/css/job-card.css' %}" />
+<!-- Add the new toast notification styles -->
+<style>
+.toast {
+position: fixed;
+bottom: 20px;
+right: 20px;
+padding: 12px 20px;
+border-radius: 5px;
+color: white;
+max-width: 300px;
+opacity: 0;
+transform: translateY(20px);
+transition: opacity 0.3s, transform 0.3s;
+z-index: 1000;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+    .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .toast-success {
+        background-color: #4caf50;
+    }
+    
+    .toast-error {
+        background-color: #f44336;
+    }
 
+    /* For the "No skills required" placeholder */
+    .no-skills {
+        color: #666;
+        font-style: italic;
+    }
+</style>
+{% endblock %}
 {% block content %}
-    <main class="container">
-        {% include 'search.html' %}
-        <div class="jobs-container">
-            <div class="filters" id="filters">
-                {% for category in filters %}
-                    {% include 'filter-group.html' with category=category.category filters=category.filters %}
-                {% endfor %}
-                <div class="filter-category">
-                    <h2>Salary</h2>
-                    <input type="hidden" id="min_salary_input" name="min_salary" value="{{ min_salary }}">
-                    <input type="hidden" id="max_salary_input" name="max_salary" value="{{ max_salary }}">
-                    <div class="range-container">
-                        <div class="sliders-control">
-                            <input id="from-slider" type="range" value="{{ min_salary }}" min="{{ min_salary_range }}" max="{{ max_salary_range }}">
-                            <input id="to-slider" type="range" value="{{ max_salary }}" min="{{ min_salary_range }}" max="{{ max_salary_range }}">
-                        </div>
-                    </div>
-                    <div class="form-control">
-                        <div class="control-container">
-                            <div class="min-label">Min</div>
-                            <a id="min-value">${{ min_salary }}</a>
-                        </div>
-                        <div class="control_container">
-                            <div class="max-label">Max</div>
-                            <a id="max-value">${{ max_salary }}</a>
-                        </div>
+<main class="container">
+{% comment %} Add a class to body if user is authenticated for JS to detect {% endcomment %}
+<body class="{% if user.is_authenticated %}user-authenticated{% endif %}">
+    {% comment %} IMPORTANT: Add CSRF token for AJAX POST requests {% endcomment %}
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+    {% include 'search.html' %}
+    <div class="jobs-container">
+        <div class="filters" id="filters">
+            {% for category_group in filters %}
+                {% include 'filter-group.html' with category=category_group.category filters=category_group.filters %}
+            {% endfor %}
+            <div class="filter-category">
+                <h2>Salary</h2>
+                <input type="hidden" id="min_salary_input" name="min_salary" value="{{ min_salary }}">
+                <input type="hidden" id="max_salary_input" name="max_salary" value="{{ max_salary }}">
+                <div class="range-container">
+                    <div class="sliders-control">
+                        <input id="from-slider" type="range" value="{{ min_salary }}" min="{{ min_salary_range }}" max="{{ max_salary_range }}">
+                        <input id="to-slider" type="range" value="{{ max_salary }}" min="{{ min_salary_range }}" max="{{ max_salary_range }}">
                     </div>
                 </div>
-                <div class="button-container">
-                    <a class="button clear-button" id="clear-filters">Clear Filters</a>
+                <div class="form-control">
+                    <div class="control-container">
+                        <div class="min-label">Min</div>
+                        <a id="min-value">${{ min_salary }}</a>
+                    </div>
+                    <div class="control-container">
+                        <div class="max-label">Max</div>
+                        <a id="max-value">${{ max_salary }}</a>
+                    </div>
                 </div>
             </div>
+            <div class="button-container">
+                <a class="button clear-button" id="clear-filters">Clear Filters</a>
+            </div>
+        </div>
 
-            <div class="job-postings">
-                <h1>Found <a id="job-count">{{ job_count }}</a> Job Postings</h1>
-                <div class="job-cards">
-                    {% for job in jobs %}
-                        {% include 'job-card.html' with job=job user=user %}
-                    {% endfor %}
+        <div class="job-postings">
+            <h1>Found <a id="job-count">{{ job_count }}</a> Job Postings</h1>
+            <div class="job-cards">
+                {% for job in jobs %}
+                    {% include 'job-card.html' with job=job user=user %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% comment %} Modal HTML Structures - These are outside <main> but inside block content {% endcomment %}
+<div id="details-modal-container" class="modal-container">
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-modal-close>×</span>
+            <div class="modal-header">
+                <div class="company-info-large">
+                    <img src="" alt="Company Logo" class="company-logo-large" id="modal-company-logo">
+                    <div>
+                        <h2 class="company-name" id="modal-company-name">Company Name</h2>
+                        <h1 class="job-title-large" id="modal-job-title">Job Title</h1>
+                        <p class="job-location" id="modal-job-location">Location</p>
+                        <p class="job-posted">Posted: <span id="modal-job-posted-date">Date</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="job-highlights">
+                    <div class="highlight-item">
+                        <h3>Salary</h3>
+                        <p id="modal-job-salary">$Salary</p>
+                    </div>
+                    <div class="highlight-item">
+                        <h3>Job Type</h3>
+                        <p id="modal-job-type-display">Job Type</p>
+                    </div>
+                    <div class="highlight-item">
+                        <h3>Experience</h3>
+                        <p id="modal-job-experience-display">Experience Level</p>
+                    </div>
+                    <div class="highlight-item">
+                        <h3>Work Mode</h3>
+                        <p id="modal-job-work-mode-display">Work Mode</p>
+                    </div>
+                </div>
+
+                <div class="job-section">
+                    <h3>Job Description</h3>
+                    <p id="modal-job-description">Full job description here...</p>
+                </div>
+
+                <div class="job-section">
+                    <h3>Skills Required</h3>
+                    <ul class="tags" id="modal-job-skills-list">
+                        {% comment %} Skills will be populated by JS {% endcomment %}
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="button apply-button large-button" id="modal-details-apply-now-button" data-job-id="">Apply Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="apply-confirm-modal-container" class="modal-container">
+    <div id="apply-confirm-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">
+                <h1>Apply for Job</h1>
+                <span class="close-button" data-modal-close>×</span>
+            </div>
+            <div class="modal-header">
+                <div class="company-info-large">
+                    <img src="" alt="Company Logo" class="company-logo-large" id="apply-modal-company-logo-confirm">
+                    <div>
+                        <h2 class="company-name" id="apply-modal-company-name-confirm">Company Name</h2>
+                        <h1 class="job-title-large" id="apply-modal-job-title-confirm">Job Title</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to apply for this job?</p>
+                <div class="modal-actions">
+                    <a href="#" class="button apply-button" id="apply-modal-confirm-action-button" data-job-id="">Apply</a>
+                    <a href="#" class="button cancel-button" data-modal-close>Cancel</a>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
+
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Existing variables for filters ---
     let isDragging = false;
     let timeoutId;
     const searchInput = document.getElementById('search-input');
     const fromSlider = document.getElementById('from-slider');
     const toSlider = document.getElementById('to-slider');
-    const minValue = document.getElementById('min-value');
-    const maxValue = document.getElementById('max-value');
-    
-    // Initialize slider values
-    fromSlider.value = {{ min_salary }};
-    toSlider.value = {{ max_salary }};
-    updateSliderValues();
-    
+    const minValueLabel = document.getElementById('min-value');
+    const maxValueLabel = document.getElementById('max-value');
+    const MIN_SALARY_GAP_CONSTANT = 100;
+
+    // --- Modal Elements ---
+    const detailsModalContainerEl = document.getElementById('details-modal-container');
+    const applyConfirmModalContainerEl = document.getElementById('apply-confirm-modal-container');
+    const jobCardsContainer = document.querySelector('.job-cards');
+
+    // --- Initialize slider values ---
+    if (fromSlider && toSlider) {
+        fromSlider.value = parseInt(document.getElementById('min_salary_input').value);
+        toSlider.value = parseInt(document.getElementById('max_salary_input').value);
+        updateSliderValues();
+    }
+
+    // --- Existing event listeners for filters ---
     document.querySelectorAll('.filter input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', updateFilters);
     });
 
     if (fromSlider && toSlider) {
-        fromSlider.addEventListener('input', handleSliderInput);
-        toSlider.addEventListener('input', handleSliderInput);
+        fromSlider.addEventListener('input', (e) => handleSliderInput(e, 'from'));
+        toSlider.addEventListener('input', (e) => handleSliderInput(e, 'to'));
         fromSlider.addEventListener('change', updateFilters);
         toSlider.addEventListener('change', updateFilters);
     }
@@ -90,60 +219,81 @@ document.addEventListener('DOMContentLoaded', () => {
             timeoutId = setTimeout(updateFilters, 500);
         });
     }
-    
+
     document.querySelector('.clear-button')?.addEventListener('click', () => {
         document.querySelectorAll('.filter input[type="checkbox"]').forEach(checkbox => {
             checkbox.checked = false;
         });
-        
-        fromSlider.value = {{ min_salary_range }};
-        toSlider.value = {{ max_salary_range }};
-        updateSliderValues();
-        
+
+        if (fromSlider && toSlider) {
+            fromSlider.value = fromSlider.min;
+            toSlider.value = toSlider.max;
+            updateSliderValues();
+        }
+
         if (searchInput) searchInput.value = '';
-        
+
         updateFilters();
     });
 
-    function handleSliderInput(e) {
-        updateSliderValues();
-    }
-    
-    function updateSliderValues() {
+    // --- Slider handling functions ---
+    function handleSliderInput(event, sliderIdentifier) {
+        let fromVal = parseInt(fromSlider.value);
+        let toVal = parseInt(toSlider.value);
+        const minRange = parseInt(fromSlider.min);
+        const maxRange = parseInt(toSlider.max);
+
+        // Enforce MIN_SALARY_GAP_CONSTANT
+        if (toVal - fromVal < MIN_SALARY_GAP_CONSTANT) {
+            if (sliderIdentifier === 'from') {
+                fromSlider.value = Math.max(minRange, toVal - MIN_SALARY_GAP_CONSTANT);
+            } else {
+                toSlider.value = Math.min(maxRange, fromVal + MIN_SALARY_GAP_CONSTANT);
+            }
+        }
+        // Prevent sliders from crossing
         if (parseInt(fromSlider.value) > parseInt(toSlider.value)) {
-            if (e?.target === fromSlider) {
+            if (sliderIdentifier === 'from') {
                 toSlider.value = fromSlider.value;
             } else {
                 fromSlider.value = toSlider.value;
             }
         }
-        
-        minValue.textContent = '$' + fromSlider.value;
-        maxValue.textContent = '$' + toSlider.value;
-        
+        updateSliderValues();
+    }
+
+    function updateSliderValues() {
+        if (!fromSlider || !toSlider || !minValueLabel || !maxValueLabel) return;
+
+        minValueLabel.textContent = '$' + fromSlider.value;
+        maxValueLabel.textContent = '$' + toSlider.value;
+
         document.getElementById('min_salary_input').value = fromSlider.value;
         document.getElementById('max_salary_input').value = toSlider.value;
     }
 
+    // --- updateFilters function ---
     function updateFilters() {
         const params = new URLSearchParams();
-        
+
         if (searchInput?.value) {
             params.set('q', searchInput.value);
         }
-        
-        document.querySelectorAll('.filter input[type="checkbox"]').forEach(checkbox => {
-            if (checkbox.checked) {
-                params.append(checkbox.name, checkbox.value);
-            }
+
+        document.querySelectorAll('.filter input[type="checkbox"]:checked').forEach(checkbox => {
+            params.append(checkbox.name, checkbox.value);
         });
-        
-        params.set('min_salary', fromSlider.value);
-        params.set('max_salary', toSlider.value);
 
-        history.replaceState({}, '', `?${params.toString()}`);
+        if (fromSlider && toSlider) {
+            params.set('min_salary', fromSlider.value);
+            params.set('max_salary', toSlider.value);
+        }
 
-        fetch(`?${params.toString()}`, {
+        history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+
+        jobCardsContainer?.classList.add('loading');
+
+        fetch(`${window.location.pathname}?${params.toString()}`, {
             headers: { 'X-Requested-With': 'XMLHttpRequest' }
         })
         .then(response => {
@@ -151,14 +301,30 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(data => {
-            document.querySelector('.job-cards').innerHTML = data.jobs_html;
-            
+            if (jobCardsContainer) jobCardsContainer.innerHTML = data.jobs_html;
             document.getElementById('job-count').textContent = data.job_count;
 
-
+            // Update filter counts
+            if (data.filters && Array.isArray(data.filters)) {
+                data.filters.forEach(categoryGroup => {
+                    if (categoryGroup.filters && Array.isArray(categoryGroup.filters)) {
+                        categoryGroup.filters.forEach(filterItem => {
+                            const countElement = document.getElementById(`${filterItem.id}-count`);
+                            if (countElement) {
+                                countElement.textContent = filterItem.count;
+                            }
+                        });
+                    }
+                });
+            }
         })
         .catch(error => {
             console.error('Fetch error:', error);
+            // Display a user-friendly error message
+            window.failMessage('Failed to update job listings. Please try again.');
+        })
+        .finally(() => {
+            jobCardsContainer?.classList.remove('loading');
         });
     }
 
@@ -166,6 +332,333 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         updateFilters();
     };
+
+    // --- Modal Functions ---
+    function disableScrolling() {
+        document.body.style.overflow = 'hidden';
+    }
+
+    function enableScrolling() {
+        document.body.style.overflow = '';
+    }
+
+    function openModal(modalContainerElement) {
+        if (!modalContainerElement) return;
+        modalContainerElement.classList.add('active');
+        void modalContainerElement.offsetWidth;
+        const modal = modalContainerElement.querySelector('.modal');
+        if (modal) modal.classList.add('active');
+        disableScrolling();
+    }
+
+    function closeModal(modalContainerElement) {
+        if (!modalContainerElement) return;
+        const modal = modalContainerElement.querySelector('.modal');
+        if (modal) modal.classList.remove('active');
+        modalContainerElement.classList.remove('active');
+        setTimeout(() => {
+            enableScrolling();
+        }, 300);
+    }
+
+    document.querySelectorAll('[data-modal-close]').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const modalToClose = button.closest('.modal-container');
+            if (modalToClose) {
+                closeModal(modalToClose);
+            }
+        });
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") {
+            if (detailsModalContainerEl && detailsModalContainerEl.classList.contains('active')) {
+                closeModal(detailsModalContainerEl);
+            }
+            if (applyConfirmModalContainerEl && applyConfirmModalContainerEl.classList.contains('active')) {
+                closeModal(applyConfirmModalContainerEl);
+            }
+        }
+    });
+
+    [detailsModalContainerEl, applyConfirmModalContainerEl].forEach(container => {
+        if (container) {
+            container.addEventListener('click', (e) => {
+                if (e.target === container) {
+                    closeModal(container);
+                }
+            });
+        }
+    });
+
+    // --- IMPROVED: Job Details Modal Function ---
+    function showJobDetailsModal(jobId) {
+        // Show loading state or spinner if desired
+        const skillsListEl = document.getElementById('modal-job-skills-list');
+        if (skillsListEl) {
+            skillsListEl.innerHTML = '<li class="tag">Loading skills...</li>'; 
+        }
+        
+        fetch(`/api/job/${jobId}/details/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(job => {
+                // Populate company and job info
+                document.getElementById('modal-company-logo').src = job.company_logo_url || '/static/images/default_logo.png';
+                document.getElementById('modal-company-logo').alt = `${job.company_name} logo`;
+                document.getElementById('modal-company-name').textContent = job.company_name;
+                document.getElementById('modal-job-title').textContent = job.title;
+                document.getElementById('modal-job-location').textContent = job.location;
+                document.getElementById('modal-job-posted-date').textContent = job.posted_at;
+                document.getElementById('modal-job-salary').textContent = job.salary;
+                document.getElementById('modal-job-type-display').textContent = job.job_type_display;
+                document.getElementById('modal-job-experience-display').textContent = job.experience_level_display;
+                document.getElementById('modal-job-work-mode-display').textContent = job.work_mode_display;
+                document.getElementById('modal-job-description').innerHTML = job.description.replace(/\n/g, '<br>');
+                
+                // Update skills list
+                const skillsListEl = document.getElementById('modal-job-skills-list');
+                if (skillsListEl) {
+                    // Always clear existing skills first
+                    skillsListEl.innerHTML = '';
+                    
+                    console.log('Skills from API:', job.skills); // Debug: log the skills array
+                    
+                    // Check if skills array exists and is not empty
+                    if (job.skills && Array.isArray(job.skills) && job.skills.length > 0) {
+                        job.skills.forEach(skillText => {
+                            const li = document.createElement('li');
+                            li.className = 'tag';
+                            li.textContent = skillText;
+                            skillsListEl.appendChild(li);
+                        });
+                    } else {
+                        // Add a placeholder if no skills
+                        const li = document.createElement('li');
+                        li.className = 'tag no-skills';
+                        li.textContent = 'No specific skills required';
+                        skillsListEl.appendChild(li);
+                    }
+                } else {
+                    console.error('Skills list element not found!');
+                }
+                
+                // Configure apply button
+                const detailsApplyButton = document.getElementById('modal-details-apply-now-button');
+                if (detailsApplyButton) {
+                    detailsApplyButton.dataset.jobId = job.id;
+                    
+                    if (job.user_has_applied) {
+                        detailsApplyButton.textContent = 'Already Applied';
+                        detailsApplyButton.classList.add('already-applied');
+                        detailsApplyButton.disabled = true;
+                    } else {
+                        detailsApplyButton.textContent = 'Apply Now';
+                        detailsApplyButton.classList.remove('already-applied');
+                        detailsApplyButton.disabled = false;
+                    }
+                }
+                
+                // Open the modal
+                openModal(detailsModalContainerEl);
+            })
+            .catch(error => {
+                console.error('Error fetching job details:', error);
+                window.failMessage('Could not load job details. Please try again.');
+            });
+    }
+
+    // --- Check Authentication Function ---
+    function isUserAuthenticated() {
+        return document.body.classList.contains('user-authenticated') || 
+               document.querySelector('.user-authenticated') !== null;
+    }
+
+    // --- Apply Confirmation Modal with Authentication Check ---
+    function handleApplyButtonClick(jobId, jobTitle, companyName, companyLogoUrl) {
+        // Check if user is authenticated
+        if (!isUserAuthenticated()) {
+            // If not authenticated, redirect to login page with a next parameter
+            const loginUrl = `/login/?next=/jobs/?job_id=${jobId}`;
+            window.location.href = loginUrl;
+            return;
+        }
+        
+        // If authenticated, show the apply confirmation modal
+        showApplyConfirmationModal(jobId, jobTitle, companyName, companyLogoUrl);
+    }
+
+    function showApplyConfirmationModal(jobId, jobTitle, companyName, companyLogoUrl) {
+        document.getElementById('apply-modal-job-title-confirm').textContent = jobTitle;
+        document.getElementById('apply-modal-company-name-confirm').textContent = companyName;
+        if (companyLogoUrl) document.getElementById('apply-modal-company-logo-confirm').src = companyLogoUrl;
+        document.getElementById('apply-modal-company-logo-confirm').alt = `${companyName} logo`;
+        document.getElementById('apply-modal-confirm-action-button').dataset.jobId = jobId;
+        openModal(applyConfirmModalContainerEl);
+    }
+
+    // --- Job Cards Click Event Handlers ---
+    if (jobCardsContainer) {
+        jobCardsContainer.addEventListener('click', function(event) {
+            const target = event.target;
+            const button = target.closest('.button');
+            if (!button) return;
+            
+            if (button.classList.contains('details-button')) {
+                event.preventDefault();
+                const jobId = button.dataset.jobId;
+                if (jobId) showJobDetailsModal(jobId);
+            } else if (button.classList.contains('apply-button') && !button.closest('.modal-content')) {
+                event.preventDefault();
+                const jobId = button.dataset.jobId;
+                if (jobId) {
+                    const card = button.closest('.job-card');
+                    const jobTitle = card.querySelector('.job-title').textContent;
+                    const companyName = card.querySelector('.company-name').textContent;
+                    const companyLogoUrl = card.querySelector('.company-logo')?.src;
+                    
+                    handleApplyButtonClick(jobId, jobTitle, companyName, companyLogoUrl);
+                }
+            }
+        });
+    }
+
+    // --- Details Modal Apply Button Click Handler ---
+    const detailsModalApplyButton = document.getElementById('modal-details-apply-now-button');
+    if (detailsModalApplyButton) {
+        detailsModalApplyButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            if (this.classList.contains('already-applied') || this.disabled) return;
+            
+            const jobId = this.dataset.jobId;
+            const jobTitle = document.getElementById('modal-job-title').textContent;
+            const companyName = document.getElementById('modal-company-name').textContent;
+            const companyLogoUrl = document.getElementById('modal-company-logo').src;
+            
+            closeModal(detailsModalContainerEl);
+            
+            handleApplyButtonClick(jobId, jobTitle, companyName, companyLogoUrl);
+        });
+    }
+
+    // --- Apply Confirmation Modal Submit Button Handler ---
+    const applyModalConfirmButton = document.getElementById('apply-modal-confirm-action-button');
+    if (applyModalConfirmButton) {
+        applyModalConfirmButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            const jobId = this.dataset.jobId;
+            const button = this;
+            button.disabled = true;
+            button.textContent = 'Applying...';
+            
+            const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
+            if (!csrfToken) {
+                console.error('CSRF token not found.');
+                window.failMessage('Security token missing. Cannot apply.');
+                button.disabled = false;
+                button.textContent = 'Apply';
+                return;
+            }
+            
+            fetch(`/api/job/${jobId}/apply/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().catch(() => { throw new Error(response.statusText); })
+                        .then(errData => { throw errData; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    window.successMessage(data.message || 'Application submitted!');
+                    closeModal(applyConfirmModalContainerEl);
+                    if (typeof updateFilters === 'function') {
+                        // Refresh job list to update "Applied" status
+                        updateFilters();
+                    }
+                } else {
+                    window.failMessage(data.message || 'Application failed.');
+                }
+            })
+            .catch(error => {
+                console.error('Error applying for job:', error);
+                window.failMessage(error.message || 'Application error.');
+            })
+            .finally(() => {
+                // Re-enable the button unless application was successful
+                if (!button.classList.contains('already-applied') && 
+                    !document.getElementById(`modal-details-apply-now-button`)?.classList.contains('already-applied')) {
+                    button.disabled = false;
+                    button.textContent = 'Apply';
+                }
+            });
+        });
+    }
+
+    // --- Define success and fail message functions ---
+    if (!window.successMessage) {
+        window.successMessage = (text) => { 
+            console.log("SUCCESS:", text); 
+            
+            // Create a success toast notification
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-success';
+            toast.textContent = text;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }, 100);
+        };
+    }
+    
+    if (!window.failMessage) {
+        window.failMessage = (text) => { 
+            console.error("FAIL:", text); 
+            
+            // Create an error toast notification
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-error';
+            toast.textContent = text;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }, 100);
+        };
+    }
+
+    // --- Check for job_id in URL ---
+    // This allows for direct opening of job details from login redirect
+    window.addEventListener('load', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobId = urlParams.get('job_id');
+        if (jobId) {
+            showJobDetailsModal(jobId);
+            // Remove job_id from URL to prevent reopening modal on refresh
+            const cleanUrl = window.location.pathname;
+            history.replaceState({}, '', cleanUrl);
+        }
+    });
 });
 </script>
 {% endblock %}

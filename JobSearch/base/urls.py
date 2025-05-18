@@ -24,4 +24,6 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(template_name='forgot-password-complete.html'), 
          name='password_reset_complete'),
     path('accounts/', include('allauth.urls')),
+    path('api/job/<int:job_id>/apply/', views.apply_for_job_api, name='apply_for_job_api'),
+    path('api/job/<int:job_id>/details/', views.get_job_details_api, name='get_job_details_api'),
 ]
