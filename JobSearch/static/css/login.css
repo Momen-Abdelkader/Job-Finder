@@ -8,3 +8,8 @@ input {
   margin-top: 0.3em;
   margin-bottom: -0.4em;
 }
+
+.button.google-account {
+  text-decoration: none;
+  cursor: default;
+}

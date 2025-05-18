@@ -48,7 +48,7 @@ Login
               <p class="form-footer-text">Don't have an account?</p>
               <a href="{% url 'signup' %}" class="form-link">Create an Account</a>
             </div>
-            <a class="button google-account" href="{% provider_login_url 'google' %}">
+            <a class="button google-account" href="{% provider_login_url 'google' %}" style="cursor: default; text-decoration: none;">
               <img
                 src="{% static '/assets/google.png' %}"
                 alt="Google Logo"
