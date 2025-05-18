@@ -1,12 +1,10 @@
 {% load static %}
     <nav class="main-nav">
-        <div class="nav-left">
-            {% if request.user.is_admin %}
-            <a href="{% url 'adminDashboard' %}" class="logo">Job Finder</a>
-            {% else %}
-            <a href="{% url 'home' %}" class="logo">Job Finder</a>
-            {% endif %}
-        </div>
+        {% if request.user.is_admin %}
+        <a href="{% url 'adminDashboard' %}" class="logo">Job Finder</a>
+        {% else %}
+        <a href="{% url 'home' %}" class="logo">Job Finder</a>
+        {% endif %}
         <div class="nav-content">
             <ul class="nav-list">   
                 {% if request.user.is_admin %}
