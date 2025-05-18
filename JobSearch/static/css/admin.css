@@ -63,7 +63,7 @@ button:active {
   padding: 0.9em 1.2em;
 }
 
-.skill-tag {
+.tagg {
   color: #000;  
 }
 
@@ -113,6 +113,7 @@ button:active {
   padding: 2rem; 
   box-sizing: border-box;
   overflow: hidden; 
+  z-index: 1000;
 }
 
 .modal-content {
@@ -171,7 +172,7 @@ label {
   margin-bottom: 15px;
 }
 
-.interest-tag, .skill-tag {
+.interest-tag, .tagg {
   display: inline-flex;
   align-items: center;
   background-color: white;

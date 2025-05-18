@@ -33,7 +33,7 @@ function refreshSkillTags() {
   skillsContainer.innerHTML = "";
   uiSkills.forEach((skill) => {
     const skillTag = document.createElement("span");
-    skillTag.className = "skill-tag";
+    skillTag.className = "tagg";
     skillTag.innerHTML = `${skill} <span class="tag-remove">x</span>`;
 
     // Add event listener to remove button (UI only)
@@ -93,6 +93,8 @@ function showEditJobModal(jobCard) {
 
   let jobForm = document.querySelector(".job-form");
 
+  uiSkills = [];
+
   jobForm.querySelector("#hidden-job-id-edit").value = jobCard.id;
 
 
@@ -115,14 +117,21 @@ function showEditJobModal(jobCard) {
   jobType.checked = true;
   experience.checked = true;
 
-  // uiSkills = job.skills;
-  // refreshSkillTags();
+  jobCard.querySelectorAll(".skill-tag").forEach((tag) => {
+    const skill = tag.childNodes[0].textContent.trim();
+    if (!uiSkills.includes(skill)) {
+      uiSkills.push(skill);
+    }
+  });
+
+  refreshSkillTags();
   newSkill = document.querySelector(".add-tag-input");
 
   modal.querySelector("#add-job-button").innerHTML = "Confirm";
   modal.querySelector("#add-job-button").setAttribute("name", "edit-job");
 
   closeButton.addEventListener("click", () => {
+    uiSkills = [];
     jobForm.querySelector("#hidden-job-id-edit").value.remove;
     modal.style.display = "none";
     jobForm.reset();
@@ -130,6 +139,7 @@ function showEditJobModal(jobCard) {
   });
 
   cancelButton.addEventListener("click", () => {
+    uiSkills = [];
     jobForm.querySelector("#hidden-job-id-edit").value.remove;
     modal.style.display = "none";
     jobForm.reset();
@@ -137,6 +147,7 @@ function showEditJobModal(jobCard) {
   });
 
   jobForm.addEventListener("submit", function () {
+    // uiSkills = [];
     // jobForm.reset();
     modal.style.display = "none";
     enableScrolling();
@@ -184,8 +195,21 @@ function showDeleteJobModal(jobCard) {
   disableScrolling();
 }
 
+function addSkillsToForm() {
+  let skillsInput = document.querySelector('input[name="skillz"]');
+  if (!skillsInput) {
+    skillsInput = document.createElement('input');
+    skillsInput.type = 'hidden';
+    skillsInput.name = 'skillz';
+    document.querySelector('.job-form').appendChild(skillsInput);
+  }
+  skillsInput.value = JSON.stringify(uiSkills);
+}
 
-
+const jobForm = document.querySelector('.job-form');
+if (jobForm) {
+  jobForm.addEventListener('submit', addSkillsToForm);
+}
 
 //-----------------------------// Function to show the job applicants modal
 function applicantProfileSetup(user) {

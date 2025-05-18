@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.template.defaultfilters import date as _date_filter
 from django.contrib.staticfiles.storage import staticfiles_storage
+import json
 
 # Constants
 MAX_SALARY_RANGE = 20000
@@ -227,9 +228,14 @@ def adminDashboard(request):
     jobs = Job.objects.filter(company__company_name = admin.company_name)     
     context = {
         'jobs' : jobs,
+        'skills' : Skill.objects.all(),
         'admin' : admin,
     }
     if request.method == 'POST':
+        skills_json = request.POST.get('skillz', '[]')
+        skills = json.loads(skills_json)
+        skills = list(dict.fromkeys(skills))
+        print (skills)
         if 'add-job' in request.POST:
             try:
                 new_job = Job.objects.create(
@@ -241,7 +247,12 @@ def adminDashboard(request):
                 salary = request.POST.get('salary'),
                 location = request.POST.get('location'),
                 description = request.POST.get('description'),
-            )
+                )
+
+                for skill_name in skills:
+                    skill_obj, created = Skill.objects.get_or_create(skill=skill_name)
+                    new_job.skills_required.add(skill_obj)
+
                 messages.success(request, "Job added successfully")
             except Exception as e:
                 messages.error(request, f"Error creating job: {str(e)}")
@@ -270,7 +281,12 @@ def adminDashboard(request):
                 job.location = request.POST.get('location')
                 job.description = request.POST.get('description')
                 job.save()
+                job.skills_required.clear()
+                for skill_name in skills:
+                    skill_obj, created = Skill.objects.get_or_create(skill=skill_name)
+                    job.skills_required.add(skill_obj)
                 messages.success(request, "Job updated successfully")
+
             except Job.DoesNotExist:
                 messages.error(request, "Failed to update Job")
             return redirect('adminDashboard')
