@@ -149,7 +149,6 @@ def jobs(request):
 
     return render(request, 'jobs.html', context)
 
-
 def adminDashboard(request):
     admin = AdminProfile.objects.get(user = request.user)
     jobs = Job.objects.filter(company__company_name = admin.company_name)     
