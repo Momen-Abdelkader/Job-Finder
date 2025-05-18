@@ -20,24 +20,31 @@
 }
 
 .darkmode {
-  --accent: #5193fa;
-  --accent-semi-dark: #3a80d2;
-  --accent-dark: #305188;
-  --white_1: #1b1b1e;
-  --white_2: #2d2d30;
-  --white_3: #3d3d40;
-  --white_4: #4d4d50;
-  --white_5: #5d5d60;
-  --white_6: #6d6d70;
-  --white_7: #7d7d80;
-  --white_8: #8d8d90;
-  --dark: #e3edfe;
-  --red: #ee5353;
-  --reddish: #e64c4c;
-  --dark-red: #a50202;
-  --green: #4caf50;
-  --greenish: #388e3c;
-  --dark-green: #2e7d32;
+  /* Softer blue accent that's easier on the eyes */
+  --accent: #4a85e5;
+  --accent-semi-dark: #3b6fc0;
+  --accent-dark: #2c5899;
+  
+  /* Refined dark background with subtle gradation */
+  --white_1: #1a1a1c;
+  --white_2: #242426;
+  --white_3: #2d2d2f;
+  --white_4: #38383a;
+  --white_5: #454547;
+  --white_6: #555557;
+  --white_7: #686869;
+  --white_8: #7a7a7b;
+  
+  /* Inverted text color - slightly off-white to reduce eye strain */
+  --dark: #e6e6f0;
+  
+  /* Softer alert/status colors */
+  --red: #e65c5c;
+  --reddish: #d35555;
+  --dark-red: #933a3a;
+  --green: #5eba62;
+  --greenish: #4a9a4e;
+  --dark-green: #3c7d40;
 }
 
 * {
