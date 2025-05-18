@@ -8,10 +8,10 @@
         <a class="job-location">{{ job.location }}</a>
     </div>
     <ul class="tags">
-        <li><a class="tag">{{ job.get_work_type_display }}</a></li>
-        <li><a class="tag">{{ job.get_job_type_display }}</a></li> 
-        <li><a class="tag">{{ job.get_exp_level_display }}</a></li>
-        <li><a class="tag">${{ job.salary }}</a></li>
+        <li><a id="job-work-type" class="tag">{{ job.get_work_type_display }}</a></li>
+        <li><a id="job-job-type" class="tag">{{ job.get_job_type_display }}</a></li> 
+        <li><a id="job-exp" class="tag">{{ job.get_exp_level_display }}</a></li>
+        <li><a id="job-salary" class="tag">${{ job.salary }}</a></li>
     </ul>
     <div class="buttons">
         {% if user.is_admin %}
@@ -27,4 +27,5 @@
             <a class="details-button button" data-job-id="{{ job.id }}">Details</a>
         {% endif %}
     </div>
+    <p style="display: none;" class="job-job-description">{{ job.description }}</p>
 </div>
