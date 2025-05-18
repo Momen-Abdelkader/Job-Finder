@@ -1,0 +1,4 @@
+{% for job in jobs %}
+    {% include 'job-card.html' with job=job user=user %}
+{% endfor %}
+<span id="job-count" style="display: none;">{{ jobs.count }}</span>

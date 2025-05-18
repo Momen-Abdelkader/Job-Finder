@@ -1,39 +1,3 @@
-// import {
-//   getJobsByCompany,
-//   getJobById,
-//   updateJob,
-//   addJob,
-//   deleteJob,
-// } from "./job-data.js";
-
-// import {
-//   getApplications,
-//   getApplicationByJobID,
-//   getApplicationByUserID,
-//   getApplicationByID,
-//   addApplication,
-//   updateApplicationStatus,
-//   deleteApplication,
-//   deleteApplicationsByJobID,
-//   deleteApplicationsByUserID,
-//   getApplicationCountByJobID,
-//   getApplicationCountByUserID,
-//   getApplicationCount,
-//   getApplicationID,
-// } from "./app-data.js";
-
-// import { isUserLoggedIn, isUserAdmin, getCurrentUser } from "./auth.js";
-
-// import {
-//   createJobCard,
-//   disableScrolling,
-//   enableScrolling,
-//   successMessage,
-//   failMessage,
-// } from "./main.js";
-
-import { getProfileById, getUserPersonalInfo } from "./profile-interface.js"
-
 const skillsContainer = document.getElementById("skills-tags");
 const newSkillInput = document.querySelector(".add-skill-button");
 let newSkill;
@@ -74,7 +38,6 @@ function showAddJobModal() {
   const closeButton = document.querySelector("#add-job-modal .close");
   const cancelButton = document.querySelector("#cancel");
   const jobForm = document.querySelector(".job-form");
-  const user = getCurrentUser();
 
   uiSkills = [];
   newSkill = document.querySelector(".add-tag-input");
@@ -94,42 +57,43 @@ function showAddJobModal() {
   });
 
   jobForm.addEventListener("submit", function () {
-    const workLocation = document.querySelector(
-      'input[name="workLocation"]:checked'
-    ).value;
-    const jobType = document.querySelector(
-      'input[name="jobType"]:checked'
-    ).value;
-    const experience = document.querySelector(
-      'input[name="experience"]:checked'
-    ).value;
+    // const workLocation = document.querySelector(
+    //   'input[name="workLocation"]:checked'
+    // ).value;
+    // const jobType = document.querySelector(
+    //   'input[name="jobType"]:checked'
+    // ).value;
+    // const experience = document.querySelector(
+    //   'input[name="experience"]:checked'
+    // ).value;
 
-    const jobArr = getJobsByCompany(user.id);
-    let maxID = 0;
-    for (let i = 0; i < jobArr.length; i++) {
-      if (maxID < jobArr[i].id) maxID = jobArr[i].id;
-    }
+    // const jobArr = getJobsByCompany(user.id);
+    // let maxID = 0;
+    // for (let i = 0; i < jobArr.length; i++) {
+    //   if (maxID < jobArr[i].id) maxID = jobArr[i].id;
+    // }
 
-    const newJob = {
-      id: maxID + 1,
-      logo: "../assets/temp-profile.webp", // TODO: implement profile image link
-      company: user.companyName,
-      companyId: user.id,
-      title: jobForm.querySelector("#job-title").value,
-      location: jobForm.querySelector("#job-location").value,
-      salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
-      jobType: jobType,
-      workMode: workLocation,
-      skills: uiSkills, 
-      experienceLevel: experience,
-      postedAt: new Date(),
-      description: jobForm.querySelector("#job-description").value,
-    };
-
-    addJob(newJob);
-
-    jobForm.reset();
-    uiSkills = [];
+    // const newJob = {
+    //   id: maxID + 1,
+    //   logo: "../assets/temp-profile.webp", // TODO: implement profile image link
+    //   company: user.companyName,
+    //   companyId: user.id,
+    //   title: jobForm.querySelector("#job-title").value,
+    //   location: jobForm.querySelector("#job-location").value,
+    //   salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
+    //   jobType: jobType,
+    //   workMode: workLocation,
+    //   skills: uiSkills, 
+    //   experienceLevel: experience,
+    //   postedAt: new Date(),
+    //   description: jobForm.querySelector("#job-description").value,
+    // };
+    const skillsInput = document.createElement('input');
+    skillsInput.type = 'hidden';
+    skillsInput.name = 'skills';
+    skillsInput.value = JSON.stringify(uiSkills);
+    this.appendChild(skillsInput);
+    
     modal.style.display = "none";
     enableScrolling();
     location.reload();
@@ -390,61 +354,93 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (addButton) {
     addButton.addEventListener("click", () => {
+      uiSkills = [];
+      // jobForm.reset();
       showAddJobModal();
     });
   }
 });
 
-function setupCardEventHandlers(card, jobId) {
-  const editButton = card.querySelector(".edit-button");
-  const deleteButton = card.querySelector(".delete-button");
-  const applicantsButton = card.querySelector(".applicants-button");
+document.addEventListener("DOMContentLoaded", function () {
+  // const editButton = card.querySelector(".edit-button");
 
-  if (editButton) {
-    editButton.addEventListener("click", () => {
-      const job = getJobById(jobId);
-      showEditJobModal(job);
-    });
-  }
+  // if (editButton) {
+  //   editButton.addEventListener("click", () => {
+  //     showEditJobModal();
+  //   });
+  // }
+});
 
-  if (deleteButton) {
-    deleteButton.addEventListener("click", () => {
-      const job = getJobById(jobId);
-      showDeleteJobModal(job);
-    });
-  }
+document.addEventListener("DOMContentLoaded", function () {
+  // const deleteButton = card.querySelector(".delete-button");
 
-  if (applicantsButton) {
-    applicantsButton.addEventListener("click", () => {
-      const job = getJobById(jobId);
-      showJobApplicantsModal(job);
-    });
-  }
-}
+  // if (deleteButton) {
+  //   deleteButton.addEventListener("click", () => {
+  //     showDeleteJobModal();
+  //   });
+  // }
+});
 
-function init() {
-  authValidation();
-  const user = getCurrentUser();
-  const jobData = getJobsByCompany(user.id);
-  const jobCardsContainer = document.querySelector(".job-cards");
+document.addEventListener("DOMContentLoaded", function () {
+  // const applicantsButton = card.querySelector(".applicants-button");
 
-  jobData.forEach((job) => {
-    const card = createJobCard(job, "admin");
-    jobCardsContainer.appendChild(card);
-    setupCardEventHandlers(card, job.id);
-  });
-}
+  // if (applicantsButton) {
+  //   applicantsButton.addEventListener("click", () => {
+  //     showJobApplicantsModal();
+  //   });
+  // }
+});
 
-function authValidation() {
-  if (!isUserLoggedIn()) {
-    alert("You are not logged in. Redirecting to login page.");
-    window.location.href = "../html/login.html";
-  }
+// function setupCardEventHandlers(card, jobId) {
+//   const editButton = card.querySelector(".edit-button");
+//   const deleteButton = card.querySelector(".delete-button");
+//   const applicantsButton = card.querySelector(".applicants-button");
 
-  if (!isUserAdmin()) {
-    alert("You are not an admin. Redirecting to home page.");
-    window.location.href = "../html/home.html";
-  }
-}
+//   if (editButton) {
+//     editButton.addEventListener("click", () => {
+//       const job = getJobById(jobId);
+//       showEditJobModal(job);
+//     });
+//   }
 
-init();
+//   if (deleteButton) {
+//     deleteButton.addEventListener("click", () => {
+//       const job = getJobById(jobId);
+//       showDeleteJobModal(job);
+//     });
+//   }
+
+//   if (applicantsButton) {
+//     applicantsButton.addEventListener("click", () => {
+//       const job = getJobById(jobId);
+//       showJobApplicantsModal(job);
+//     });
+//   }
+// }
+
+// function init() {
+//   // authValidation();
+//   // const user = getCurrentUser();
+//   // const jobData = getJobsByCompany(user.id);
+//   const jobCardsContainer = document.querySelector(".job-cards");
+
+//   jobData.forEach((job) => {
+//     const card = createJobCard(job, "admin");
+//     jobCardsContainer.appendChild(card);
+//     setupCardEventHandlers(card, job.id);
+//   });
+// }
+
+// function authValidation() {
+//   if (!isUserLoggedIn()) {
+//     alert("You are not logged in. Redirecting to login page.");
+//     window.location.href = "../html/login.html";
+//   }
+
+//   if (!isUserAdmin()) {
+//     alert("You are not an admin. Redirecting to home page.");
+//     window.location.href = "../html/home.html";
+//   }
+// }
+
+// init();

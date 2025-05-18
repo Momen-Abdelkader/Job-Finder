@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block title %}
+Jobs
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/jobs.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/job-card.css' %}" />
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        {% include 'search.html' %}
+        <div class="jobs-container">
+            <div class="filters" id="filters">
+                {% for category in filters %}
+                    {% include 'filter-group.html' with category=category.category filters=category.filters %}
+                {% endfor %}
+                <div class="filter-category">
+                    <h2>Salary</h2>
+                    <input type="hidden" id="min_salary_input" name="min_salary" value="{{ min_salary }}">
+                    <input type="hidden" id="max_salary_input" name="max_salary" value="{{ max_salary }}">
+                    <div class="range-container">
+                        <div class="sliders-control">
+                            <input id="from-slider" type="range" value="{{ min_salary }}" min="{{ min_salary_range }}" max="{{ max_salary_range }}">
+                            <input id="to-slider" type="range" value="{{ max_salary }}" min="{{ min_salary_range }}" max="{{ max_salary_range }}">
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <div class="control-container">
+                            <div class="min-label">Min</div>
+                            <a id="min-value">${{ min_salary }}</a>
+                        </div>
+                        <div class="control_container">
+                            <div class="max-label">Max</div>
+                            <a id="max-value">${{ max_salary }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <a class="button clear-button" id="clear-filters">Clear Filters</a>
+                </div>
+            </div>
+
+            <div class="job-postings">
+                <h1>Found <a id="job-count">{{ job_count }}</a> Job Postings</h1>
+                <div class="job-cards">
+                    {% for job in jobs %}
+                        {% include 'job-card.html' with job=job user=user %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    let isDragging = false;
+    let timeoutId;
+    const searchInput = document.getElementById('search-input');
+    const fromSlider = document.getElementById('from-slider');
+    const toSlider = document.getElementById('to-slider');
+    const minValue = document.getElementById('min-value');
+    const maxValue = document.getElementById('max-value');
+    
+    // Initialize slider values
+    fromSlider.value = {{ min_salary }};
+    toSlider.value = {{ max_salary }};
+    updateSliderValues();
+    
+    document.querySelectorAll('.filter input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updateFilters);
+    });
+
+    if (fromSlider && toSlider) {
+        fromSlider.addEventListener('input', handleSliderInput);
+        toSlider.addEventListener('input', handleSliderInput);
+        fromSlider.addEventListener('change', updateFilters);
+        toSlider.addEventListener('change', updateFilters);
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(updateFilters, 500);
+        });
+    }
+    
+    document.querySelector('.clear-button')?.addEventListener('click', () => {
+        document.querySelectorAll('.filter input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        
+        fromSlider.value = {{ min_salary_range }};
+        toSlider.value = {{ max_salary_range }};
+        updateSliderValues();
+        
+        if (searchInput) searchInput.value = '';
+        
+        updateFilters();
+    });
+
+    function handleSliderInput(e) {
+        updateSliderValues();
+    }
+    
+    function updateSliderValues() {
+        if (parseInt(fromSlider.value) > parseInt(toSlider.value)) {
+            if (e?.target === fromSlider) {
+                toSlider.value = fromSlider.value;
+            } else {
+                fromSlider.value = toSlider.value;
+            }
+        }
+        
+        minValue.textContent = '$' + fromSlider.value;
+        maxValue.textContent = '$' + toSlider.value;
+        
+        document.getElementById('min_salary_input').value = fromSlider.value;
+        document.getElementById('max_salary_input').value = toSlider.value;
+    }
+
+    function updateFilters() {
+        const params = new URLSearchParams();
+        
+        if (searchInput?.value) {
+            params.set('q', searchInput.value);
+        }
+        
+        document.querySelectorAll('.filter input[type="checkbox"]').forEach(checkbox => {
+            if (checkbox.checked) {
+                params.append(checkbox.name, checkbox.value);
+            }
+        });
+        
+        params.set('min_salary', fromSlider.value);
+        params.set('max_salary', toSlider.value);
+
+        history.replaceState({}, '', `?${params.toString()}`);
+
+        fetch(`?${params.toString()}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            document.querySelector('.job-cards').innerHTML = data.jobs_html;
+            
+            document.getElementById('job-count').textContent = data.job_count;
+
+
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+    }
+
+    window.handleSearch = function(event) {
+        event.preventDefault();
+        updateFilters();
+    };
+});
+</script>
+{% endblock %}

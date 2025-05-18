@@ -25,5 +25,4 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(template_name='forgot-password-complete.html'), 
          name='password_reset_complete'),
     path('accounts/', include('allauth.urls')),
-
 ]

@@ -1,8 +1,16 @@
 {% load static %}
-    <div class="search">
-        <div class="search-left">
-            <div class="search-icon"><img src="{% static 'assets/search.png'%}"></div>
-            <input type="text" class="search-input" placeholder="Search for jobs, companies, or keywords...">
-        </div>
-        <a class="find-button">Find</a>
+<form class="search" action="{% url 'jobs' %}" method="GET" onsubmit="handleSearch(event)">
+    <div class="search-left">
+        <div class="search-icon"><img src="{% static 'assets/search.png'%}"></div>
+        <input type="text" class="search-input" placeholder="Search for jobs, companies, or keywords..." 
+               name="q" value="{{ request.GET.q }}" id="search-input">
     </div>
+    {% for key, values in request.GET.items %}
+        {% if key != 'q' %}
+            {% for value in values %}
+                <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    <button class="find-button" type="submit">Find</button>
+</form>
