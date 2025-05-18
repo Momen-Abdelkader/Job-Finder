@@ -152,18 +152,15 @@ def jobs(request):
 
 def adminDashboard(request):
     admin = AdminProfile.objects.get(user = request.user)
-    jobs = Job.objects.filter(company__company_name = admin.company_name) 
-    
+    jobs = Job.objects.filter(company__company_name = admin.company_name)     
     context = {
         'jobs' : jobs,
         'admin' : admin,
     }
-
     if request.method == 'POST':
-        # skills_json = request.POST.get('skills', '[]')
-        # skills = json.loads(skills_json)
-        try:
-            new_job = Job.objects.create(
+        if 'add-job' in request.POST:
+            try:
+                new_job = Job.objects.create(
                 company = admin,
                 job_title = request.POST.get('title'),
                 work_type = request.POST.get('work-type'),
@@ -173,10 +170,30 @@ def adminDashboard(request):
                 location = request.POST.get('location'),
                 description = request.POST.get('description'),
             )
-        except Exception as e:
-            messages.error(request, f"Error creating job: {str(e)}")
+                messages.success(request, "Job added successfully")
+            except Exception as e:
+                messages.error(request, f"Error creating job: {str(e)}")
+            return redirect('adminDashboard')
         
-        return redirect('adminDashboard')
+        
+        elif 'confirm-delete-job' in request.POST:
+            job_id = request.POST.get('hidden-job-id')
+            try:
+                job = Job.objects.get(id=job_id)
+                job.delete()
+                messages.success(request, "Job deleted successfully")
+            except Job.DoesNotExist:
+                messages.error(request, "Job not found")
+            return redirect('adminDashboard')
+        
+        elif 'edit-job' in request.POST:
+            job_id = request.POST.get('edit-job')
+            try:
+                job = Job.objects.get(id=job_id)
+                context['edit-job'] = job
+            except Job.DoesNotExist:
+                messages.error(request, "Job not found")
+            return render(request, "admin-dashboard.html", context)
 
     """Render admin dashboard page"""
     return render(request, "admin-dashboard.html", context)
