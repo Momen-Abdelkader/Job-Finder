@@ -103,32 +103,52 @@ function showAddJobModal() {
   disableScrolling();
 }
 
-function showEditJobModal(job) {
+function showEditJobModal(jobCard) {
   const modal = document.querySelector("#add-job-modal");
   const closeButton = document.querySelector("#add-job-modal .close");
   const cancelButton = document.querySelector("#cancel");
 
   let jobForm = document.querySelector(".job-form");
-  let workLocation = document.querySelector(
-    `input[name="workLocation"][value=${job.workMode}]`
-  );
-  let jobType = document.querySelector(
-    'input[name="jobType"][value="' + job.jobType + '"]'
-  );
-  let experience = document.querySelector(
-    'input[name="experience"][value="' + job.experienceLevel + '"]'
-  );
 
-  jobForm.querySelector("#job-title").value = job.title;
-  jobForm.querySelector("#job-location").value = job.location;
-  jobForm.querySelector("#job-salary").value = job.salary.replace(/\D/g, "");
-  jobForm.querySelector("#job-description").value = job.description;
-  workLocation.checked = true;
-  jobType.checked = true;
-  experience.checked = true;
+  let jobList;
 
-  uiSkills = job.skills;
-  refreshSkillTags();
+  // fetch('/admin-dashboard/')  // URL to your Django view
+  //   .then(response => {
+  //       if (!response.ok) {
+  //           throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();  // Parse JSON response
+  //   })
+  //   .then(data => {
+  //       console.log(data);  // Process your Django model data
+  //       jobList = data;
+  //   })
+  //   .catch(error => {
+  //       console.error('There was a problem:', error);
+  //   });
+
+
+
+  // let workLocation = document.querySelector(
+  //   `input[name="workLocation"][value=${job.workMode}]`
+  // );
+  // let jobType = document.querySelector(
+  //   'input[name="jobType"][value="' + job.jobType + '"]'
+  // );
+  // let experience = document.querySelector(
+  //   'input[name="experience"][value="' + job.experienceLevel + '"]'
+  // );
+
+  // jobForm.querySelector("#job-title").value = job.title;
+  // jobForm.querySelector("#job-location").value = job.location;
+  // jobForm.querySelector("#job-salary").value = job.salary.replace(/\D/g, "");
+  // jobForm.querySelector("#job-description").value = job.description;
+  // workLocation.checked = true;
+  // jobType.checked = true;
+  // experience.checked = true;
+
+  // uiSkills = job.skills;
+  // refreshSkillTags();
   newSkill = document.querySelector(".add-tag-input");
 
   modal.querySelector("#add-job-button").innerHTML = "Confirm";
@@ -146,68 +166,72 @@ function showEditJobModal(job) {
   });
 
   jobForm.addEventListener("submit", function () {
-    const workLocation = document.querySelector(
-      'input[name="workLocation"]:checked'
-    ).value;
-    const jobType = document.querySelector(
-      'input[name="jobType"]:checked'
-    ).value;
-    const experience = document.querySelector(
-      'input[name="experience"]:checked'
-    ).value;
+    // const workLocation = document.querySelector(
+    //   'input[name="workLocation"]:checked'
+    // ).value;
+    // const jobType = document.querySelector(
+    //   'input[name="jobType"]:checked'
+    // ).value;
+    // const experience = document.querySelector(
+    //   'input[name="experience"]:checked'
+    // ).value;
 
-    const newJob = {
-      id: job.id,
-      logo: job.logo,
-      company: job.company,
-      companyId: job.companyId,
-      title: jobForm.querySelector("#job-title").value,
-      location: jobForm.querySelector("#job-location").value,
-      salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
-      jobType: jobType,
-      workMode: workLocation,
-      skills: uiSkills,
-      experienceLevel: experience,
-      postedAt: new Date(),
-      description: jobForm.querySelector("#job-description").value,
-    };
+    // const newJob = {
+    //   id: job.id,
+    //   logo: job.logo,
+    //   company: job.company,
+    //   companyId: job.companyId,
+    //   title: jobForm.querySelector("#job-title").value,
+    //   location: jobForm.querySelector("#job-location").value,
+    //   salary: "$" + jobForm.querySelector("#job-salary").value + "/month",
+    //   jobType: jobType,
+    //   workMode: workLocation,
+    //   skills: uiSkills,
+    //   experienceLevel: experience,
+    //   postedAt: new Date(),
+    //   description: jobForm.querySelector("#job-description").value,
+    // };
 
-    updateJob(newJob);
+    // updateJob(newJob);
 
-    jobForm.reset();
+    // jobForm.reset();
     modal.style.display = "none";
     enableScrolling();
-    location.reload();
+    // location.reload();
   });
 
   modal.style.display = "flex";
   disableScrolling();
 }
 
-function showDeleteJobModal(job) {
+function showDeleteJobModal(jobCard) {
   const modal = document.getElementById("delete-job-modal");
   const confirmButton = modal.querySelector("#confirm-delete");
   const cancelButton = modal.querySelector("#cancel-delete");
   const closeButton = modal.querySelector(".close");
+  const hiddenJob = document.querySelector("#hidden-job-id");
 
+  hiddenJob.value = jobCard.id;
   confirmButton.addEventListener("click", () => {
-    deleteJob(job.id);
-    deleteApplicationsByJobID(job.id);
-    location.reload();
+    jobCard.remove();
+    modal.style.display = "none";
   });
 
   cancelButton.addEventListener("click", () => {
+    hiddenJob.value.remove;
     modal.style.display = "none";
     enableScrolling();
   });
 
   closeButton.addEventListener("click", () => {
+    hiddenJob.value.remove;
     modal.style.display = "none";
     enableScrolling();
   });
 
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
+      hiddenJob.value.remove;
       modal.style.display = "none";
       enableScrolling();
     }
@@ -361,86 +385,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  // const editButton = card.querySelector(".edit-button");
-
-  // if (editButton) {
-  //   editButton.addEventListener("click", () => {
-  //     showEditJobModal();
-  //   });
-  // }
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('delete-button')) {
+        const jobCard = event.target.closest('.job-card');
+        const jobId = jobCard.id;
+        console.log('Delete job with ID:', jobId);
+        showDeleteJobModal(jobCard);
+    }
+    
+    if (event.target.classList.contains('edit-button')) {
+        const jobCard = event.target.closest('.job-card');
+        const jobId = jobCard.id;
+        console.log('Edit job with ID:', jobId);
+        showEditJobModal(jobCard);
+    }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  // const deleteButton = card.querySelector(".delete-button");
-
-  // if (deleteButton) {
-  //   deleteButton.addEventListener("click", () => {
-  //     showDeleteJobModal();
-  //   });
-  // }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  // const applicantsButton = card.querySelector(".applicants-button");
-
-  // if (applicantsButton) {
-  //   applicantsButton.addEventListener("click", () => {
-  //     showJobApplicantsModal();
-  //   });
-  // }
-});
-
-// function setupCardEventHandlers(card, jobId) {
-//   const editButton = card.querySelector(".edit-button");
-//   const deleteButton = card.querySelector(".delete-button");
-//   const applicantsButton = card.querySelector(".applicants-button");
-
-//   if (editButton) {
-//     editButton.addEventListener("click", () => {
-//       const job = getJobById(jobId);
-//       showEditJobModal(job);
-//     });
-//   }
-
-//   if (deleteButton) {
-//     deleteButton.addEventListener("click", () => {
-//       const job = getJobById(jobId);
-//       showDeleteJobModal(job);
-//     });
-//   }
-
-//   if (applicantsButton) {
-//     applicantsButton.addEventListener("click", () => {
-//       const job = getJobById(jobId);
-//       showJobApplicantsModal(job);
-//     });
-//   }
-// }
-
-// function init() {
-//   // authValidation();
-//   // const user = getCurrentUser();
-//   // const jobData = getJobsByCompany(user.id);
-//   const jobCardsContainer = document.querySelector(".job-cards");
-
-//   jobData.forEach((job) => {
-//     const card = createJobCard(job, "admin");
-//     jobCardsContainer.appendChild(card);
-//     setupCardEventHandlers(card, job.id);
-//   });
-// }
-
-// function authValidation() {
-//   if (!isUserLoggedIn()) {
-//     alert("You are not logged in. Redirecting to login page.");
-//     window.location.href = "../html/login.html";
-//   }
-
-//   if (!isUserAdmin()) {
-//     alert("You are not an admin. Redirecting to home page.");
-//     window.location.href = "../html/home.html";
-//   }
-// }
-
-// init();

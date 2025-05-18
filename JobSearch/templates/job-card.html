@@ -1,4 +1,4 @@
-<div class="job-card">
+<div id="{{job.id}}" class="job-card">
     <div class="company-info">
         <img src="{{ job.company.user.profile_photo }}" class="company-logo">
         <h4 class="company-name">{{ job.company.company_name }}</h4>                
@@ -15,9 +15,9 @@
     </ul>
     <div class="buttons">
         {% if user.is_admin %}
-            <a class="edit-button button">Edit</a>
-            <a class="applicants-button button">Applicants</a>
-            <a class="delete-button button">Delete</a>
+            <a id="edit{{job.id}}"  class="edit-button button">Edit</a>
+            <a id="applicant{{job.id}}" class="applicants-button button">Applicants</a>
+            <a id="delete{{job.id}}"  class="delete-button button">Delete</a>
         {% else %}
             {% if user.is_authenticated and job.has_applied %}
                 <a class="applied-button button">Applied</a>

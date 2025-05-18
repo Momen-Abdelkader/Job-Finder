@@ -43,6 +43,9 @@ class Job(models.Model):
     description = models.TextField(max_length=1000, blank=True)
     company = models.ForeignKey(AdminProfile, on_delete=models.CASCADE)
     skills_required = models.ManyToManyField('Skill', blank=True)
+
+    class Meta:
+        ordering = ['-published_date']
     
     def __str__(self):
         return str(self.id)
