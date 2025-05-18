@@ -20,12 +20,9 @@
 }
 
 .darkmode {
-  /* Softer blue accent that's easier on the eyes */
   --accent: #4a85e5;
   --accent-semi-dark: #3b6fc0;
   --accent-dark: #2c5899;
-  
-  /* Refined dark background with subtle gradation */
   --white_1: #1a1a1c;
   --white_2: #242426;
   --white_3: #2d2d2f;
@@ -34,11 +31,7 @@
   --white_6: #555557;
   --white_7: #686869;
   --white_8: #7a7a7b;
-  
-  /* Inverted text color - slightly off-white to reduce eye strain */
   --dark: #e6e6f0;
-  
-  /* Softer alert/status colors */
   --red: #e65c5c;
   --reddish: #d35555;
   --dark-red: #933a3a;
@@ -307,6 +300,10 @@ nav {
   color: var(--white_1);
 }
 
+#theme-switch {
+  margin-left: 20px;
+}
+
 @media screen and (max-width: 767px) {
   .main-nav {
     justify-content: space-between;
@@ -386,6 +383,10 @@ nav {
     margin-left: 0;
     width: 100%;
     text-align: center;
+  }
+
+  #theme-switch {
+    margin-left: 0;
   }
 }
 

@@ -17,12 +17,15 @@ Home
       Welcome, {{ request.user.username }}! <br> 
       {% endif %}
       Let's get you hired!</h2>
-      <div class="container">
-        {% include 'search.html' %}
+      <div class="main-content">
+        <div class="container">
+          {% include 'search.html' %}
+        </div>
+
+        <div class="container">
+          <a href="{% url 'jobs' %}" class="button see-more-button" style="text-decoration: none;">See More Jobs</a>
+        </div>
       </div>
 
-      <div class="container">
-        <a href="{% url 'jobs' %}" class="button see-more-button" style="text-decoration: none;">See More Jobs</a>
-      </div>
     </section>
 {% endblock %}
