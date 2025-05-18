@@ -186,16 +186,25 @@ def adminDashboard(request):
             return redirect('adminDashboard')
         
         elif 'edit-job' in request.POST:
-            job_id = request.POST.get('edit-job')
+            job_id = request.POST.get('job-Id')
             try:
                 job = Job.objects.get(id=job_id)
-                context['edit-job'] = job
+                job.job_title = request.POST.get('title')
+                job.work_type = request.POST.get('work-type')
+                job.job_type = request.POST.get('job-type')
+                job.exp_level = request.POST.get('experience')
+                job.salary = request.POST.get('salary')
+                job.location = request.POST.get('location')
+                job.description = request.POST.get('description')
+                job.save()
+                messages.success(request, "Job updated successfully")
             except Job.DoesNotExist:
-                messages.error(request, "Job not found")
-            return render(request, "admin-dashboard.html", context)
+                messages.error(request, "Failed to update Job")
+            return redirect('adminDashboard')
 
     """Render admin dashboard page"""
     return render(request, "admin-dashboard.html", context)
+
 
 def loginView(request):
     if request.method == 'POST':
