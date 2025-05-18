@@ -1,3 +1,4 @@
+    {% load static %}
     <nav class="main-nav">
         <div class="nav-left">
             {% if request.user.is_admin %}
@@ -21,12 +22,15 @@
             </ul>
             {% if request.user.is_authenticated %}
                 <div class="profile" id="profile-nav">
-                    {% if request.user.is_admin %}
-                    <a href="company-profile.html" class="profile-name">
-                    {% else %}
-                    <a href="user-profile.html" class="profile-name">
-                    {% endif %}
-                    <img src="../assets/temp-profile.webp" class="profile-image">
+                    <a href="{% url 'profile' %}" class="profile-name">
+                    <img src=
+                            "{% if user.profile_photo and user.profile_photo.url %}
+                                {{ user.profile_photo.url }}
+                            {% else %}
+                                {% static 'assets/temp-profile.webp' %}
+                            {% endif %}" 
+                    class="profile-image" 
+                    alt="Profile photo">
                     </a>
                     <a class="signout-button" id="signout-button" href="{% url 'logout' %}">Sign Out</a>
                 </div>
