@@ -420,6 +420,14 @@ def logoutUser(request):
     messages.success(request, "You have been logged out.")
     return redirect('home')
 
+def convertUserToUserProfile(request):
+    user = request.user
+    if user.is_authenticated and not user.is_admin:
+        try:
+            user_profile = user.userprofile
+        except UserProfile.DoesNotExist:
+            user_profile = UserProfile.objects.create(user=user)
+
 @login_required
 def get_job_applications_api(request, job_id):
     if not request.user.is_admin:
