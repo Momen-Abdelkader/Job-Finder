@@ -36,7 +36,6 @@ function refreshSkillTags() {
     skillTag.className = "tagg";
     skillTag.innerHTML = `${skill} <span class="tag-remove">x</span>`;
 
-    // Add event listener to remove button (UI only)
     skillTag.querySelector(".tag-remove").addEventListener("click", () => {
       uiSkills = uiSkills.filter((s) => s !== skill);
       refreshSkillTags();
@@ -116,7 +115,6 @@ function showEditJobModal(jobCard) {
   jobForm.querySelector("#job-location").value = jobCard.querySelector(".job-location").innerHTML;  
   jobForm.querySelector("#job-salary").value = parseInt(jobCard.querySelector("#job-salary").innerHTML.replace(/\D/g, ""), 10) || 0;
   jobForm.querySelector("#job-description").value = jobCard.querySelector(".job-job-description").innerHTML;
-  // jobForm.querySelector("#job-image").src = jobCard.querySelector(".job-image").src;
   workLocation.checked = true;
   jobType.checked = true;
   experience.checked = true;
@@ -151,11 +149,8 @@ function showEditJobModal(jobCard) {
   });
 
   jobForm.addEventListener("submit", function () {
-    // uiSkills = [];
-    // jobForm.reset();
     modal.style.display = "none";
     enableScrolling();
-    // location.reload();
   });
 
   modal.style.display = "flex";
@@ -216,7 +211,6 @@ if (jobForm) {
   jobForm.addEventListener('submit', addSkillsToForm);
 }
 
-//-----------------------------// Function to show the job applicants modal
 function applicantProfileSetup(user) {
 
   fetch('profile.html')
@@ -346,17 +340,6 @@ async function showJobApplicantsModal(jobId) {
 
   });
 
-  // const viewApplicantProfile = applicantsList.querySelectorAll('.profile-button');
-  // viewApplicantProfile.addEventListener("click", () => {
-  //   // const applicantInfo = getUserPersonalInfo(applicant.id);
-  //   // const app = (getProfileById(viewApplicantProfile.id));
-  //   // const app2 = getUserPersonalInfo(viewApplicantProfile.id);
-  //   // console.log(viewApplicantProfile.id);
-  //   // console.log("app: " + app);
-  //   // console.log(app2);
-  //   // applicantProfileSetup(app);
-  // });
-
   closeButton.addEventListener("click", () => {
     modal.style.display = "none";
     enableScrolling();
@@ -380,17 +363,12 @@ async function showJobApplicantsModal(jobId) {
   disableScrolling();
 }
 
-
-//-----------------------------
-
-
 document.addEventListener("DOMContentLoaded", function () {
   const addButton = document.querySelector("#add-button");
 
   if (addButton) {
     addButton.addEventListener("click", () => {
       uiSkills = [];
-      // jobForm.reset();
       showAddJobModal();
     });
   }
