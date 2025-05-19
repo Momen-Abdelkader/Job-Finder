@@ -123,8 +123,6 @@ from django.contrib import messages
 
 @login_required
 def profile(request):
-    """Base profile view."""
-    return HttpResponse("Hello, world. You're at the base profile.")
     user = request.user
     if user.is_admin:
         profile = user.adminprofile

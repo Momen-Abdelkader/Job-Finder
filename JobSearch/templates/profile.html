@@ -28,7 +28,7 @@ Profile
                     {% if user.is_admin %}
                         {{ user.adminprofile.company_name }}
                     {% else %}
-                        {{ user.userprofile.job_title|default:user.username }}
+                        {{ user.username }}
                     {% endif %}
                 </div>
                 <div class="user-email">{{ user.email }}</div>
