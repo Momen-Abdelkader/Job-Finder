@@ -20,6 +20,27 @@
 }
 
 .darkmode {
+  --accent: #5193fa;
+  --accent-semi-dark: #3a80d2;
+  --accent-dark: #305188;
+  --white_1: #e3edfe;
+  --white_2: #d4e0f4;
+  --white_3: #d0dbee;
+  --white_4: #c3cdde;
+  --white_5: #b9c2d1;
+  --white_6: #a8b2c0;
+  --white_7: #8f97a3;
+  --white_8: #a8b2c0;
+  --dark: #1b1b1e;
+  --red: #ee5353;
+  --reddish: #e64c4c;
+  --dark-red: #a50202;
+  --green: #4caf50;
+  --greenish: #388e3c;
+  --dark-green: #2e7d32;
+}
+
+.darkmode {
   --accent: #4a85e5;
   --accent-semi-dark: #3b6fc0;
   --accent-dark: #2c5899;
@@ -32,7 +53,7 @@
   --white_7: #686869;
   --white_8: #7a7a7b;
   --dark: #e6e6f0;
-  --red: #e65c5c;
+    --red: #e65c5c;
   --reddish: #d35555;
   --dark-red: #933a3a;
   --green: #5eba62;
