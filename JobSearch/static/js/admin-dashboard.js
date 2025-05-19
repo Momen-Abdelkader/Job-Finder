@@ -208,6 +208,7 @@ function addSkillsToForm() {
     document.querySelector('.job-form').appendChild(skillsInput);
   }
   skillsInput.value = JSON.stringify(uiSkills);
+  uiSkills = [];
 }
 
 const jobForm = document.querySelector('.job-form');

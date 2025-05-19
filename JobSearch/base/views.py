@@ -493,7 +493,16 @@ def update_application_status_api(request, application_id):
     
 
 def profile_view(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
+    # applied_jobs = JobApplication.objects.filter(user=user_profile).select_related('job')
+    user_skills = Skill.objects.filter(userskill__user=user_profile)
     context = {
-        'user_id': user_id,
+        'applicant': user,
+        'app_profile': user_profile,
+        'user_skills': user_skills,
     }
-    return render(request, 'profile-view.html', context)
+    # 'applied_jobs': applied_jobs,
+
+    """Render applicant profile page"""
+    return render(request, "profile-view.html", context)

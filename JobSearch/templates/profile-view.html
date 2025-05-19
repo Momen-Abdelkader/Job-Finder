@@ -6,12 +6,79 @@
 {% endblock %}
 
 {% block styles %}
+<link rel="stylesheet" href= "{% static 'css/style.css' %}" />
+<link rel="stylesheet" href= "{% static 'css/profile-view.css' %}" />
 {% endblock %}
 
 {% block content %}
+<main>
+    <div class="container">
+      <div class="sidebar">
+        <div class="user-info">
+          <img
+            src=
+                "{% if applicant.profile_photo and applicant.profile_photo.url %}
+                    {{ applicant.profile_photo.url }}
+                {% else %}
+                    {% static 'assets/temp-profile.webp' %}
+                {% endif %}" 
+            alt="user avatar"
+            class="avatar"
+          />
+          <div class="user-name">{{applicant.username}}</div>
+          <div class="user-email">{{applicant.email}}</div>
+        </div>
+        <ul class="nav-tabs">
+          <li class="tab-link active" data-tab="personal-info">Applicant Info</li>
+        </ul>
+      </div>
 
+      <div class="content">
+        <div id="applicant-info" class="tab-content active">
+          <h1>Applicant Information</h1>
+
+          <div class="display-group">
+            <label for="email">Email Address</label>
+            <p id="email">{{applicant.email}}</p>
+          </div>
+
+          <div class="display-group">
+            <label for="fullname">Full Name</label>
+            <p id="fullname">{{applicant.username}}</p>
+          </div>
+
+          <div class="display-group">
+            <label for="phone">Phone Number</label>
+            <p id="phone">{{applicant.phone}}</p>
+          </div>
+         
+          <div class="display-group">
+            <label for="location">Location</label>
+            <p id="location">{{app_profile.location}}</p>
+          </div>
+
+          <div class="display-group">
+            <label for="job-title">Job Title</label>
+            <p id="job-title">{{app_profile.job_title}}</p>
+          </div>
+
+          <div class="display-group">
+            <label for="resume">Resume URL</label>
+            <a id="resume">{{app_profile.resume_url}}</a>
+          </div>
+
+          <div class="display-group" id="skills">
+            <label>Skills</label>
+            <div class="tags-container" id="skills-tags">
+                {% for skill in user_profile.skills.all %}
+                    <span class="tag">{{ skill.skill }}</span>
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+    </div>
+</main>
 {% endblock %}
 
 {% block scripts %}
-
 {% endblock %}
