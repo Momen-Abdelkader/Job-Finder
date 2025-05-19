@@ -1,6 +1,8 @@
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -26,4 +28,4 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('api/job/<int:job_id>/apply/', views.apply_for_job_api, name='apply_for_job_api'),
     path('api/job/<int:job_id>/details/', views.get_job_details_api, name='get_job_details_api'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

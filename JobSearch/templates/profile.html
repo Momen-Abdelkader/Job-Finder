@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="user-info">
+                <img src=
+                        "{% if user.profile_photo and user.profile_photo.url %}
+                            {{ user.profile_photo.url }}
+                        {% else %}
+                            {% static 'assets/temp-profile.webp' %}
+                        {% endif %}" 
+                class="avatar" 
+                alt="Profile photo">
+                <div class="user-name">
+                    {% if user.is_admin %}
+                        {{ user.adminprofile.company_name }}
+                    {% else %}
+                        {{ user.userprofile.job_title|default:user.username }}
+                    {% endif %}
+                </div>
+                <div class="user-email">{{ user.email }}</div>
+            </div>
+            <ul class="nav-tabs">
+                <li class="tab-link active" data-tab="personal-info">
+                    {% if user.is_admin %}Company Info{% else %}Personal Info{% endif %}
+                </li>
+                {% if not user.is_admin %}
+                <li class="tab-link" data-tab="preferences">Preferences</li>
+                {% endif %}
+            </ul>
+        </div>
+    
+        <div class="content">
+
+            <div id="personal-info" class="tab-content active">
+
+                {% if user.is_admin %}
+                    <h1>Company Information</h1>
+                {% else %}
+                    <h1>Personal Information</h1>
+                {% endif %}
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" value="{{ user.email }}" disabled>
+                    </div>
+
+                    {% for field in basic_info_form %} 
+                        <div class="input-group">
+                            <label for="{{ field.label }}">{{ field.label }}</label>
+                            {{field}}
+                        </div>
+                    {% endfor %}
+
+                    {% for field in profile_form %}
+                        <div class="input-group">
+                            <label for="{{ field.label }}">{{ field.label }}</label>
+                            {{field}}
+                        </div>
+                    {% endfor %}
+
+                    <button class="btn" name="save-changes">Save Changes</button>
+                </form>
+            </div>
+
+            {% if not user.is_admin %}
+            <div id="preferences" class="tab-content">
+                <h1>Preferences</h1>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    {% for field in preference_form %}
+                        <div class="input-group">
+                            <label for="{{ field.label }}">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+
+                    <button class="btn" name="save-preferences">Save Preferences</button>
+                </form>
+
+            </div>
+
+
+            {% endif %}
+        </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'js/profile-nav.js' %}"></script>
+{% endblock %}

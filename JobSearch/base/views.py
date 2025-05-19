@@ -112,14 +112,62 @@ def apply_for_job_api(request, job_id):
         # Log the error e for debugging
         print(f"Error during application: {e}")
         return JsonResponse({'success': False, 'message': 'An error occurred. Please try again.'}, status=500)
+from .models import User, UserProfile, AdminProfile
+from .forms import UserProfileForm, UserPreferenceForm, AdminProfileForm, UserForm
 
 def home(request):
     """Render the home page."""
     return render(request, 'home.html')
 
+from django.contrib import messages
+
+@login_required
 def profile(request):
     """Base profile view."""
     return HttpResponse("Hello, world. You're at the base profile.")
+    user = request.user
+    if user.is_admin:
+        profile = user.adminprofile
+        profile_form = AdminProfileForm
+    else:
+        profile = user.userprofile
+        profile_form = UserProfileForm
+
+    if request.method == 'POST':
+        if 'save-changes' in request.POST:
+            basic_info_form = UserForm(request.POST, request.FILES, instance=user)
+            profile_form = profile_form(request.POST, instance=profile)
+            
+            if basic_info_form.is_valid() and profile_form.is_valid():
+                basic_info_form.save()
+                profile_form.save()
+                messages.success(request, 'Profile updated successfully!')
+                return redirect('profile')
+            
+            messages.error(request, 'Please correct the errors below')
+
+        elif 'save-preferences' in request.POST:
+            basic_info_form = UserForm(instance=user) # No changes
+            preference_form = UserPreferenceForm(request.POST, instance=profile)
+            if preference_form.is_valid():
+                preference_form.save()
+                messages.success(request, 'Preferences saved successfully!')
+                return redirect('profile')
+            
+            messages.error(request, 'Please correct the errors below ')
+
+    else:
+        basic_info_form = UserForm(instance=user)
+        profile_form = profile_form(instance=profile)
+        preference_form = UserPreferenceForm(instance=profile)
+
+    context = {
+        'basic_info_form': basic_info_form,
+        'profile_form': profile_form,
+        'preference_form': preference_form if not user.is_admin else None,
+    }
+    
+    return render(request, 'profile.html', context)
 
 def _normalize_search_term(term):
     """Normalize search terms for filter matching."""
