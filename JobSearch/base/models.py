@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import AbstractUser
-from .choices import WORK_MODE_CHOICES, JOB_TYPE_CHOICES, EXP_LEVEL_CHOICES
+from .choices import WORK_MODE_CHOICES, JOB_TYPE_CHOICES, EXP_LEVEL_CHOICES, APP_STATUS_CHOICES
 
 class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
@@ -54,7 +54,8 @@ class JobApplication(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     date = models.DateTimeField(default=datetime.now)
-    
+    status = models.CharField(max_length=20, choices=APP_STATUS_CHOICES, default='Pending')
+
     class Meta:
         unique_together = ('user', 'job')
     

@@ -243,67 +243,111 @@ function applicantProfileSetup(user) {
 });
 };
 
-function showJobApplicantsModal(job) {
+async function fetchJobApplications(jobId) {
+    try {
+        const response = await fetch(`/api/job/${jobId}/applications/`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data.applications;
+    } catch (error) {
+        console.error('Error fetching job applications:', error);
+        return []; // Return empty array on error
+    }
+}
+
+async function updateApplicationStatus(applicationId, newStatus) {
+    try {
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const response = await fetch(`/api/application/${applicationId}/update-status/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({
+                status: newStatus
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to update status');
+        }
+
+        const data = await response.json();
+        return data;
+        
+    } catch (error) {
+        console.error('Error updating application status:', error);
+        throw error; // Re-throw to let caller handle it
+    }
+}
+
+async function showJobApplicantsModal(jobId) {
   const modal = document.getElementById("job-applicants-modal");
   const closeButton = modal.querySelector(".close");
   const applicantsList = modal.querySelector(".applicants-list");
   const okButton = modal.querySelector("#close-applicants-modal");
 
-  const applications = getApplicationByJobID(job.id);
+  const applications = await fetchJobApplications(jobId);
   applicantsList.innerHTML = "";
 
   applications.forEach((application) => {
-    const applicant = getApplicationByUserID(application.applicantId);
     const applicationDataHTML = `
-    <div class="applicant-card" id="${application.applicantId}">
+    <div class="applicant-card" id="${application.id}">
       <div class="applicant-info">
-        <img class="applicant-image" src="../assets/profile.webp" alt="${
-          applicant.name
-        } image">
-        <h3 class="applicant-name">${applicant.name}</h3>
-        <p class="applicant-email">${applicant.email}</p>
-        <p class="applicant-date">${applicant.applicationDate}</p>
+        <img class="applicant-image" src="${application.profile_photo_url}" alt="${application.applicant_name}'s image">
+        <h3 class="applicant-name">${application.applicant_name}</h3>
+        <p class="applicant-email">${application.applicant_email}</p>
+        <p class="applicant-date">${application.application_date}</p>
         <select class="applicant-status">
           <option ${
-            application.status === "Pending" ? "selected" : ""
+            application.application_status === "Pending" ? "selected" : ""
           }>Pending</option>
           <option ${
-            application.status === "Accepted" ? "selected" : ""
+            application.application_status === "Accepted" ? "selected" : ""
           }>Accepted</option>
           <option ${
-            application.status === "Rejected" ? "selected" : ""
+            application.application_status === "Rejected" ? "selected" : ""
           }>Rejected</option>
         </select>
       </div>
       <div class="applicant-actions">
-        <a class="button resume-button" href="${
-          applicant.resumeUrl
-        }" target="_blank">View Resume</a>
-        <a class="button profile-button" href="../html/profile.html?userId=${
-          applicant.applicantId
-        }" target="_blank">View Profile</a>
+        <a class="button resume-button"
+          ${application.resume_url ? `href="${application.resume_url}" target="_blank"` : ""}>
+          View Resume
+        </a>
+        <a class="button profile-button" href="/profile-view/${application.applicant_id}" target="_blank">View Profile</a>
       </div>
     </div>`;
-
-    
-
-    // <a class="button profile-button" href="../html/profile.html?userId=${  // NOTE: this will be used in the next phase
-    //   applicant.applicantId
-    // }" target="_blank">View Profile</a>
 
     const listItem = document.createElement("li");
     listItem.classList.add("applicant-item");
     listItem.innerHTML = applicationDataHTML;
     applicantsList.appendChild(listItem);
+
+    const statusSelect = listItem.querySelector(".applicant-status");
+    statusSelect.addEventListener("change", async (event) => {
+      const newStatus = event.target.value;
+      try {
+        await updateApplicationStatus(application.id, newStatus);
+        console.log(`Application status updated to ${newStatus}`);
+      } catch (error) {
+        console.error('Error updating application status:', error);
+      }
+    });
+
   });
 
   // const viewApplicantProfile = applicantsList.querySelectorAll('.profile-button');
   // viewApplicantProfile.addEventListener("click", () => {
   //   // const applicantInfo = getUserPersonalInfo(applicant.id);
-  //   const app = (getProfileById(viewApplicantProfile.id));
+  //   // const app = (getProfileById(viewApplicantProfile.id));
   //   // const app2 = getUserPersonalInfo(viewApplicantProfile.id);
-  //   console.log(viewApplicantProfile.id);
-  //   console.log("app: " + app);
+  //   // console.log(viewApplicantProfile.id);
+  //   // console.log("app: " + app);
   //   // console.log(app2);
   //   // applicantProfileSetup(app);
   // });
@@ -318,18 +362,7 @@ function showJobApplicantsModal(job) {
     enableScrolling();
   });
 
-  const statusSelects = modal.querySelectorAll(".applicant-status");
-  statusSelects.forEach((select) => {
-    select.addEventListener("change", (event) => {
-      const newStatus = event.target.value;
-      const applicantId = event.target.closest(".applicant-card").id;
 
-      const applicationId = getApplicationID(parseInt(job.id), applicantId);
-      if (applicationId) {
-        updateApplicationStatus(applicationId, newStatus);
-      }
-    });
-  });
 
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
@@ -341,6 +374,8 @@ function showJobApplicantsModal(job) {
   modal.style.display = "flex";
   disableScrolling();
 }
+
+
 //-----------------------------
 
 
@@ -369,6 +404,13 @@ document.addEventListener('click', function(event) {
         const jobId = jobCard.id;
         console.log('Edit job with ID:', jobId);
         showEditJobModal(jobCard);
+    }
+
+    if (event.target.classList.contains('applicants-button')) {
+        const jobCard = event.target.closest('.job-card');
+        const jobId = jobCard.id;
+        console.log('View applicants for job with ID:', jobId);
+        showJobApplicantsModal(jobId);
     }
 });
 

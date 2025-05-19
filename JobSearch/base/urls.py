@@ -28,4 +28,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('api/job/<int:job_id>/apply/', views.apply_for_job_api, name='apply_for_job_api'),
     path('api/job/<int:job_id>/details/', views.get_job_details_api, name='get_job_details_api'),
+    path('api/job/<int:job_id>/applications/', views.get_job_applications_api, name='get_job_applications_api'),
+    path('api/application/<int:application_id>/update-status/', views.update_application_status_api, name='update_application_status_api'),
+    path('profile-view/<int:user_id>/', views.profile_view, name='profile_view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

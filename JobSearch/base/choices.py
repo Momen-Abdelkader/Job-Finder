@@ -17,3 +17,9 @@ JOB_TYPE_CHOICES = [
     ('part_time', 'Part-Time'),
     ('internship', 'Internship'),
 ]
+
+APP_STATUS_CHOICES = [
+    ('Pending', 'Pending'),
+    ('Accepted', 'Accepted'),
+    ('Rejected', 'Rejected'),
+]
