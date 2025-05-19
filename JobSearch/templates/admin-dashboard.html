@@ -60,7 +60,7 @@ Admin Dashboard
       <div class="modal" id="add-job-modal">
         <div class="modal-content">
           <span class="close">&times;</span>
-          <h2>Add New Job</h2>
+          <h2 id="form-title">Add New Job</h2>
           <form class="job-form" action="{% url 'adminDashboard' %}" method="POST">
             {% csrf_token %}
 

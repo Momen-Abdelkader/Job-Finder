@@ -52,6 +52,8 @@ function showAddJobModal() {
   const cancelButton = document.querySelector("#cancel");
   const jobForm = document.querySelector(".job-form");
 
+  modal.querySelector("#form-title").innerHTML = "Add New Job";
+
   uiSkills = [];
   newSkill = document.querySelector(".add-tag-input");
 
@@ -90,6 +92,8 @@ function showEditJobModal(jobCard) {
   const modal = document.querySelector("#add-job-modal");
   const closeButton = document.querySelector("#add-job-modal .close");
   const cancelButton = document.querySelector("#cancel");
+
+  modal.querySelector("#form-title").innerHTML = "Edit Job";
 
   let jobForm = document.querySelector(".job-form");
 
