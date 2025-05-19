@@ -418,3 +418,11 @@ def logoutUser(request):
     logout(request)
     messages.success(request, "You have been logged out.")
     return redirect('home')
+
+def convertUserToUserProfile(request):
+    user = request.user
+    if user.is_authenticated and not user.is_admin:
+        try:
+            user_profile = user.userprofile
+        except UserProfile.DoesNotExist:
+            user_profile = UserProfile.objects.create(user=user)
