@@ -26,6 +26,14 @@ body {
   cursor: default;
   user-select: none;
   font-size: 1rem;
+  transition: 0.1s;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .button.see-more-button:hover {
@@ -82,5 +90,9 @@ body {
 
   .button.see-more-button {
     font-size: 1rem;
+  }
+
+  .main-content {
+    gap: 1em;
   }
 }

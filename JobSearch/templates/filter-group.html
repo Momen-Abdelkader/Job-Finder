@@ -1,0 +1,6 @@
+<div class="filter-category">
+    <h2>{{ category.name }}</h2>
+    {% for filter in filters %}
+        {% include 'filter.html' with filter=filter category=category %}
+    {% endfor %}
+</div>

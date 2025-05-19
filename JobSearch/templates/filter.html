@@ -1,0 +1,11 @@
+<div class="filter">
+    <div>
+        <input id="{{ filter.id }}" 
+               type="checkbox" 
+               name="{{ category.id }}" 
+               value="{{ filter.id }}" 
+               {% if filter.selected %}checked{% endif %}>
+        <label for="{{ filter.id }}">{{ filter.name }}</label>
+    </div>
+    <span id="{{ filter.id }}-count" class="count">{{ filter.count }}</span>
+</div>
