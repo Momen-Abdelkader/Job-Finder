@@ -12,9 +12,6 @@
         <li><a id="job-job-type" class="tag">{{ job.get_job_type_display }}</a></li> 
         <li><a id="job-exp" class="tag">{{ job.get_exp_level_display }}</a></li>
         <li><a id="job-salary" class="tag">${{ job.salary }}</a></li>
-        {% for Skill in job.skills_required.all %}
-        <li><a class="skill-tag">{{ Skill.skill }}</a></li>
-        {% endfor %}
     </ul>
     <div class="buttons">
         {% if user.is_admin %}
