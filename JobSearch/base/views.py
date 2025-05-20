@@ -147,7 +147,7 @@ def profile(request):
                 messages.success(request, 'Profile updated successfully!')
                 return redirect('profile')
             
-            messages.error(request, 'Please correct the errors below')
+            messages.error(request, 'Please correct invalid inputs.')
 
         elif 'save-preferences' in request.POST:
             basic_info_form = UserForm(instance=user) # No changes
@@ -157,7 +157,7 @@ def profile(request):
                 messages.success(request, 'Preferences saved successfully!')
                 return redirect('profile')
             
-            messages.error(request, 'Please correct the errors below ')
+            messages.error(request, 'Please correct invalid inputs.')
 
     else:
         basic_info_form = UserForm(instance=user)

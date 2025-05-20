@@ -80,21 +80,33 @@ Profile
             </div>
 
             {% if not user.is_admin %}
-            <div id="preferences" class="tab-content">
-                <h1>Preferences</h1>
-                <form method="POST">
-                    {% csrf_token %}
+                <div id="preferences" class="tab-content">
+                    <h1>Preferences</h1>
+                    <form method="POST">
+                        {% csrf_token %}
 
-                    {% for field in preference_form %}
-                        <div class="input-group">
-                            <label for="{{ field.label }}">{{ field.label }}</label>
-                            {{ field }}
+                        {% for field in preference_form %}
+                            <div class="input-group">
+                                <label for="{{ field.label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+
+                        <div class="tags-container" id="skills-tags"></div>
+                        <div class="add-tag">
+                        <label class="lab" for="new-tag">Skills</label>
+                        <input
+                            type="text"
+                            id="new-tag"
+                            class="add-tag-input"
+                            placeholder="Add skill"
+                        />
                         </div>
-                    {% endfor %}
+                        <a class="add-skill-button">Add Skill</a>
 
-                    <button class="btn" name="save-preferences">Save Preferences</button>
-                </form>
-            </div>
+                        <button class="btn" name="save-preferences">Save Preferences</button>
+                    </form>
+                </div>
             {% endif %}
         </div>
     </div>
