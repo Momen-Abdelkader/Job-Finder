@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q, Exists, OuterRef
 from django.template.loader import render_to_string
+
+from JobSearch.settings import LOGIN_URL
 from .models import User, UserProfile, AdminProfile, Job, JobApplication, Skill, UserSkill
 from .choices import JOB_TYPE_CHOICES, WORK_MODE_CHOICES, EXP_LEVEL_CHOICES, APP_STATUS_CHOICES
 from django.contrib.auth.decorators import login_required
@@ -89,7 +91,7 @@ def get_job_details_api(request, job_id):
     }
     return JsonResponse(job_data)
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 @require_POST # Ensures this view only accepts POST requests
 def apply_for_job_api(request, job_id):
     if request.user.is_admin: # Admins cannot apply
@@ -118,12 +120,13 @@ from .models import User, UserProfile, AdminProfile
 from .forms import UserProfileForm, UserPreferenceForm, AdminProfileForm, UserForm
 
 def home(request):
-    """Render the home page."""
+    if request.user.is_authenticated and request.user.is_admin:
+            return redirect('adminDashboard')
     return render(request, 'home.html')
 
 from django.contrib import messages
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 def profile(request):
     user = request.user
     if user.is_admin:
@@ -199,6 +202,9 @@ def _build_search_query(normalized_search):
     return q_objects
 
 def jobs(request):
+    if request.user.is_authenticated and request.user.is_admin:
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+
     """Display and filter job listings."""
     # Get filter parameters
     search_query = request.GET.get('q', '').strip()
@@ -271,7 +277,11 @@ def jobs(request):
 
     return render(request, 'jobs.html', context)
 
+@login_required(login_url=LOGIN_URL)
 def adminDashboard(request):
+    if not request.user.is_admin:
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+    
     admin = AdminProfile.objects.get(user = request.user)
     jobs = Job.objects.filter(company__company_name = admin.company_name)     
     context = {
@@ -414,6 +424,7 @@ def signupView(request):
 def resetPassword(request):
     return render(request, 'forgot-password.html')
 
+@login_required(login_url=LOGIN_URL)
 def logoutUser(request):
     """Handle user logout."""
     logout(request)
@@ -454,12 +465,13 @@ def get_job_applications_api(request, job_id):
     
     return JsonResponse({'applications': applications_data})
 
-
-
 @csrf_exempt 
-@login_required
+@login_required(login_url=LOGIN_URL)
 @require_http_methods(["PATCH"])
 def update_application_status_api(request, application_id):
+    if not request.user.is_admin:
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+
     try:
         application = JobApplication.objects.select_related('job__company__user').get(
             pk=application_id,
@@ -491,7 +503,6 @@ def update_application_status_api(request, application_id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
     
-
 def profile_view(request, user_id):
     user = get_object_or_404(User, id=user_id)
     user_profile, created = UserProfile.objects.get_or_create(user=user)

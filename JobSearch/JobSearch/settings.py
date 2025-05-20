@@ -172,3 +172,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jobsearch98786@gmail.com'
 EMAIL_HOST_PASSWORD = 'sgjl uand xyiy ctvz' 
 DEFAULT_FROM_EMAIL = 'jobsearch98786@gmail.com'
+
+
+LOGIN_URL = '/login/'
