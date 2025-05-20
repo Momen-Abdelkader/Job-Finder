@@ -3,13 +3,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q, Exists, OuterRef
 from django.template.loader import render_to_string
-from .models import User, UserProfile, AdminProfile, Job, JobApplication, Skill
-from .choices import JOB_TYPE_CHOICES, WORK_MODE_CHOICES, EXP_LEVEL_CHOICES
+from .models import User, UserProfile, AdminProfile, Job, JobApplication, Skill, UserSkill
+from .choices import JOB_TYPE_CHOICES, WORK_MODE_CHOICES, EXP_LEVEL_CHOICES, APP_STATUS_CHOICES
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.template.defaultfilters import date as _date_filter
+from django.views.decorators.http import require_http_methods
 from django.contrib.staticfiles.storage import staticfiles_storage
 import json
 
@@ -340,7 +342,6 @@ def adminDashboard(request):
     """Render admin dashboard page"""
     return render(request, "admin-dashboard.html", context)
 
-
 def loginView(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -418,3 +419,88 @@ def logoutUser(request):
     logout(request)
     messages.success(request, "You have been logged out.")
     return redirect('home')
+
+def convertUserToUserProfile(request):
+    user = request.user
+    if user.is_authenticated and not user.is_admin:
+        try:
+            user_profile = user.userprofile
+        except UserProfile.DoesNotExist:
+            user_profile = UserProfile.objects.create(user=user)
+
+@login_required
+def get_job_applications_api(request, job_id):
+    if not request.user.is_admin:
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+    
+    job = get_object_or_404(Job, pk=job_id, company__user=request.user)
+    applications = JobApplication.objects.filter(job=job).select_related('user__user')
+    
+    applications_data = []
+    for app in applications:
+        applications_data.append({
+            'id': app.id,
+            'applicant_name': app.user.user.get_full_name() or app.user.user.username,
+            'applicant_email': app.user.user.email,
+            'applicant_phone': app.user.user.phone,
+            'applicant_id': app.user.user.id,
+            'applicant_location': app.user.location,
+            'applicant_job_title': app.user.job_title,
+            'application_date': _date_filter(app.date, "M d, Y H:i"),
+            'application_status': app.status,
+            'resume_url': app.user.resume_url if app.user.resume_url else None,
+            'profile_photo_url': app.user.user.profile_photo.url if app.user.user.profile_photo else None
+        })
+    
+    return JsonResponse({'applications': applications_data})
+
+
+
+@csrf_exempt 
+@login_required
+@require_http_methods(["PATCH"])
+def update_application_status_api(request, application_id):
+    try:
+        application = JobApplication.objects.select_related('job__company__user').get(
+            pk=application_id,
+            job__company__user=request.user
+        )
+    except JobApplication.DoesNotExist:
+        return JsonResponse({'error': 'Application not found or unauthorized'}, status=404)
+    
+    try:
+        data = json.loads(request.body)
+        new_status = data.get('status')
+        print (new_status)
+        
+        if new_status not in dict(APP_STATUS_CHOICES).keys():
+            return JsonResponse({'error': 'Invalid status'}, status=400)
+            
+        application.status = new_status
+        application.save()
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Status updated successfully',
+            'new_status': new_status,
+            'status_display': application.get_status_display()
+        })
+        
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    
+
+def profile_view(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
+    user_skills = Skill.objects.filter(userskill__user=user_profile)
+    context = {
+        'applicant': user,
+        'app_profile': user_profile,
+        'user_skills': user_skills,
+    }
+
+    """Render applicant profile page"""
+    return render(request, "profile-view.html", context)

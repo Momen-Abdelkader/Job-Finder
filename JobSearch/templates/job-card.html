@@ -1,6 +1,15 @@
+{% load static %}
+
 <div id="{{job.id}}" class="job-card">
     <div class="company-info">
-        <img src="{{ job.company.user.profile_photo }}" class="company-logo">
+        <img src="{% if job.company.user.profile_photo and job.company.user.profile_photo.url %}
+                    {{ job.company.user.profile_photo.url }}
+                  {% else %}
+                    {% static 'assets/temp-profile.webp' %}
+                  {% endif %}" 
+        class="company-logo">
+
+                        
         <h4 class="company-name">{{ job.company.company_name }}</h4>                
     </div>
     <div class="job-info">
@@ -12,6 +21,9 @@
         <li><a id="job-job-type" class="tag">{{ job.get_job_type_display }}</a></li> 
         <li><a id="job-exp" class="tag">{{ job.get_exp_level_display }}</a></li>
         <li><a id="job-salary" class="tag">${{ job.salary }}</a></li>
+        {% for Skill in job.skills_required.all %}
+        <li><a class="skill-tag" style="display: none;">{{ Skill.skill }}</a></li>
+        {% endfor %}
     </ul>
     <div class="buttons">
         {% if user.is_admin %}
