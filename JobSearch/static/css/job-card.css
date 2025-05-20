@@ -81,13 +81,13 @@
 
 .edit-button {
   background-color: var(--accent);
-  color: var(--white_1);
+  color: white;
   padding: 10px 20px;
 }
 
 .delete-button {
   background-color: var(--red);
-  color: var(--white_1);
+  color: white;
   padding: 10px 20px;
 }
 
@@ -181,4 +181,37 @@
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 5px;
+  color: white;
+  max-width: 300px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-success {
+  background-color: #4caf50;
+}
+
+.toast-error {
+  background-color: #f44336;
+}
+
+.no-skills {
+  color: white;
+  font-style: italic;
 }
