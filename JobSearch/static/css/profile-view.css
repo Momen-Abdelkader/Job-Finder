@@ -60,7 +60,7 @@ body {
 
 .nav-tabs li:hover, .nav-tabs li.active {
     background-color: var(--accent-semi-dark);
-    color: var(--white_1);
+    color: white;
     border-left: 4px solid var(--accent-dark);
 }
 
@@ -103,7 +103,7 @@ h1 {
 
 .display-group {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 10px;
     margin-bottom: 22px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);

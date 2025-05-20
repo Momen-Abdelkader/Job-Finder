@@ -283,7 +283,7 @@ def adminDashboard(request):
         return JsonResponse({'error': 'Unauthorized'}, status=403)
     
     admin = AdminProfile.objects.get(user = request.user)
-    jobs = Job.objects.filter(company__company_name = admin.company_name)     
+    jobs = Job.objects.filter(company_id = admin.id)     
     context = {
         'jobs' : jobs,
         'skills' : Skill.objects.all(),
