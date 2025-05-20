@@ -497,3 +497,6 @@ def profile_view(request, user_id):
         'user_id': user_id,
     }
     return render(request, 'profile-view.html', context)
+
+def some_error_view(request):
+    return render(request, "error.html", {"error_message": "A specific error message if you want."})
