@@ -13,7 +13,4 @@ CMakeSettings.json
 JobSearch/clientsecret*.json
 
 # Database Files
-JobSearch/db.sqlite3
-*.sqlite3
-*.db
 media/
