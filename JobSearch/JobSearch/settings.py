@@ -178,3 +178,5 @@ DEFAULT_FROM_EMAIL = 'jobsearch98786@gmail.com'
 
 
 LOGIN_URL = '/login/'
+
+ALLOWED_HOSTS = ['*']
