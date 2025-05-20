@@ -512,6 +512,10 @@ def profile_view(request, user_id):
         'app_profile': user_profile,
         'user_skills': user_skills,
     }
+    return render(request, 'profile-view.html', context)
+
+def some_error_view(request):
+    return render(request, "error.html", {"error_message": "A specific error message if you want."})
 
     """Render applicant profile page"""
     return render(request, "profile-view.html", context)

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}Complete Your Signup{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="container">
+    <div class="form-container">
+      <h2>Complete Your Signup</h2>
+      <br>
+      <form method="post" class="form">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="form-errors">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        <div class="input-container">
+          {{ form.username.label_tag }}
+          {{ form.username }}
+          {{ form.username.errors }}
+        </div>
+
+        <button type="submit" class="button confirm-button">Finish Signup</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+{% endblock %}
