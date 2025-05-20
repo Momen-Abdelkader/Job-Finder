@@ -90,19 +90,7 @@ Profile
                                 <label for="{{ field.label }}">{{ field.label }}</label>
                                 {{ field }}
                             </div>
-                        {% endfor %}
-
-                        <div class="tags-container" id="skills-tags"></div>
-                        <div class="add-tag">
-                        <label class="lab" for="new-tag">Skills</label>
-                        <input
-                            type="text"
-                            id="new-tag"
-                            class="add-tag-input"
-                            placeholder="Add skill"
-                        />
-                        </div>
-                        <a class="add-skill-button">Add Skill</a>
+                        {% endfor %}          
 
                         <button class="btn" name="save-preferences">Save Preferences</button>
                     </form>
@@ -117,4 +105,5 @@ Profile
 
 {% block scripts %}
 <script src="{% static 'js/profile-nav.js' %}"></script>
+<script src="{% static 'js/profile.js' %}"></script>
 {% endblock %}
