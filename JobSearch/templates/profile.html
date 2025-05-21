@@ -28,7 +28,7 @@ Profile
                     {% if user.is_admin %}
                         {{ user.adminprofile.company_name }}
                     {% else %}
-                        {{ user.username }}
+                        {{ user.username}}
                     {% endif %}
                 </div>
                 <div class="user-email">{{ user.email }}</div>
@@ -80,28 +80,24 @@ Profile
             </div>
 
             {% if not user.is_admin %}
-            <div id="preferences" class="tab-content">
-                <h1>Preferences</h1>
+                <div id="preferences" class="tab-content">
+                    <h1>Preferences</h1>
+                    <form method="POST">
+                        {% csrf_token %}
 
-                <form method="POST">
-                    {% csrf_token %}
+                        {% for field in preference_form %}
+                            <div class="input-group">
+                                <label for="{{ field.label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}          
 
-                    {% for field in preference_form %}
-                        <div class="input-group">
-                            <label for="{{ field.label }}">{{ field.label }}</label>
-                            {{ field }}
-                        </div>
-                    {% endfor %}
-
-                    <button class="btn" name="save-preferences">Save Preferences</button>
-                </form>
-
-            </div>
-
-
+                        <button class="btn" name="save-preferences">Save Preferences</button>
+                    </form>
+                </div>
             {% endif %}
         </div>
-
+    </div>
 </div>
 
 {% endblock %}
@@ -109,4 +105,5 @@ Profile
 
 {% block scripts %}
 <script src="{% static 'js/profile-nav.js' %}"></script>
+<script src="{% static 'js/profile.js' %}"></script>
 {% endblock %}

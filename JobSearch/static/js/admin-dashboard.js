@@ -50,9 +50,9 @@ function showAddJobModal() {
   const closeButton = document.querySelector("#add-job-modal .close");
   const cancelButton = document.querySelector("#cancel");
   const jobForm = document.querySelector(".job-form");
-
+  
   modal.querySelector("#form-title").innerHTML = "Add New Job";
-
+  jobForm.reset();
   uiSkills = [];
   newSkill = document.querySelector(".add-tag-input");
 
@@ -61,12 +61,16 @@ function showAddJobModal() {
 
   closeButton.addEventListener("click", () => {
     modal.style.display = "none";
+    uiSkills = [];
+    refreshSkillTags();
     jobForm.reset();
     enableScrolling();
   });
 
   cancelButton.addEventListener("click", () => {
     modal.style.display = "none";
+    uiSkills = [];
+    refreshSkillTags();
     jobForm.reset();
     enableScrolling();
   });
@@ -99,6 +103,7 @@ function showEditJobModal(jobCard) {
   uiSkills = [];
 
   jobForm.querySelector("#hidden-job-id-edit").value = jobCard.id;
+  jobForm.reset();
 
 
   let workLocation = document.querySelector(
@@ -134,6 +139,7 @@ function showEditJobModal(jobCard) {
 
   closeButton.addEventListener("click", () => {
     uiSkills = [];
+    refreshSkillTags();
     jobForm.querySelector("#hidden-job-id-edit").value.remove;
     modal.style.display = "none";
     jobForm.reset();
@@ -142,6 +148,7 @@ function showEditJobModal(jobCard) {
 
   cancelButton.addEventListener("click", () => {
     uiSkills = [];
+    refreshSkillTags();
     jobForm.querySelector("#hidden-job-id-edit").value.remove;
     modal.style.display = "none";
     jobForm.reset();
@@ -173,12 +180,16 @@ function showDeleteJobModal(jobCard) {
   cancelButton.addEventListener("click", () => {
     hiddenJob.value.remove;
     modal.style.display = "none";
+    uiSkills = [];
+    refreshSkillTags();
     enableScrolling();
   });
 
   closeButton.addEventListener("click", () => {
     hiddenJob.value.remove;
     modal.style.display = "none";
+    uiSkills = [];
+    refreshSkillTags();
     enableScrolling();
   });
 

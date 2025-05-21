@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Authentication Error{% endblock %}
+{% block content %}
+<main>
+  <div class="container">
+    <div class="form-container">
+      <h2>Authentication Error</h2>
+      <br>
+      <p>
+        There was a problem signing you in with Google.<br>
+        Please try again or contact support.
+      </p>
+      <br>
+      <a href="{% url 'login' %}" class="button">Back to Login</a>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -75,7 +75,7 @@ button:active {
   background-color: var(--accent);
   font-size: 0.8rem;
   font-weight: bold;
-  color: var(white);
+  color: white;
   border: none;
   padding: 1em 2em;
   border-radius: 8px;
