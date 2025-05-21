@@ -147,7 +147,7 @@ def profile(request):
                 messages.success(request, 'Profile updated successfully!')
                 return redirect('profile')
             
-            messages.error(request, 'Please correct the errors below')
+            messages.error(request, 'Please correct invalid inputs.')
 
         elif 'save-preferences' in request.POST:
             basic_info_form = UserForm(instance=user) # No changes
@@ -157,7 +157,7 @@ def profile(request):
                 messages.success(request, 'Preferences saved successfully!')
                 return redirect('profile')
             
-            messages.error(request, 'Please correct the errors below ')
+            messages.error(request, 'Please correct invalid inputs.')
 
     else:
         basic_info_form = UserForm(instance=user)
@@ -283,7 +283,7 @@ def adminDashboard(request):
         return JsonResponse({'error': 'Unauthorized'}, status=403)
     
     admin = AdminProfile.objects.get(user = request.user)
-    jobs = Job.objects.filter(company__company_name = admin.company_name)     
+    jobs = Job.objects.filter(company_id = admin.id)     
     context = {
         'jobs' : jobs,
         'skills' : Skill.objects.all(),
@@ -431,14 +431,6 @@ def logoutUser(request):
     messages.success(request, "You have been logged out.")
     return redirect('home')
 
-def convertUserToUserProfile(request):
-    user = request.user
-    if user.is_authenticated and not user.is_admin:
-        try:
-            user_profile = user.userprofile
-        except UserProfile.DoesNotExist:
-            user_profile = UserProfile.objects.create(user=user)
-
 @login_required
 def get_job_applications_api(request, job_id):
     if not request.user.is_admin:
@@ -516,6 +508,3 @@ def profile_view(request, user_id):
 
 def some_error_view(request):
     return render(request, "error.html", {"error_message": "A specific error message if you want."})
-
-    """Render applicant profile page"""
-    return render(request, "profile-view.html", context)

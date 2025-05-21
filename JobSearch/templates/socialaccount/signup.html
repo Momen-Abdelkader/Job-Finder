@@ -26,10 +26,21 @@
           {{ form.username.errors }}
         </div>
 
+        <div class="toggle-container">
+          <div class="toggle-indicator"></div>
+          <a class="admin">Company Admin</a>
+          <a class="user active">Regular User</a>
+          <input type="hidden" id="user_type" name="user_type" value="normal" />
+        </div>
+        
         <button type="submit" class="button confirm-button">Finish Signup</button>
       </form>
     </div>
   </div>
 </main>
 
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/signup.js' %}"></script>
 {% endblock %}

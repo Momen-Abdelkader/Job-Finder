@@ -6,41 +6,6 @@ Jobs
 {% block styles %}
 <link rel="stylesheet" href="{% static '/css/jobs.css' %}" />
 <link rel="stylesheet" href="{% static '/css/job-card.css' %}" />
-<!-- Add the new toast notification styles -->
-<style>
-.toast {
-position: fixed;
-bottom: 20px;
-right: 20px;
-padding: 12px 20px;
-border-radius: 5px;
-color: white;
-max-width: 300px;
-opacity: 0;
-transform: translateY(20px);
-transition: opacity 0.3s, transform 0.3s;
-z-index: 1000;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-    .toast.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .toast-success {
-        background-color: #4caf50;
-    }
-    
-    .toast-error {
-        background-color: #f44336;
-    }
-
-    /* For the "No skills required" placeholder */
-    .no-skills {
-        color: #666;
-        font-style: italic;
-    }
-</style>
 {% endblock %}
 {% block content %}
 <main class="container">
