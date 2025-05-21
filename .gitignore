@@ -11,3 +11,5 @@ Makefile
 CMakeSettings.json
 
 JobSearch/clientsecret*.json
+JobSearch/media/
+db.sqlite3
