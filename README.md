@@ -1,6 +1,6 @@
 # JobSearch Platform
 
-![JobSearch Screenshot](assets/Screenshot (186).png)
+![JobSearch Screenshot](assets/project.png)
 
 JobSearch is a full-featured Django web application for job seekers and companies. It allows users to register as job seekers or company administrators, manage profiles, and post or search for jobs. The platform integrates Google OAuth for easy authentication and provides a modern, responsive user experience.
 
